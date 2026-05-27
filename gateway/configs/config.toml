@@ -45,3 +45,13 @@ pricing_file = "/etc/policy-engine/llm-pricing/model_prices.json"
 [immutable_gateway]
 enabled = false
 artifacts_dir = "/etc/api-platform-gateway/immutable_gateway/artifacts"
+
+[devportal_webhook]
+enabled = true
+secret = "secretkey"   # your secret from step 2
+private_key_path = "/app/certificates/devportal-webhook.pem"
+gateway_type = "wso2/api-platform"   # must match what you put in devportal config.yaml
+
+[devportal_webhook.idempotency]
+ttl = "10m"
+max_size = 10000
