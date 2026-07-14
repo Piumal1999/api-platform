@@ -1,15 +1,15 @@
-<div class="aov-hero">
-  <div class="aov-hero-top">
-    <div class="aov-hero-thumb">
+<div class="dp-api-overview__hero">
+  <div class="dp-api-overview__hero-top">
+    <div class="dp-api-overview__hero-thumb">
       {{#if apiMetadata.apiImageMetadata.api-icon}}
-      <img class="aov-api-img" src="{{apiMetadata.apiImageMetadata.api-icon}}" alt="{{apiMetadata.name}}" />
+      <img class="dp-api-overview__api-img" src="{{apiMetadata.apiImageMetadata.api-icon}}" alt="{{apiMetadata.name}}" />
       {{else}}
-      <div class="aov-api-avatar">{{firstTwoLetters apiMetadata.name}}</div>
+      <div class="dp-api-overview__api-avatar">{{firstTwoLetters apiMetadata.name}}</div>
       {{/if}}
     </div>
-    <div class="aov-hero-title-row">
-      <h1 class="aov-hero-name">{{apiMetadata.name}}</h1>
-      <div class="aov-hero-badges">
+    <div class="dp-api-overview__hero-title-row">
+      <h1 class="dp-api-overview__hero-name">{{apiMetadata.name}}</h1>
+      <div class="dp-api-overview__hero-badges">
         {{#if apiMetadata.version}}
         <span class="dp-badge dp-badge--version">{{apiMetadata.version}}</span>
         {{/if}}
@@ -38,9 +38,9 @@
       </div>
     </div>
   </div>
-  <div class="aov-hero-body">
+  <div class="dp-api-overview__hero-body">
     {{#if apiMetadata.description}}
-    <p class="aov-hero-desc">{{apiMetadata.description}}</p>
+    <p class="dp-api-overview__hero-desc">{{apiMetadata.description}}</p>
     {{/if}}
     {{#if apiMetadata.tags}}
     <div class="dp-tags">
@@ -49,7 +49,7 @@
       {{/apiMetadata.tags}}
     </div>
     {{/if}}
-    <div class="aov-hero-actions">
+    <div class="dp-api-overview__hero-actions">
       {{#if subscriptionPlans.length}}
         {{#unless subscriptions.length}}
       <a class="dp-btn dp-btn--primary" href="#subscriptionPlans">

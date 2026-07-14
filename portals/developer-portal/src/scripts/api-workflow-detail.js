@@ -21,9 +21,9 @@
  */
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
+    notification.className = `notification dp-notification__${type}`;
     const content = document.createElement('div');
-    content.className = 'notification-content';
+    content.className = 'dp-notification__content';
     const icon = document.createElement('i');
     icon.classList.add('bi', type === 'success' ? 'bi-check-circle' : 'bi-exclamation-circle');
     const span = document.createElement('span');
@@ -53,7 +53,7 @@ function renderMarkdownPreview(content) {
     if (!container) return;
 
     if (!content) {
-        container.innerHTML = '<p class="af-md-empty">No workflow description available.</p>';
+        container.innerHTML = '<p class="dp-workflow__md-empty">No workflow description available.</p>';
         return;
     }
 
@@ -63,7 +63,7 @@ function renderMarkdownPreview(content) {
         container.innerHTML = DOMPurify.sanitize(rawHtml);
     } else {
         const pre = document.createElement('pre');
-        pre.className = 'af-md-fallback';
+        pre.className = 'dp-workflow__md-fallback';
         pre.textContent = content;
         container.replaceChildren(pre);
     }
@@ -116,9 +116,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const promptEl = document.getElementById('modalAgentPromptText');
             if (!promptEl) return;
             navigator.clipboard.writeText(promptEl.textContent).then(() => {
-                btnCopyPrompt.classList.add('copy-btn--copied');
+                btnCopyPrompt.classList.add('dp-copy__btn--copied');
                 if (btnCopyPrompt._copyTimer) clearTimeout(btnCopyPrompt._copyTimer);
-                btnCopyPrompt._copyTimer = setTimeout(() => { btnCopyPrompt.classList.remove('copy-btn--copied'); }, 1600);
+                btnCopyPrompt._copyTimer = setTimeout(() => { btnCopyPrompt.classList.remove('dp-copy__btn--copied'); }, 1600);
             }).catch(function(){});
         });
     }

@@ -15,64 +15,64 @@
     {{!-- ── LIST VIEW ── --}}
     <div id="apiWorkflowList">
         <!-- Header -->
-        <div class="cfg-panel-header">
+        <div class="dp-settings__panel-header">
             <div>
-                <h2 class="cfg-panel-title">API Workflows</h2>
-                <p class="cfg-panel-desc">Encode your real-world API use cases as guided workflows, so AI agents know exactly how your APIs work together, <br />
+                <h2 class="dp-settings__panel-title">API Workflows</h2>
+                <p class="dp-settings__panel-desc">Encode your real-world API use cases as guided workflows, so AI agents know exactly how your APIs work together, <br />
                     in the right order, for the right purpose. No guesswork, no hallucinations.</p>
             </div>
             {{#if apiWorkflows.length}}
-            <button class="cfg-btn-primary" id="createApiWorkflowBtn" type="button">
+            <button class="dp-settings__btn-primary" id="createApiWorkflowBtn" type="button">
                 <i class="bi bi-plus me-1"></i> Create
             </button>
             {{/if}}
         </div>
 
-        {{> view-combo hash="cfg-workflows" label="workflows"}}
+        {{> view-combo hash="dp-settings__workflows" label="workflows"}}
 
         {{#if apiWorkflows.length}}
         <!-- Flows Grid -->
-        <div class="api-workflows-grid">
+        <div class="dp-api__workflows-grid">
             {{#each apiWorkflows}}
-            <div class="api-workflow-card">
-                <div class="api-workflow-card-header">
-                    <div class="api-workflow-card-meta-row">
-                        <span class="api-workflow-status-dot api-workflow-status-dot--{{lowercase this.status}}"></span>
-                        <span class="api-workflow-status-label">{{this.status}}</span>
-                        <span class="api-workflow-card-sep">·</span>
-                        <span class="api-workflow-content-type-badge api-workflow-content-type--{{lowercase this.contentType}}">{{this.contentType}}</span>
+            <div class="dp-api__workflow-card">
+                <div class="dp-api__workflow-card-header">
+                    <div class="dp-api__workflow-card-meta-row">
+                        <span class="dp-api__workflow-status-dot dp-api__workflow-status-dot--{{lowercase this.status}}"></span>
+                        <span class="dp-api__workflow-status-label">{{this.status}}</span>
+                        <span class="dp-api__workflow-card-sep">·</span>
+                        <span class="dp-api__workflow-content-type-badge dp-api__workflow-content-type--{{lowercase this.contentType}}">{{this.contentType}}</span>
                     </div>
-                    <div class="api-workflow-card-actions api-workflow-card-actions--hover">
+                    <div class="dp-api__workflow-card-actions dp-api__workflow-card-actions--hover">
                         {{#unless (eq this.agentVisibility "HIDDEN")}}
                         <button type="button"
-                            class="api-workflow-action-btn api-workflow-view-prompt-btn"
+                            class="dp-api__workflow-action-btn dp-api__workflow-view-prompt-btn"
                             title="View agent prompt"
                             data-api-workflow-id="{{this.id}}">
                             <i class="bi bi-robot"></i>
                         </button>
                         {{/unless}}
-                        <button type="button" class="api-workflow-action-btn api-workflow-edit-btn"
+                        <button type="button" class="dp-api__workflow-action-btn dp-api__workflow-edit-btn"
                             title="Edit"
                             data-api-workflow-id="{{this.id}}">
                             <i class="bi bi-pencil"></i>
                         </button>
-                        <button type="button" class="api-workflow-action-btn api-workflow-action-btn--danger api-workflow-delete-btn"
+                        <button type="button" class="dp-api__workflow-action-btn dp-api__workflow-action-btn--danger dp-api__workflow-delete-btn"
                             title="Delete"
                             data-api-workflow-id="{{this.id}}">
                             <i class="bi bi-trash"></i>
                         </button>
                     </div>
                 </div>
-                <div class="api-workflow-card-body">
-                    <h5 class="api-workflow-card-title">{{this.displayName}}</h5>
-                    <p class="api-workflow-card-description" title="{{this.description}}">
+                <div class="dp-api__workflow-card-body">
+                    <h5 class="dp-api__workflow-card-title">{{this.displayName}}</h5>
+                    <p class="dp-api__workflow-card-description" title="{{this.description}}">
                         {{this.description}}
                     </p>
                 </div>
-                <div class="api-workflow-card-footer">
-                    <div class="api-workflow-card-visibility-badges">
+                <div class="dp-api__workflow-card-footer">
+                    <div class="dp-api__workflow-card-visibility-badges">
                         {{#unless (eq this.agentVisibility "HIDDEN")}}
-                        <span class="api-workflow-visibility-badge api-workflow-agent-visible"
+                        <span class="dp-api__workflow-visibility-badge dp-api__workflow-agent-visible"
                             title="AI agents can discover and use this workflow">
                             <span class="agent-live-dot"></span>
                             <i class="bi bi-robot"></i> AI Ready
@@ -113,8 +113,8 @@
                 <p id="deleteApiWorkflowModalMessage"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn common-btn-link" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn common-btn-primary common-btn-danger" id="deleteApiWorkflowConfirmBtn" data-cyid="confirm">
+                <button type="button" class="btn dp-common__btn-link" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn dp-common__btn-primary dp-common__btn-danger" id="deleteApiWorkflowConfirmBtn" data-cyid="confirm">
                     Confirm
                 </button>
             </div>
@@ -134,21 +134,21 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-0">
-                <div class="api-workflow-prompt-toolbar">
+                <div class="dp-api__workflow-prompt-toolbar">
                     <span class="small text-muted">Use this prompt to let your AI agent execute the workflow—handling API calls, dependencies, and errors automatically</span>
-                    <div class="prompt-modal-toolbar">
-                        <button type="button" class="prompt-tool-btn" id="downloadPromptBtn" title="Download as .txt">
+                    <div class="dp-prompt__modal-toolbar">
+                        <button type="button" class="dp-prompt__tool-btn" id="downloadPromptBtn" title="Download as .txt">
                             <i class="bi bi-download"></i>
                         </button>
-                        <button type="button" class="prompt-tool-btn" id="copyPromptBtn" title="Copy prompt">
+                        <button type="button" class="dp-prompt__tool-btn" id="copyPromptBtn" title="Copy prompt">
                             <i class="bi bi-copy"></i>
                         </button>
-                        <button type="button" class="btn-run-prompt" id="runInClaudeBtn">
+                        <button type="button" class="dp-prompt__btn-run-prompt" id="runInClaudeBtn">
                             <i class="bi bi-play-fill"></i> Run in Claude
                         </button>
                     </div>
                 </div>
-                <pre id="agentPromptContent" class="api-workflow-prompt-pre"></pre>
+                <pre id="agentPromptContent" class="dp-api__workflow-prompt-pre"></pre>
             </div>
         </div>
     </div>

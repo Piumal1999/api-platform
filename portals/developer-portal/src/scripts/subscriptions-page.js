@@ -57,19 +57,19 @@ function updateSubManageStatus(status) {
     const badge = document.getElementById('subManageStatusBadge');
     if (badge) {
         badge.textContent = isSuspended ? 'Suspended' : 'Active';
-        badge.className = 'mc-manage-status-badge ' + (isSuspended ? 'mc-manage-status-badge--suspended' : 'mc-manage-status-badge--active');
+        badge.className = 'dp-mcp__manage-status-badge ' + (isSuspended ? 'dp-mcp__manage-status-badge--suspended' : 'dp-mcp__manage-status-badge--active');
     }
     const btn = document.getElementById('subManageSuspendBtn');
     if (btn) {
         btn.querySelector('i').className = 'bi bi-' + (isSuspended ? 'play-circle' : 'pause-circle');
-        btn.querySelector('.sub-suspend-label').textContent = isSuspended ? 'Resume' : 'Suspend';
-        btn.className = 'dp-btn mc-manage-action-btn ' + (isSuspended ? 'mc-manage-action-btn--resume' : 'mc-manage-action-btn--suspend');
+        btn.querySelector('.dp-subscription__suspend-label').textContent = isSuspended ? 'Resume' : 'Suspend';
+        btn.className = 'dp-btn dp-mcp__manage-action-btn ' + (isSuspended ? 'dp-mcp__manage-action-btn--resume' : 'dp-mcp__manage-action-btn--suspend');
     }
 }
 
 function resetSubManageCopyBtn() {
     const btn = document.getElementById('subManageCopyBtn');
-    if (btn) btn.classList.remove('copy-btn--copied');
+    if (btn) btn.classList.remove('dp-copy__btn--copied');
 }
 
 /* ── Token fetch / reveal / copy ───────────────────────────────── */
@@ -123,7 +123,7 @@ async function copySubToken() {
         document.body.removeChild(ta);
     }
     const btn = document.getElementById('subManageCopyBtn');
-    if (btn) btn.classList.add('copy-btn--copied');
+    if (btn) btn.classList.add('dp-copy__btn--copied');
     if (_manageCopyTimer) clearTimeout(_manageCopyTimer);
     _manageCopyTimer = setTimeout(resetSubManageCopyBtn, 1600);
 }
@@ -200,10 +200,10 @@ async function toggleSubSuspend() {
             const row = document.getElementById('sub-row-' + _manageSub.id);
             if (row) {
                 row.dataset.status = newStatus;
-                const pill = row.querySelector('.sub-status-pill');
+                const pill = row.querySelector('.dp-subscription__status-pill');
                 if (pill) {
-                    pill.className = 'sub-status-pill ' + (newStatus === 'ACTIVE' ? 'sub-status-pill--active' : 'sub-status-pill--inactive');
-                    pill.innerHTML = '<span class="sub-status-dot"></span>' + newStatus;
+                    pill.className = 'dp-subscription__status-pill ' + (newStatus === 'ACTIVE' ? 'dp-subscription__status-pill--active' : 'dp-subscription__status-pill--inactive');
+                    pill.innerHTML = '<span class="dp-subscription__status-dot"></span>' + newStatus;
                 }
             }
         } else {
@@ -250,7 +250,7 @@ async function executeSubRowDelete(subscriptionId) {
             if (row) row.remove();
             const tbody = document.querySelector('#subscriptions-table tbody');
             if (tbody && tbody.children.length === 0) {
-                document.getElementById('subscriptions-table')?.closest('.sub-scroll')?.remove();
+                document.getElementById('subscriptions-table')?.closest('.dp-subscription__scroll')?.remove();
                 const noSubs = document.getElementById('no-subscriptions');
                 if (noSubs) noSubs.style.display = 'block';
             }

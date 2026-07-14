@@ -27,44 +27,44 @@
 {{/pageScripts}}
 
 <!-- Server-side data for JS -->
-<div id="cfg-page-config" data-org-id="{{orgId}}" data-base-url="{{baseUrl}}" hidden></div>
-<script type="application/json" id="cfg-org-apis-data">{{{ json orgAllAPIs }}}</script>
-<script type="application/json" id="cfg-plans-data">{{{ json orgPlans }}}</script>
-<script type="application/json" id="cfg-webhooks-data">{{{ json webhookSubscribers }}}</script>
-<script type="application/json" id="cfg-keymanagers-data">{{{ json keyManagers }}}</script>
-<script type="application/json" id="cfg-views-data">{{{ json views }}}</script>
-<script type="application/json" id="cfg-orglabels-data">{{{ json orgLabels }}}</script>
+<div id="dp-settings__page-config" data-org-id="{{orgId}}" data-base-url="{{baseUrl}}" hidden></div>
+<script type="application/json" id="dp-settings__org-apis-data">{{{ json orgAllAPIs }}}</script>
+<script type="application/json" id="dp-settings__plans-data">{{{ json orgPlans }}}</script>
+<script type="application/json" id="dp-settings__webhooks-data">{{{ json webhookSubscribers }}}</script>
+<script type="application/json" id="dp-settings__keymanagers-data">{{{ json keyManagers }}}</script>
+<script type="application/json" id="dp-settings__views-data">{{{ json views }}}</script>
+<script type="application/json" id="dp-settings__orglabels-data">{{{ json orgLabels }}}</script>
 
-<div class="cfg-page">
+<div class="dp-settings__page">
 
-  <a href="{{baseUrl}}/" class="cfg-back-link">
+  <a href="{{baseUrl}}/" class="dp-settings__back-link">
     <i class="bi bi-arrow-left"></i> Home
   </a>
-  <h1 class="cfg-heading">Settings</h1>
+  <h1 class="dp-settings__heading">Settings</h1>
 
-  <div class="cfg-layout">
+  <div class="dp-settings__layout">
 
     {{> cfg-nav}}
 
     <!-- ── Content panes ── -->
-    <div class="cfg-content">
+    <div class="dp-settings__content">
 
       <!-- ══ LLM Instructions ══ -->
-      <div class="cfg-panel" id="cfg-llm">
+      <div class="dp-settings__panel" id="dp-settings__llm">
         <div id="llmsTabContent">
           {{> llms-config}}
         </div>
       </div>
 
       <!-- ══ API Workflows ══ -->
-      <div class="cfg-panel" id="cfg-workflows">
+      <div class="dp-settings__panel" id="dp-settings__workflows">
         <div id="workflowsTabContent">
           {{> api-workflows}}
         </div>
       </div>
 
       <!-- ══ Theming ══ -->
-      <div class="cfg-panel" id="cfg-theming">
+      <div class="dp-settings__panel" id="dp-settings__theming">
         <div id="themingTabContent">
           {{> theming}}
         </div>
@@ -86,9 +86,9 @@
 
       {{> cfg-labels-panel}}
 
-    </div><!-- /.cfg-content -->
-  </div><!-- /.cfg-layout -->
-</div><!-- /.cfg-page -->
+    </div><!-- /.dp-settings__content -->
+  </div><!-- /.dp-settings__layout -->
+</div><!-- /.dp-settings__page -->
 
 {{> cfg-modals}}
 

@@ -41,7 +41,7 @@
 
   function init() {
     if (typeof window.particlesJS === 'undefined') return;
-    var el = document.getElementById('hero-particles');
+    var el = document.getElementById('dp-hero__particles');
     if (!el) return;
 
     var dotColors = [
@@ -51,7 +51,7 @@
     ];
     var linkColor = resolveHex('--primary-light', '#9fb6cc');
 
-    window.particlesJS('hero-particles', {
+    window.particlesJS('dp-hero__particles', {
       particles: {
         number: { value: 64, density: { enable: true, value_area: 900 } },
         color: { value: dotColors },

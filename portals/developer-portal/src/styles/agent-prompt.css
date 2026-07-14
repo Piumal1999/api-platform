@@ -1,4 +1,4 @@
-.btn-prompt {
+.dp-prompt__btn-prompt{
     background: linear-gradient(135deg, #6B4FE8, #E040D0);
     background-size: 200% 200%;
     color: var(--white);
@@ -17,37 +17,12 @@
     box-shadow: 0 2px 10px rgba(107, 79, 232, 0.35);
 }
 
-.btn-prompt:hover {
+.dp-prompt__btn-prompt:hover{
     box-shadow: 0 4px 16px rgba(107, 79, 232, 0.45);
 }
 
-@keyframes btn-prompt-shimmer {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .btn-prompt {
-        animation: none;
-        transition: none;
-        background-position: 0% 50%;
-    }
-}
-
-/* ── API detail banner: uniform 42px button heights ── */
-.api-details-btn .common-btn-primary,
-.api-details-btn .common-btn-outlined {
-    height: 42px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    border-radius: 9px;
-}
-
 /* Documentation icon button */
-.btn-icon-docs {
+.dp-prompt__btn-icon-docs{
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -64,7 +39,7 @@
     box-sizing: border-box;
 }
 
-.btn-icon-docs:hover {
+.dp-prompt__btn-icon-docs:hover{
     border-color: rgba(255, 255, 255, 0.4);
     transform: translateY(-2px) scale(1.05);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
@@ -72,11 +47,11 @@
     text-decoration: none;
 }
 
-.btn-icon-docs:active {
+.dp-prompt__btn-icon-docs:active{
     transform: translateY(0) scale(0.97);
 }
 
-.btn-icon-docs .btn-icon-tooltip {
+.dp-prompt__btn-icon-docs .dp-prompt__btn-icon-tooltip{
     position: absolute;
     bottom: calc(100% + 8px);
     left: 50%;
@@ -93,26 +68,11 @@
     z-index: 10;
 }
 
-.btn-icon-docs:hover .btn-icon-tooltip {
+.dp-prompt__btn-icon-docs:hover .dp-prompt__btn-icon-tooltip{
     opacity: 1;
 }
 
-/* Try with AI icon button */
-@keyframes btn-ripple-anim {
-    to { transform: scale(1); opacity: 0; }
-}
-
-@keyframes ai-glow-pulse {
-    0%, 100% { box-shadow: 0 0 3px 1px rgba(168, 85, 247, 0.15); }
-    50%       { box-shadow: 0 0 6px 2px rgba(236, 72, 153, 0.25); }
-}
-
-@keyframes btn-icon-ai-shimmer {
-    0%   { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
-
-.btn-icon-ai {
+.dp-prompt__btn-icon-ai{
     position: absolute;
     display: inline-flex;
     align-items: center;
@@ -132,7 +92,7 @@
     right: 70px;
 }
 
-.btn-icon-ai::before {
+.dp-prompt__btn-icon-ai::before{
     content: '';
     position: absolute;
     inset: 0;
@@ -144,18 +104,18 @@
     pointer-events: none;
 }
 
-.btn-icon-ai:hover {
+.dp-prompt__btn-icon-ai:hover{
     transform: translateY(-2px) scale(1.06);
     box-shadow: 0 4px 12px rgba(200,80,200,0.35);
     filter: brightness(1.1);
 }
 
-.btn-icon-ai:active {
+.dp-prompt__btn-icon-ai:active{
     transform: scale(0.95);
     box-shadow: 0 1px 4px rgba(124,58,237,0.2);
 }
 
-.btn-icon-ai .btn-icon-tooltip {
+.dp-prompt__btn-icon-ai .dp-prompt__btn-icon-tooltip{
     position: absolute;
     bottom: calc(100% + 8px);
     left: 50%;
@@ -172,46 +132,11 @@
     z-index: 10;
 }
 
-.btn-icon-ai:hover .btn-icon-tooltip {
+.dp-prompt__btn-icon-ai:hover .dp-prompt__btn-icon-tooltip{
     opacity: 1;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .btn-icon-ai {
-        animation: none;
-        transition: none;
-    }
-    .btn-icon-ai::before {
-        animation: none;
-    }
-    .btn-icon-ai:hover {
-        transform: none;
-        box-shadow: 0 2px 6px rgba(124,58,237,0.3);
-        filter: none;
-    }
-    .btn-icon-ai:active {
-        transform: none;
-        box-shadow: 0 2px 6px rgba(124,58,237,0.3);
-    }
-    .btn-icon-ai .btn-icon-tooltip {
-        transition: none;
-    }
-}
-
-.api-workflow-prompt-toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.625rem 1rem;
-    border-bottom: 1px solid var(--bs-gray-200);
-    background: var(--surface-sunken);
-}
-
-.api-workflow-prompt-pre-wrapper {
-    position: relative;
-}
-
-.prompt-pre-actions {
+.dp-prompt__pre-actions{
     position: absolute;
     top: 0.625rem;
     right: 0.625rem;
@@ -220,26 +145,13 @@
     z-index: 1;
 }
 
-.api-workflow-prompt-pre {
-    margin: 0;
-    padding: 1.25rem;
-    font-size: 0.8125rem;
-    line-height: 1.7;
-    white-space: pre-wrap;
-    word-break: break-word;
-    background: var(--surface);
-    color: var(--text);
-    border: none;
-    border-radius: 0;
-}
-
-.prompt-modal-toolbar {
+.dp-prompt__modal-toolbar{
     display: flex;
     align-items: center;
     gap: 0.4rem;
 }
 
-.prompt-tool-btn {
+.dp-prompt__tool-btn{
     background: none;
     border: 1px solid var(--bs-gray-300);
     border-radius: 0.375rem;
@@ -254,17 +166,17 @@
     transition: all 0.2s ease;
 }
 
-.prompt-tool-btn:hover {
+.dp-prompt__tool-btn:hover{
     border-color: var(--primary);
     color: var(--primary);
     background: var(--primary-surface);
 }
 
-.prompt-run-dropdown {
+.dp-prompt__run-dropdown{
     position: relative;
 }
 
-.btn-run-prompt {
+.dp-prompt__btn-run-prompt{
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -281,42 +193,93 @@
     transition: background 0.2s ease;
 }
 
-.btn-run-prompt:hover {
+.dp-prompt__btn-run-prompt:hover{
     background: #D97757;
 }
 
-.run-dropdown-menu {
-    display: none;
-    position: absolute;
-    top: calc(100% + 6px);
-    right: 0;
+/* ── API detail banner: uniform 42px button heights ── */
+.dp-api__details-btn .dp-common__btn-primary, .dp-api__details-btn .dp-common__btn-outlined{
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border-radius: 9px;
+}
+
+.dp-api__workflow-prompt-toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.625rem 1rem;
+    border-bottom: 1px solid var(--bs-gray-200);
+    background: var(--surface-sunken);
+}
+
+.dp-api__workflow-prompt-pre-wrapper{
+    position: relative;
+}
+
+.dp-api__workflow-prompt-pre{
+    margin: 0;
+    padding: 1.25rem;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
     background: var(--surface);
-    border: 1px solid var(--bs-gray-200);
-    border-radius: 0.5rem;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    min-width: 170px;
-    z-index: 100;
-    overflow: hidden;
-}
-
-.run-dropdown-menu.show {
-    display: block;
-}
-
-.run-option {
-    display: block;
-    width: 100%;
-    padding: 0.6rem 1rem;
-    text-align: left;
-    background: none;
-    border: none;
-    font-size: 0.875rem;
     color: var(--text);
-    cursor: pointer;
-    transition: background 0.15s ease;
+    border: none;
+    border-radius: 0;
 }
 
-.run-option:hover {
-    background: var(--primary-surface);
-    color: var(--primary);
+@keyframes btn-prompt-shimmer {
+    0%{ background-position: 0% 50%; }
+    50%{ background-position: 100% 50%; }
+    100%{ background-position: 0% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dp-prompt__btn-prompt{
+        animation: none;
+        transition: none;
+        background-position: 0% 50%;
+    }
+}
+
+/* Try with AI icon button */
+@keyframes btn-ripple-anim {
+    to{ transform: scale(1); opacity: 0; }
+}
+
+@keyframes ai-glow-pulse {
+    0%, 100%{ box-shadow: 0 0 3px 1px rgba(168, 85, 247, 0.15); }
+    50%{ box-shadow: 0 0 6px 2px rgba(236, 72, 153, 0.25); }
+}
+
+@keyframes btn-icon-ai-shimmer {
+    0%{ background-position: 200% 0; }
+    100%{ background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dp-prompt__btn-icon-ai{
+        animation: none;
+        transition: none;
+    }
+    .dp-prompt__btn-icon-ai::before{
+        animation: none;
+    }
+    .dp-prompt__btn-icon-ai:hover{
+        transform: none;
+        box-shadow: 0 2px 6px rgba(124,58,237,0.3);
+        filter: none;
+    }
+    .dp-prompt__btn-icon-ai:active{
+        transform: none;
+        box-shadow: 0 2px 6px rgba(124,58,237,0.3);
+    }
+    .dp-prompt__btn-icon-ai .dp-prompt__btn-icon-tooltip{
+        transition: none;
+    }
 }

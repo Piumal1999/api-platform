@@ -1,8 +1,8 @@
 /* Organization-select page only — dropdown, org rows, and contact hint.
-   Loaded alongside auth-shell.css (which provides the shared shell). auth-* prefix. */
+   Loaded alongside auth-shell.css (which provides the shared shell). dp-auth-org BEM block. */
 
 /* Dropdown */
-.auth-dropdown {
+.dp-auth-org__dropdown{
   position: absolute;
   top: calc(100% + 0.5rem);
   left: 0;
@@ -17,9 +17,9 @@
   display: none;
 }
 
-.auth-dropdown--open { display: block; }
+.dp-auth-org__dropdown--open{ display: block; }
 
-.auth-dropdown-label {
+.dp-auth-org__dropdown-label{
   padding: 0.5rem 0.75rem 0.375rem;
   font-size: 0.6875rem;
   font-weight: 600;
@@ -29,7 +29,7 @@
   line-height: 1;
 }
 
-.auth-dropdown-item {
+.dp-auth-org__dropdown-item{
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -39,9 +39,9 @@
   transition: background .12s;
 }
 
-.auth-dropdown-item:hover { background: var(--surface-sunken); }
+.dp-auth-org__dropdown-item:hover{ background: var(--surface-sunken); }
 
-.auth-org-avatar {
+.dp-auth-org__avatar{
   width: 2.125rem;
   height: 2.125rem;
   flex: none;
@@ -55,14 +55,14 @@
   line-height: 1;
 }
 
-.auth-org-meta {
+.dp-auth-org__meta{
   display: flex;
   flex-direction: column;
   gap: 0.1875rem;
   min-width: 0;
 }
 
-.auth-org-name {
+.dp-auth-org__name{
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.2;
@@ -72,7 +72,7 @@
   text-overflow: ellipsis;
 }
 
-.auth-org-domain {
+.dp-auth-org__domain{
   font-size: 0.75rem;
   font-weight: 400;
   line-height: 1;
@@ -80,7 +80,7 @@
 }
 
 /* Contact hint */
-.auth-contact-hint {
+.dp-auth-org__contact-hint{
   margin: 1.375rem 0 0;
   text-align: center;
   font-size: 0.8125rem;
@@ -88,10 +88,10 @@
   color: var(--text-subtle);
 }
 
-.auth-contact-link {
+.dp-auth-org__contact-link{
   color: var(--primary);
   text-decoration: none;
   font-weight: 500;
 }
 
-.auth-contact-link:hover { text-decoration: underline; }
+.dp-auth-org__contact-link:hover{ text-decoration: underline; }

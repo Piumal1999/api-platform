@@ -19,7 +19,7 @@
 
 (function () {
   function g(id) { return document.getElementById(id); }
-  var saveBtn = g('cfg-save-org-btn');
+  var saveBtn = g('dp-settings__save-org-btn');
   if (!saveBtn) return;
 
   var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

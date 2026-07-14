@@ -34,7 +34,7 @@
 
     /* ── App filter ────────────────────────────────────────────── */
 
-    const appFilter = document.getElementById('ak-app-filter');
+    const appFilter = document.getElementById('dp-api-key__app-filter');
     if (appFilter) {
         appFilter.addEventListener('change', function () {
             const url = new URL(window.location.href);
@@ -73,7 +73,7 @@
     }
 
     // Close any overlay when clicking on the backdrop
-    ['generateApiKeyModal', 'regenerateApiKeyModal', 'showApiKeySecretModal', 'ak-revoke-modal', 'ak-app-modal'].forEach(function (id) {
+    ['generateApiKeyModal', 'regenerateApiKeyModal', 'showApiKeySecretModal', 'dp-api-key__revoke-modal', 'dp-api-key__app-modal'].forEach(function (id) {
         const el = document.getElementById(id);
         if (!el) return;
         el.addEventListener('click', function (e) {
@@ -90,10 +90,10 @@
         _secretReloadOnClose = !!reloadOnClose;
         const codeEl = document.getElementById('api-key-secret-value');
         if (codeEl) codeEl.textContent = value || '';
-        const nameEl = document.getElementById('ak-secret-key-name');
+        const nameEl = document.getElementById('dp-api-key__secret-key-name');
         if (nameEl) nameEl.textContent = keyName || '';
         const copyBtn = document.getElementById('btn-copy-api-key-secret');
-        if (copyBtn) copyBtn.classList.remove('copy-btn--copied');
+        if (copyBtn) copyBtn.classList.remove('dp-copy__btn--copied');
         akShowModal('showApiKeySecretModal');
     }
 
@@ -105,9 +105,9 @@
         }
     }
 
-    const secretDoneBtn = document.getElementById('ak-secret-done');
+    const secretDoneBtn = document.getElementById('dp-api-key__secret-done');
     if (secretDoneBtn) secretDoneBtn.addEventListener('click', closeSecretModal);
-    const secretCloseBtn = document.getElementById('ak-secret-close');
+    const secretCloseBtn = document.getElementById('dp-api-key__secret-close');
     if (secretCloseBtn) secretCloseBtn.addEventListener('click', closeSecretModal);
 
     const copyBtn = document.getElementById('btn-copy-api-key-secret');
@@ -126,10 +126,10 @@
                     document.body.removeChild(ta);
                 }
             } catch (e) {}
-            copyBtn.classList.add('copy-btn--copied');
+            copyBtn.classList.add('dp-copy__btn--copied');
             if (_copyTimer) clearTimeout(_copyTimer);
             _copyTimer = setTimeout(function () {
-                copyBtn.classList.remove('copy-btn--copied');
+                copyBtn.classList.remove('dp-copy__btn--copied');
             }, 1600);
         });
     }
@@ -152,27 +152,27 @@
     const genOpenBtnEmpty = document.getElementById('btn-open-generate-api-key-empty');
     if (genOpenBtnEmpty) genOpenBtnEmpty.addEventListener('click', openGenModal);
 
-    const genCloseBtn = document.getElementById('ak-gen-close');
+    const genCloseBtn = document.getElementById('dp-api-key__gen-close');
     if (genCloseBtn) genCloseBtn.addEventListener('click', closeGenModal);
-    const genCancelBtn = document.getElementById('ak-gen-cancel');
+    const genCancelBtn = document.getElementById('dp-api-key__gen-cancel');
     if (genCancelBtn) genCancelBtn.addEventListener('click', closeGenModal);
 
     /* ── Regenerate modal ─────────────────────────────────────── */
 
     function closeRegenModal() { akHideModal('regenerateApiKeyModal'); }
 
-    const regenCloseBtn = document.getElementById('ak-regen-close');
+    const regenCloseBtn = document.getElementById('dp-api-key__regen-close');
     if (regenCloseBtn) regenCloseBtn.addEventListener('click', closeRegenModal);
-    const regenCancelBtn = document.getElementById('ak-regen-cancel');
+    const regenCancelBtn = document.getElementById('dp-api-key__regen-cancel');
     if (regenCancelBtn) regenCancelBtn.addEventListener('click', closeRegenModal);
 
     /* ── Associate app modal ──────────────────────────────────── */
 
-    function closeAppModal() { akHideModal('ak-app-modal'); }
+    function closeAppModal() { akHideModal('dp-api-key__app-modal'); }
 
-    const appCloseBtn = document.getElementById('ak-app-close');
+    const appCloseBtn = document.getElementById('dp-api-key__app-close');
     if (appCloseBtn) appCloseBtn.addEventListener('click', closeAppModal);
-    const appCancelBtn = document.getElementById('ak-app-cancel');
+    const appCancelBtn = document.getElementById('dp-api-key__app-cancel');
     if (appCancelBtn) appCancelBtn.addEventListener('click', closeAppModal);
 
     document.querySelectorAll('.btn-app-key').forEach(function (btn) {
@@ -180,9 +180,9 @@
             if (readOnly) return;
             const keyId = btn.getAttribute('data-key-id') || '';
             const currentAppId = btn.getAttribute('data-app-id') || '';
-            const keyIdInput = document.getElementById('ak-app-key-id');
+            const keyIdInput = document.getElementById('dp-api-key__app-key-id');
             if (keyIdInput) keyIdInput.value = keyId;
-            const select = document.getElementById('ak-app-select');
+            const select = document.getElementById('dp-api-key__app-select');
             if (select) {
                 select.innerHTML = '<option value="">— None —</option>';
                 applications.forEach(function (app) {
@@ -193,7 +193,7 @@
                     select.appendChild(opt);
                 });
             }
-            akShowModal('ak-app-modal');
+            akShowModal('dp-api-key__app-modal');
         });
     });
 
@@ -260,8 +260,8 @@
     if (submitAppBtn) {
         submitAppBtn.addEventListener('click', async function () {
             if (submitAppBtn.disabled || submitAppBtn.dataset.loading === 'true') return;
-            const keyId = document.getElementById('ak-app-key-id')?.value || '';
-            const select = document.getElementById('ak-app-select');
+            const keyId = document.getElementById('dp-api-key__app-key-id')?.value || '';
+            const select = document.getElementById('dp-api-key__app-select');
             const appId = select ? select.value : '';
             submitAppBtn.dataset.loading = 'true';
             submitAppBtn.disabled = true;
@@ -381,18 +381,18 @@
             const keyName = btn.getAttribute('data-key-name') || keyId;
             if (!keyId) return;
             _pendingRevokeKeyId = keyId;
-            const nameEl = document.getElementById('ak-revoke-name');
+            const nameEl = document.getElementById('dp-api-key__revoke-name');
             if (nameEl) nameEl.textContent = keyName;
-            const confirmBtn = document.getElementById('ak-revoke-confirm');
+            const confirmBtn = document.getElementById('dp-api-key__revoke-confirm');
             if (confirmBtn) { confirmBtn.disabled = false; confirmBtn.textContent = 'Revoke key'; }
-            akShowModal('ak-revoke-modal');
+            akShowModal('dp-api-key__revoke-modal');
         });
     });
 
-    const revokeCancelBtn = document.getElementById('ak-revoke-cancel');
-    if (revokeCancelBtn) revokeCancelBtn.addEventListener('click', function () { akHideModal('ak-revoke-modal'); });
+    const revokeCancelBtn = document.getElementById('dp-api-key__revoke-cancel');
+    if (revokeCancelBtn) revokeCancelBtn.addEventListener('click', function () { akHideModal('dp-api-key__revoke-modal'); });
 
-    const revokeConfirmBtn = document.getElementById('ak-revoke-confirm');
+    const revokeConfirmBtn = document.getElementById('dp-api-key__revoke-confirm');
     if (revokeConfirmBtn) {
         revokeConfirmBtn.addEventListener('click', async function () {
             if (!_pendingRevokeKeyId) return;

@@ -39,8 +39,8 @@
     {{> api-detail-banner }}
 </div>
 
-<div class="aov-body">
-  <div class="aov-body-main">
+<div class="dp-api-overview__body">
+  <div class="dp-api-overview__body-main">
     {{#if loadDefault}}
     {{> api-default}}
     {{else}}
@@ -48,7 +48,7 @@
     {{/if}}
   </div>
   {{#if subscriptionPlans.length}}
-  <div class="aov-body-sidebar">
+  <div class="dp-api-overview__body-sidebar">
     {{> api-subscription-plans}}
   </div>
   {{/if}}

@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
         radio.addEventListener('change', () => {
             syncAgentPromptTab(radio.value === 'HIDDEN' && radio.checked);
             if (radio.value === 'VISIBLE' && radio.checked) {
-                document.querySelectorAll('.api-workflow-api-checkbox:checked').forEach(cb => {
+                document.querySelectorAll('.dp-api__workflow-api-checkbox:checked').forEach(cb => {
                     if (cb.dataset.agentVisibility !== 'VISIBLE') cb.checked = false;
                 });
             }
@@ -144,21 +144,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // List view action buttons
-    document.querySelectorAll('.api-workflow-view-prompt-btn').forEach(btn => {
+    document.querySelectorAll('.dp-api__workflow-view-prompt-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             openPromptModal(btn.dataset.apiWorkflowId);
         });
     });
 
-    document.querySelectorAll('.api-workflow-edit-btn').forEach(btn => {
+    document.querySelectorAll('.dp-api__workflow-edit-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             openEditApiWorkflow(btn.dataset.apiWorkflowId);
         });
     });
 
-    document.querySelectorAll('.api-workflow-delete-btn').forEach(btn => {
+    document.querySelectorAll('.dp-api__workflow-delete-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             openDeleteApiWorkflowModal(currentOrgId, currentViewName, btn.dataset.apiWorkflowId);
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // ─────────────────────────────────────────────
 
 function initWorkflowPathChooser() {
-    document.querySelectorAll('.af-path-card').forEach(card => {
+    document.querySelectorAll('.dp-workflow__path-card').forEach(card => {
         card.addEventListener('click', () => switchWorkflowPath(card.dataset.path));
         card.addEventListener('keydown', e => {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); switchWorkflowPath(card.dataset.path); }
@@ -209,9 +209,9 @@ function initWorkflowPathChooser() {
 function switchWorkflowPath(path) {
     currentWorkflowPath = path;
 
-    document.querySelectorAll('.af-path-card').forEach(card => {
+    document.querySelectorAll('.dp-workflow__path-card').forEach(card => {
         const isActive = card.dataset.path === path;
-        card.classList.toggle('af-path-card--active', isActive);
+        card.classList.toggle('dp-workflow__path-card--active', isActive);
         card.setAttribute('aria-pressed', String(isActive));
     });
 
@@ -221,7 +221,7 @@ function switchWorkflowPath(path) {
     createContent?.classList.toggle('d-none', path !== 'create');
 
     // Actions (Generate with Claude, VS Code, Copy Prompt) are only relevant in the create path.
-    document.querySelector('.af-rp-actions')?.classList.toggle('d-none', path === 'upload');
+    document.querySelector('.dp-workflow__rp-actions')?.classList.toggle('d-none', path === 'upload');
 
     // In create path: honour the format toggle (createPathFormat owns currentContentType).
     // In upload path: show whichever editor matches the uploaded file type (or hide both).
@@ -240,7 +240,7 @@ function switchWorkflowPath(path) {
 // ─────────────────────────────────────────────
 
 function initCreateFormatToggle() {
-    document.querySelectorAll('.af-create-format-btn').forEach(btn => {
+    document.querySelectorAll('.dp-workflow__create-format-btn').forEach(btn => {
         btn.addEventListener('click', () => switchCreateFormat(btn.dataset.format));
     });
 }
@@ -250,8 +250,8 @@ function switchCreateFormat(format) {
     currentContentType = format === 'markdown' ? 'MD' : 'ARAZZO';
 
     // Update toggle button active state
-    document.querySelectorAll('.af-create-format-btn').forEach(btn => {
-        btn.classList.toggle('af-create-format-btn--active', btn.dataset.format === format);
+    document.querySelectorAll('.dp-workflow__create-format-btn').forEach(btn => {
+        btn.classList.toggle('dp-workflow__create-format-btn--active', btn.dataset.format === format);
     });
 
     // Show/hide the right editor pane
@@ -295,12 +295,12 @@ function showBringBackFeedback(msg, type) {
     const el = document.getElementById('bringBackFeedback');
     if (!el) return;
     el.textContent = msg;
-    el.className = 'af-bring-back-feedback' + (type ? ` af-bring-back-feedback--${type}` : '');
+    el.className = 'dp-workflow__bring-back-feedback' + (type ? ` dp-workflow__bring-back-feedback--${type}` : '');
     if (type === 'success') {
         setTimeout(() => {
             if (el.textContent === msg) {
                 el.textContent = '';
-                el.className = 'af-bring-back-feedback';
+                el.className = 'dp-workflow__bring-back-feedback';
             }
         }, 3000);
     }
@@ -344,7 +344,7 @@ function handleBringBackFile(file) {
         if (isMarkdown) {
             const mdField = document.getElementById('markdownContent');
             if (mdField) mdField.value = content;
-            const filenameEl = document.querySelector('#markdownContentWrapper .af-editor-filename');
+            const filenameEl = document.querySelector('#markdownContentWrapper .dp-workflow__editor-filename');
             if (filenameEl) filenameEl.textContent = file.name;
             const lineCount = content.split('\n').length;
             const mdWordCount = document.getElementById('mdWordCount');
@@ -358,7 +358,7 @@ function handleBringBackFile(file) {
                 const field = document.getElementById('apiWorkflowDefinition');
                 if (field) field.value = content;
             }
-            const filenameEl = document.querySelector('#apiWorkflowDefinitionWrapper .af-editor-filename');
+            const filenameEl = document.querySelector('#apiWorkflowDefinitionWrapper .dp-workflow__editor-filename');
             if (filenameEl) filenameEl.textContent = file.name;
             updateArazzoEditorUI(content);
         }
@@ -392,16 +392,16 @@ function initUploadZone() {
     // Drag events
     dropZone.addEventListener('dragover', e => {
         e.preventDefault();
-        dropZone.classList.add('af-upload-zone--dragover');
+        dropZone.classList.add('dp-workflow__upload-zone--dragover');
     });
     dropZone.addEventListener('dragleave', e => {
         if (!dropZone.contains(e.relatedTarget)) {
-            dropZone.classList.remove('af-upload-zone--dragover');
+            dropZone.classList.remove('dp-workflow__upload-zone--dragover');
         }
     });
     dropZone.addEventListener('drop', e => {
         e.preventDefault();
-        dropZone.classList.remove('af-upload-zone--dragover');
+        dropZone.classList.remove('dp-workflow__upload-zone--dragover');
         const file = e.dataTransfer?.files[0];
         if (file) processArazzoFile(file);
     });
@@ -423,7 +423,7 @@ function initUploadZone() {
         if (!body || !toggle) return;
         const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
         toggle.setAttribute('aria-expanded', String(!isExpanded));
-        body.classList.toggle('af-sd-collapsed', isExpanded);
+        body.classList.toggle('dp-workflow__sd-collapsed', isExpanded);
     });
 }
 
@@ -520,10 +520,10 @@ function setUploadTypeBadge(type) {
     if (!badge) return;
     if (type === 'arazzo') {
         badge.textContent = 'Arazzo';
-        badge.className = 'af-upload-type-badge af-upload-type-badge--arazzo';
+        badge.className = 'dp-workflow__upload-type-badge dp-workflow__upload-type-badge--arazzo';
     } else {
         badge.textContent = 'Markdown';
-        badge.className = 'af-upload-type-badge af-upload-type-badge--md';
+        badge.className = 'dp-workflow__upload-type-badge dp-workflow__upload-type-badge--md';
     }
 }
 
@@ -589,12 +589,12 @@ async function validateAndRenderSourceDescriptions(specContent) {
     if (!hintEl || !itemsEl) return;
 
     hintEl.textContent = '';
-    itemsEl.innerHTML = '<div class="af-sd-item af-sd-item--loading"><span class="af-sd-checking-spinner"></span><span class="text-muted small">Validating source descriptions…</span></div>';
+    itemsEl.innerHTML = '<div class="dp-workflow__sd-item dp-workflow__sd-item--loading"><span class="dp-workflow__sd-checking-spinner"></span><span class="text-muted small">Validating source descriptions…</span></div>';
 
     // Always expand while checking so the loading state is visible.
     const toggleEl = document.getElementById('sdValidationToggle');
     if (toggleEl) toggleEl.setAttribute('aria-expanded', 'true');
-    itemsEl.classList.remove('af-sd-collapsed');
+    itemsEl.classList.remove('dp-workflow__sd-collapsed');
 
     let spec = null;
     try {
@@ -606,13 +606,13 @@ async function validateAndRenderSourceDescriptions(specContent) {
     }
 
     if (!spec) {
-        itemsEl.innerHTML = '<div class="af-sd-item"><span class="af-sd-status af-sd-status--invalid"><i class="bi bi-x-circle-fill me-1"></i>Parse error</span><span class="text-muted small ms-2">Could not parse file as Arazzo YAML/JSON</span></div>';
+        itemsEl.innerHTML = '<div class="dp-workflow__sd-item"><span class="dp-workflow__sd-status dp-workflow__sd-status--invalid"><i class="bi bi-x-circle-fill me-1"></i>Parse error</span><span class="text-muted small ms-2">Could not parse file as Arazzo YAML/JSON</span></div>';
         return;
     }
 
     const sourceDeps = spec.sourceDescriptions;
     if (!Array.isArray(sourceDeps) || sourceDeps.length === 0) {
-        itemsEl.innerHTML = '<div class="af-sd-item"><span class="text-muted small fst-italic">No source descriptions found in this spec</span></div>';
+        itemsEl.innerHTML = '<div class="dp-workflow__sd-item"><span class="text-muted small fst-italic">No source descriptions found in this spec</span></div>';
         hintEl.textContent = '(none)';
         return;
     }
@@ -634,7 +634,7 @@ async function validateAndRenderSourceDescriptions(specContent) {
     const allValid = total > 0 && validCount === total;
     const toggle = document.getElementById('sdValidationToggle');
     if (toggle) toggle.setAttribute('aria-expanded', String(!allValid));
-    itemsEl.classList.toggle('af-sd-collapsed', allValid);
+    itemsEl.classList.toggle('dp-workflow__sd-collapsed', allValid);
 }
 
 async function checkSourceDescriptionUrl(sd) {
@@ -679,21 +679,21 @@ function isValidApiSpec(text) {
 
 function renderSdItem(name, url, type, status, statusCode) {
     const statusMap = {
-        checking:     { cls: 'af-sd-status--checking',     icon: 'bi-hourglass-split',         label: 'Checking…' },
-        valid:        { cls: 'af-sd-status--valid',         icon: 'bi-check-circle-fill',       label: statusCode ? `${statusCode} · Valid spec` : 'Valid spec' },
-        invalid:      { cls: 'af-sd-status--invalid',       icon: 'bi-x-circle-fill',           label: statusCode ? `${statusCode} Error` : 'Error' },
-        'not-a-spec': { cls: 'af-sd-status--not-a-spec',    icon: 'bi-file-earmark-x',          label: 'Not an API spec' },
-        unreachable:  { cls: 'af-sd-status--unreachable',   icon: 'bi-wifi-off',                label: 'Unreachable' },
-        missing:      { cls: 'af-sd-status--invalid',       icon: 'bi-exclamation-circle-fill', label: 'No URL' },
+        checking:     { cls: 'dp-workflow__sd-status--checking',     icon: 'bi-hourglass-split',         label: 'Checking…' },
+        valid:        { cls: 'dp-workflow__sd-status--valid',         icon: 'bi-check-circle-fill',       label: statusCode ? `${statusCode} · Valid spec` : 'Valid spec' },
+        invalid:      { cls: 'dp-workflow__sd-status--invalid',       icon: 'bi-x-circle-fill',           label: statusCode ? `${statusCode} Error` : 'Error' },
+        'not-a-spec': { cls: 'dp-workflow__sd-status--not-a-spec',    icon: 'bi-file-earmark-x',          label: 'Not an API spec' },
+        unreachable:  { cls: 'dp-workflow__sd-status--unreachable',   icon: 'bi-wifi-off',                label: 'Unreachable' },
+        missing:      { cls: 'dp-workflow__sd-status--invalid',       icon: 'bi-exclamation-circle-fill', label: 'No URL' },
     };
     const s = statusMap[status] || statusMap.checking;
     const typeBadge = type ? `<span class="api-workflow-type-pill ms-1">${sanitizeInput(type)}</span>` : '';
-    const urlText = url ? `<span class="af-sd-item-url">${sanitizeInput(url)}</span>` : '<span class="af-sd-item-url text-muted">No URL defined</span>';
+    const urlText = url ? `<span class="dp-workflow__sd-item-url">${sanitizeInput(url)}</span>` : '<span class="dp-workflow__sd-item-url text-muted">No URL defined</span>';
     return `
-        <div class="af-sd-item">
-            <span class="af-sd-status ${s.cls}"><i class="bi ${s.icon} me-1"></i>${s.label}</span>
-            <div class="af-sd-item-meta">
-                <span class="af-sd-item-name">${sanitizeInput(name)}${typeBadge}</span>
+        <div class="dp-workflow__sd-item">
+            <span class="dp-workflow__sd-status ${s.cls}"><i class="bi ${s.icon} me-1"></i>${s.label}</span>
+            <div class="dp-workflow__sd-item-meta">
+                <span class="dp-workflow__sd-item-name">${sanitizeInput(name)}${typeBadge}</span>
                 ${urlText}
             </div>
         </div>`;
@@ -710,7 +710,7 @@ function initCreatePathButtons() {
 }
 
 function updateGenerateButtonsState() {
-    const count = document.querySelectorAll('.api-workflow-api-checkbox:checked').length;
+    const count = document.querySelectorAll('.dp-api__workflow-api-checkbox:checked').length;
     const hasAPIs = count > 0;
     const tip = document.getElementById('specActionsTip');
 
@@ -880,7 +880,7 @@ function openInVSCode() {
 function resetApiWorkflowForm() {
     document.getElementById('editingApiWorkflowId').value = '';
     const nameField = document.getElementById('apiWorkflowName');
-    if (nameField) { nameField.value = ''; nameField.readOnly = false; nameField.classList.remove('af-field-readonly'); }
+    if (nameField) { nameField.value = ''; nameField.readOnly = false; nameField.classList.remove('dp-workflow__field-readonly'); }
 
     document.getElementById('apiWorkflowDescription').value = '';
     document.getElementById('apiWorkflowDefinition').value = '';
@@ -897,7 +897,7 @@ function resetApiWorkflowForm() {
 
     showSelectedOnly = false;
     activeApiFilters.clear();
-    document.querySelectorAll('.af-api-filter-check').forEach(cb => { cb.checked = false; });
+    document.querySelectorAll('.dp-workflow__api-filter-check').forEach(cb => { cb.checked = false; });
     updateApiFilterBadge();
     setPickerSelection([]);
     setSaveButtonMode('create');
@@ -905,7 +905,7 @@ function resetApiWorkflowForm() {
     expandAllSections();
 
     // Re-enable format toggle for new flows.
-    document.querySelectorAll('.af-create-format-btn').forEach(btn => {
+    document.querySelectorAll('.dp-workflow__create-format-btn').forEach(btn => {
         btn.disabled = false;
         btn.title = '';
     });
@@ -923,7 +923,7 @@ function resetApiWorkflowForm() {
 function syncAgentPromptTab(isHidden) {
     const hiddenIcon = document.getElementById('tabVisualHiddenIcon');
     const banner = document.getElementById('agentHiddenBanner');
-    const toolbar = document.querySelector('.af-prompt-action-toolbar');
+    const toolbar = document.querySelector('.dp-workflow__prompt-action-toolbar');
     const promptField = document.getElementById('agentPromptField');
     const ready3 = document.getElementById('afReady3');
     const agentHiddenNotice = document.getElementById('afAgentHiddenNotice');
@@ -931,8 +931,8 @@ function syncAgentPromptTab(isHidden) {
     if (isHidden) {
         hiddenIcon?.classList.remove('d-none');
         if (banner) {
-            banner.classList.remove('d-none', 'af-banner-fade-out');
-            banner.classList.add('af-banner-fade-in');
+            banner.classList.remove('d-none', 'dp-workflow__banner-fade-out');
+            banner.classList.add('dp-workflow__banner-fade-in');
         }
         toolbar?.classList.add('d-none');
         promptField?.classList.add('d-none');
@@ -941,11 +941,11 @@ function syncAgentPromptTab(isHidden) {
     } else {
         hiddenIcon?.classList.add('d-none');
         if (banner && !banner.classList.contains('d-none')) {
-            banner.classList.remove('af-banner-fade-in');
-            banner.classList.add('af-banner-fade-out');
+            banner.classList.remove('dp-workflow__banner-fade-in');
+            banner.classList.add('dp-workflow__banner-fade-out');
             setTimeout(() => {
                 banner.classList.add('d-none');
-                banner.classList.remove('af-banner-fade-out');
+                banner.classList.remove('dp-workflow__banner-fade-out');
             }, 150);
         }
         toolbar?.classList.remove('d-none');
@@ -956,7 +956,7 @@ function syncAgentPromptTab(isHidden) {
 }
 
 function getSelectedAPIs() {
-    return [...document.querySelectorAll('.api-workflow-api-checkbox:checked')].map(cb => ({
+    return [...document.querySelectorAll('.dp-api__workflow-api-checkbox:checked')].map(cb => ({
         API_ID: cb.value,        apiId: cb.value,
         API_NAME: cb.dataset.apiName,       apiName: cb.dataset.apiName,
         API_HANDLE: cb.dataset.apiHandle,   apiHandle: cb.dataset.apiHandle,
@@ -978,10 +978,10 @@ function updateApiFilterBadge() {
     if (count > 0) {
         badge.textContent = count;
         badge.classList.remove('d-none');
-        btn?.classList.add('af-api-filter-toggle--active');
+        btn?.classList.add('dp-workflow__api-filter-toggle--active');
     } else {
         badge.classList.add('d-none');
-        btn?.classList.remove('af-api-filter-toggle--active');
+        btn?.classList.remove('dp-workflow__api-filter-toggle--active');
     }
 }
 
@@ -996,19 +996,19 @@ function initApiCardPicker() {
     if (dropdownBtn && filterMenu) {
         dropdownBtn.addEventListener('click', e => {
             e.stopPropagation();
-            const open = filterMenu.classList.toggle('af-api-filter-menu--open');
+            const open = filterMenu.classList.toggle('dp-workflow__api-filter-menu--open');
             dropdownBtn.setAttribute('aria-expanded', open);
         });
         document.addEventListener('click', e => {
             if (!filterMenu.contains(e.target) && e.target !== dropdownBtn) {
-                filterMenu.classList.remove('af-api-filter-menu--open');
+                filterMenu.classList.remove('dp-workflow__api-filter-menu--open');
                 dropdownBtn.setAttribute('aria-expanded', false);
             }
         });
     }
 
     // Filter checkboxes
-    document.querySelectorAll('.af-api-filter-check').forEach(cb => {
+    document.querySelectorAll('.dp-workflow__api-filter-check').forEach(cb => {
         cb.addEventListener('change', () => {
             const key = cb.dataset.afFilter;
             if (key === 'selectedOnly') {
@@ -1030,7 +1030,7 @@ function renderApiCards(query) {
     const grid = document.getElementById('apiCardGrid');
     if (!grid) return;
 
-    const checkboxes = [...document.querySelectorAll('.api-workflow-api-checkbox')];
+    const checkboxes = [...document.querySelectorAll('.dp-api__workflow-api-checkbox')];
     const q = query.toLowerCase();
     const FILTER_FNS = {
         aiReady:      cb => cb.dataset.agentVisibility === 'VISIBLE',
@@ -1062,29 +1062,29 @@ function renderApiCards(query) {
         const isAgentReady = cb.dataset.agentVisibility === 'VISIBLE';
         const isDisabled = workflowVisibleToAgents && !isAgentReady;
         const agentBadge = isAgentReady
-            ? `<span class="af-api-agent-badge af-api-agent-badge--ready" title="AI ready"><i class="bi bi-robot"></i></span>`
-            : `<span class="af-api-agent-badge af-api-agent-badge--not-ready" title="Not AI ready"><i class="bi bi-robot"></i></span>`;
+            ? `<span class="dp-workflow__api-agent-badge dp-workflow__api-agent-badge--ready" title="AI ready"><i class="bi bi-robot"></i></span>`
+            : `<span class="dp-workflow__api-agent-badge dp-workflow__api-agent-badge--not-ready" title="Not AI ready"><i class="bi bi-robot"></i></span>`;
         const disabledTooltip = isDisabled
-            ? `<span class="af-api-card-tooltip">This API is not AI ready and cannot be selected for an AI-visible workflow</span>`
+            ? `<span class="dp-workflow__api-card-tooltip">This API is not AI ready and cannot be selected for an AI-visible workflow</span>`
             : '';
         const docsUrl = `/${orgHandle}/views/${viewName}/api/${cb.dataset.apiHandle}.md`;
         const extLink = isAgentReady
-            ? `<a class="af-api-card-ext-link" href="${docsUrl}" target="_blank" rel="noopener"
+            ? `<a class="dp-workflow__api-card-ext-link" href="${docsUrl}" target="_blank" rel="noopener"
                   title="Open API docs" aria-label="Open ${sanitizeInput(cb.dataset.apiName)} docs in new tab">
                    <i class="bi bi-box-arrow-up-right"></i>
                </a>`
             : '';
         return `
-            <div class="af-api-card${isSelected ? ' af-api-card--selected' : ''}${isDisabled ? ' af-api-card--disabled' : ''}"
+            <div class="dp-workflow__api-card${isSelected ? ' dp-workflow__api-card--selected' : ''}${isDisabled ? ' dp-workflow__api-card--disabled' : ''}"
                  data-api-id="${cb.value}" role="button" tabindex="${isDisabled ? -1 : 0}"
                  aria-pressed="${isSelected}" aria-disabled="${isDisabled}">
                 ${disabledTooltip}
-                <div class="af-api-card-check">
+                <div class="dp-workflow__api-card-check">
                     <i class="bi ${isSelected ? 'bi-check-circle-fill' : 'bi-circle'}"></i>
                 </div>
-                <div class="af-api-card-body">
+                <div class="dp-workflow__api-card-body">
                     <div class="d-flex align-items-center gap-2 mb-1">
-                        <span class="fw-semibold small af-api-card-name" title="${sanitizeInput(cb.dataset.apiName)}">${sanitizeInput(cb.dataset.apiName)}</span>
+                        <span class="fw-semibold small dp-workflow__api-card-name" title="${sanitizeInput(cb.dataset.apiName)}">${sanitizeInput(cb.dataset.apiName)}</span>
                         <span class="api-workflow-type-pill flex-shrink-0">${sanitizeInput(cb.dataset.apiType || '')}</span>
                         ${agentBadge}
                     </div>
@@ -1094,10 +1094,10 @@ function renderApiCards(query) {
         `;
     }).join('');
 
-    grid.querySelectorAll('.af-api-card').forEach(card => {
+    grid.querySelectorAll('.dp-workflow__api-card').forEach(card => {
         function toggle() {
-            const cb = document.querySelector(`.api-workflow-api-checkbox[value="${card.dataset.apiId}"]`);
-            if (!cb || card.classList.contains('af-api-card--disabled')) return;
+            const cb = document.querySelector(`.dp-api__workflow-api-checkbox[value="${card.dataset.apiId}"]`);
+            if (!cb || card.classList.contains('dp-workflow__api-card--disabled')) return;
             cb.checked = !cb.checked;
             renderApiCards(document.getElementById('apiCardSearch')?.value.trim() || '');
             updatePromptFromForm();
@@ -1108,7 +1108,7 @@ function renderApiCards(query) {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
         });
         // Prevent the ext-link click from toggling selection.
-        card.querySelector('.af-api-card-ext-link')?.addEventListener('click', e => e.stopPropagation());
+        card.querySelector('.dp-workflow__api-card-ext-link')?.addEventListener('click', e => e.stopPropagation());
     });
 
     updateApiSelectedCount();
@@ -1121,7 +1121,7 @@ function updateApiSelectedCount() {
 }
 
 function setPickerSelection(apiIds) {
-    document.querySelectorAll('.api-workflow-api-checkbox').forEach(cb => {
+    document.querySelectorAll('.dp-api__workflow-api-checkbox').forEach(cb => {
         cb.checked = apiIds.includes(cb.value);
     });
     renderApiCards(document.getElementById('apiCardSearch')?.value.trim() || '');
@@ -1237,11 +1237,11 @@ function setSaveButtonMode(mode, currentStatus) {
         mainBtn.innerHTML = '<i class="bi bi-check2 me-1"></i> Update Flow';
         if (badge && currentStatus) {
             badge.textContent = currentStatus;
-            badge.className = `api-workflow-status-badge api-workflow-status-${currentStatus.toLowerCase()}`;
+            badge.className = `dp-api__workflow-status-badge dp-api__workflow-status-${currentStatus.toLowerCase()}`;
         }
     } else {
         mainBtn.innerHTML = '<i class="bi bi-send me-1"></i> Publish Flow';
-        if (badge) badge.className = 'api-workflow-status-badge d-none';
+        if (badge) badge.className = 'dp-api__workflow-status-badge d-none';
     }
 }
 
@@ -1276,11 +1276,11 @@ async function saveApiWorkflow(orgId, viewName, status) {
             const host = document.getElementById('arazoEditorHost');
             const feedback = document.getElementById('apiWorkflowDefinitionInvalid');
             if (!val) {
-                host?.classList.add('af-cm-invalid');
+                host?.classList.add('dp-workflow__cm-invalid');
                 if (feedback) feedback.style.display = 'block';
                 valid = false;
             } else {
-                host?.classList.remove('af-cm-invalid');
+                host?.classList.remove('dp-workflow__cm-invalid');
                 if (feedback) feedback.style.display = 'none';
             }
         } else {
@@ -1387,7 +1387,7 @@ async function deleteApiWorkflow(orgId, viewName, apiWorkflowId) {
 // ─────────────────────────────────────────────
 
 function inferApiIdsFromContent(data) {
-    const checkboxes = [...document.querySelectorAll('.api-workflow-api-checkbox')];
+    const checkboxes = [...document.querySelectorAll('.dp-api__workflow-api-checkbox')];
     if (!checkboxes.length) return [];
     const contentType = data.contentType || 'ARAZZO';
     if (contentType === 'ARAZZO' && data.apiWorkflowDefinition) {
@@ -1442,7 +1442,7 @@ function openEditApiWorkflow(apiWorkflowId) {
     if (titleEl) titleEl.textContent = 'Edit API Workflow';
     document.getElementById('editingApiWorkflowId').value = apiWorkflowId;
     const nameField = document.getElementById('apiWorkflowName');
-    if (nameField) { nameField.value = data.displayName || ''; nameField.readOnly = true; nameField.classList.add('af-field-readonly'); }
+    if (nameField) { nameField.value = data.displayName || ''; nameField.readOnly = true; nameField.classList.add('dp-workflow__field-readonly'); }
 
     document.getElementById('apiWorkflowDescription').value = data.description || '';
 
@@ -1475,7 +1475,7 @@ function openEditApiWorkflow(apiWorkflowId) {
     switchCreateFormat(createPathFormat);
 
     // Disable format toggle in edit mode — format cannot be changed after creation.
-    document.querySelectorAll('.af-create-format-btn').forEach(btn => {
+    document.querySelectorAll('.dp-workflow__create-format-btn').forEach(btn => {
         btn.disabled = true;
         btn.title = 'Format cannot be changed when editing';
     });
@@ -1769,13 +1769,13 @@ function updateEditorFooter(format) {
 function initSectionCollapse() {
     document.querySelectorAll('[data-af-collapse]').forEach(btn => {
         btn.addEventListener('click', () => {
-            const section = btn.closest('.af-section');
-            const body = section?.querySelector('.af-section-body');
-            const summary = section?.querySelector('.af-section-summary');
+            const section = btn.closest('.dp-workflow__section');
+            const body = section?.querySelector('.dp-workflow__section-body');
+            const summary = section?.querySelector('.dp-workflow__section-summary');
             const icon = btn.querySelector('i');
             if (!body) return;
-            const isCollapsed = body.classList.contains('af-section-body--collapsed');
-            body.classList.toggle('af-section-body--collapsed', !isCollapsed);
+            const isCollapsed = body.classList.contains('dp-workflow__section-body--collapsed');
+            body.classList.toggle('dp-workflow__section-body--collapsed', !isCollapsed);
             if (summary) summary.classList.toggle('d-none', isCollapsed);
             if (icon) icon.className = isCollapsed ? 'bi bi-chevron-up' : 'bi bi-chevron-down';
             if (isCollapsed && arazoEditor) arazoEditor.refresh();
@@ -1784,10 +1784,10 @@ function initSectionCollapse() {
 }
 
 function expandAllSections() {
-    document.querySelectorAll('.af-section-body--collapsed').forEach(body => {
-        body.classList.remove('af-section-body--collapsed');
+    document.querySelectorAll('.dp-workflow__section-body--collapsed').forEach(body => {
+        body.classList.remove('dp-workflow__section-body--collapsed');
     });
-    document.querySelectorAll('.af-section-summary').forEach(s => s.classList.add('d-none'));
+    document.querySelectorAll('.dp-workflow__section-summary').forEach(s => s.classList.add('d-none'));
     document.querySelectorAll('[data-af-collapse] i').forEach(i => { i.className = 'bi bi-chevron-up'; });
 }
 
@@ -1798,14 +1798,14 @@ function expandAllSections() {
 function updateSectionSummaries() {
     const name = document.getElementById('apiWorkflowName')?.value?.trim() || '';
     const agentVis = document.querySelector('input[name="apiWorkflowAgentVisibility"]:checked')?.value || 'VISIBLE';
-    const s1 = document.getElementById('af-summary-1');
+    const s1 = document.getElementById('dp-workflow__summary-1');
     if (s1) {
         s1.textContent = name
             ? `${name} · Agent ${agentVis.charAt(0) + agentVis.slice(1).toLowerCase()}`
             : 'Not configured';
     }
 
-    const s2 = document.getElementById('af-summary-2');
+    const s2 = document.getElementById('dp-workflow__summary-2');
     if (s2) {
         const hasArazzo = arazoEditor
             ? arazoEditor.getValue().trim().length > 0
@@ -1818,7 +1818,7 @@ function updateSectionSummaries() {
     }
 
     const agentPrompt = document.getElementById('agentPromptField')?.value?.trim();
-    const s3 = document.getElementById('af-summary-3');
+    const s3 = document.getElementById('dp-workflow__summary-3');
     if (s3) s3.textContent = agentPrompt ? 'Prompt ready' : 'Not generated';
 }
 
@@ -1852,13 +1852,13 @@ function updateMarkdownWordCount() {
 function updateApiChips() {
     const chips = document.getElementById('apiSelectedChips');
     if (!chips) return;
-    const selected = [...document.querySelectorAll('.api-workflow-api-checkbox:checked')];
+    const selected = [...document.querySelectorAll('.dp-api__workflow-api-checkbox:checked')];
     if (selected.length === 0) {
         chips.innerHTML = '';
         chips.style.display = 'none';
     } else {
         chips.innerHTML = selected.map(cb =>
-            `<span class="af-api-chip">${sanitizeInput(cb.dataset.apiName)}</span>`
+            `<span class="dp-workflow__api-chip">${sanitizeInput(cb.dataset.apiName)}</span>`
         ).join('');
         chips.style.display = '';
     }
@@ -1876,7 +1876,7 @@ function initWizard() {
         if (currentStep > 1) goToStep(currentStep - 1);
     });
     // Clicking a complete stepper step navigates back
-    document.querySelectorAll('.af-wizard .cfg-step').forEach(el => {
+    document.querySelectorAll('.dp-workflow__wizard .dp-settings__step').forEach(el => {
         el.addEventListener('click', () => {
             const s = parseInt(el.dataset.step);
             if (s < currentStep) goToStep(s);
@@ -1937,28 +1937,28 @@ function validateWizardStep(step) {
 
 function updateWizardUI() {
     // Single-column layout for step 2
-    document.querySelector('.af-wizard-body')?.classList.toggle('af-wizard-body--single-col', currentStep === 2);
+    document.querySelector('.dp-workflow__wizard-body')?.classList.toggle('dp-workflow__wizard-body--single-col', currentStep === 2);
     // Step panels
     for (let i = 1; i <= 3; i++) {
         document.getElementById(`afStep${i}`)?.classList.toggle('d-none', i !== currentStep);
         document.getElementById(`afRight${i}`)?.classList.toggle('d-none', i !== currentStep);
     }
     // Stepper dots
-    document.querySelectorAll('.af-wizard .cfg-step').forEach(el => {
+    document.querySelectorAll('.dp-workflow__wizard .dp-settings__step').forEach(el => {
         const s = parseInt(el.dataset.step);
-        el.classList.remove('cfg-step--active', 'cfg-step--done');
-        const circ = el.querySelector('.cfg-step-circle');
+        el.classList.remove('dp-settings__step--active', 'dp-settings__step--done');
+        const circ = el.querySelector('.dp-settings__step-circle');
         if (s < currentStep) {
-            el.classList.add('cfg-step--done');
+            el.classList.add('dp-settings__step--done');
             if (circ) circ.innerHTML = '<i class="bi bi-check" style="font-size:.75rem;line-height:1;"></i>';
         } else {
-            if (s === currentStep) el.classList.add('cfg-step--active');
+            if (s === currentStep) el.classList.add('dp-settings__step--active');
             if (circ) circ.textContent = String(s);
         }
     });
     // Stepper connectors
-    document.querySelectorAll('.af-wizard .cfg-step-connector').forEach((line, idx) => {
-        line.classList.toggle('cfg-step-connector--done', idx + 1 < currentStep);
+    document.querySelectorAll('.dp-workflow__wizard .dp-settings__step-connector').forEach((line, idx) => {
+        line.classList.toggle('dp-settings__step-connector--done', idx + 1 < currentStep);
     });
     // Footer
     const backBtn = document.getElementById('afBackBtn');
@@ -2018,9 +2018,9 @@ function updateFieldStatus(statusId, state, tooltipMsg) {
     }
     el.classList.remove('d-none');
     if (icon) {
-        icon.className = 'bi af-fsi';
-        if (state === 'ok') icon.classList.add('bi-check-circle-fill', 'af-fsi-ok');
-        else icon.classList.add('bi-exclamation-circle-fill', 'af-fsi-warn');
+        icon.className = 'bi dp-workflow__fsi';
+        if (state === 'ok') icon.classList.add('bi-check-circle-fill', 'dp-workflow__fsi-ok');
+        else icon.classList.add('bi-exclamation-circle-fill', 'dp-workflow__fsi-warn');
     }
     if (tooltipMsg) {
         el.setAttribute('data-bs-title', tooltipMsg);
@@ -2100,11 +2100,11 @@ function syncAccessMatrixFromRadios() {
     const agentHidden = document.getElementById('agentHiddenCard');
 
     if (agentVisible) {
-        agentVisible.classList.toggle('af-visibility-card--active', agentVis === 'VISIBLE');
+        agentVisible.classList.toggle('dp-workflow__visibility-card--active', agentVis === 'VISIBLE');
         agentVisible.setAttribute('aria-pressed', String(agentVis === 'VISIBLE'));
     }
     if (agentHidden) {
-        agentHidden.classList.toggle('af-visibility-card--active', agentVis === 'HIDDEN');
+        agentHidden.classList.toggle('dp-workflow__visibility-card--active', agentVis === 'HIDDEN');
         agentHidden.setAttribute('aria-pressed', String(agentVis === 'HIDDEN'));
     }
 }
@@ -2159,7 +2159,7 @@ function initLlmsConfig() {
     const saveBtn = document.getElementById('saveLlmsConfigBtn');
     if (saveBtn) saveBtn.addEventListener('click', saveLlmsConfig);
 
-    const llmsPanel = document.getElementById('cfg-llm');
+    const llmsPanel = document.getElementById('dp-settings__llm');
     if (llmsPanel) {
         llmsPanel.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
             new bootstrap.Tooltip(el);
@@ -2294,14 +2294,14 @@ function initTheming() {
     if (zone) {
         zone.addEventListener('dragover', function (e) {
             e.preventDefault(); e.stopPropagation();
-            zone.classList.add('cfg-upload-zone--active');
+            zone.classList.add('dp-settings__upload-zone--active');
         });
         zone.addEventListener('dragleave', function (e) {
-            if (!zone.contains(e.relatedTarget)) zone.classList.remove('cfg-upload-zone--active');
+            if (!zone.contains(e.relatedTarget)) zone.classList.remove('dp-settings__upload-zone--active');
         });
         zone.addEventListener('drop', function (e) {
             e.preventDefault(); e.stopPropagation();
-            zone.classList.remove('cfg-upload-zone--active');
+            zone.classList.remove('dp-settings__upload-zone--active');
             const files = e.dataTransfer && e.dataTransfer.files;
             if (files && files.length) handleThemeZipFile(files[0]);
         });
@@ -2312,20 +2312,20 @@ function initTheming() {
     if (downloadBtn) downloadBtn.addEventListener('click', downloadTheme);
 
     if (resetBtn) resetBtn.addEventListener('click', function () {
-        const viewLabel = document.getElementById('cfg-reset-theme-view-txt');
+        const viewLabel = document.getElementById('dp-settings__reset-theme-view-txt');
         if (viewLabel) viewLabel.textContent = themingViewName;
-        const modal = document.getElementById('cfg-reset-theme-modal');
+        const modal = document.getElementById('dp-settings__reset-theme-modal');
         if (modal) modal.style.display = 'flex';
     });
-    const resetCancel = document.getElementById('cfg-reset-theme-cancel');
+    const resetCancel = document.getElementById('dp-settings__reset-theme-cancel');
     if (resetCancel) resetCancel.addEventListener('click', function () {
-        document.getElementById('cfg-reset-theme-modal').style.display = 'none';
+        document.getElementById('dp-settings__reset-theme-modal').style.display = 'none';
     });
-    const resetModal = document.getElementById('cfg-reset-theme-modal');
+    const resetModal = document.getElementById('dp-settings__reset-theme-modal');
     if (resetModal) resetModal.addEventListener('click', function (e) {
         if (e.target === this) this.style.display = 'none';
     });
-    const resetConfirm = document.getElementById('cfg-reset-theme-confirm');
+    const resetConfirm = document.getElementById('dp-settings__reset-theme-confirm');
     if (resetConfirm) resetConfirm.addEventListener('click', resetTheme);
 }
 
@@ -2333,9 +2333,9 @@ function setThemingStatus(hasCustomTheme) {
     const badge = document.getElementById('themingStatusBadge');
     const hint  = document.getElementById('themingStatusHint');
     if (badge) {
-        badge.classList.toggle('cfg-status-published', hasCustomTheme);
-        badge.classList.toggle('cfg-status-draft', !hasCustomTheme);
-        badge.innerHTML = '<span class="cfg-status-dot"></span>' + (hasCustomTheme ? 'Custom' : 'Default');
+        badge.classList.toggle('dp-settings__status-published', hasCustomTheme);
+        badge.classList.toggle('dp-settings__status-draft', !hasCustomTheme);
+        badge.innerHTML = '<span class="dp-settings__status-dot"></span>' + (hasCustomTheme ? 'Custom' : 'Default');
     }
     if (hint) {
         hint.textContent = hasCustomTheme
@@ -2418,8 +2418,8 @@ async function applyTheme() {
 }
 
 async function resetTheme() {
-    const modal = document.getElementById('cfg-reset-theme-modal');
-    const confirmBtn = document.getElementById('cfg-reset-theme-confirm');
+    const modal = document.getElementById('dp-settings__reset-theme-modal');
+    const confirmBtn = document.getElementById('dp-settings__reset-theme-confirm');
     if (confirmBtn) {
         confirmBtn.disabled = true;
         confirmBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span> Resetting…';

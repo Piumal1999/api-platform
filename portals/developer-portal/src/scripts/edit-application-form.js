@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Function to set loading state
         const setButtonLoadingState = (button, isLoading) => {
             const normalState = button.querySelector('.button-normal-state');
-            const loadingState = button.querySelector('.button-loading-state');
+            const loadingState = button.querySelector('.dp-app__button-loading');
 
             if (isLoading) {
                 button.disabled = true;

@@ -1,4 +1,4 @@
-.custom-bootstrap-alert {
+.dp-ui__bootstrap-alert{
     background-color: var(--warning-surface);
     color: #2c2c2c;
     border-radius: 0;
@@ -8,7 +8,7 @@
     padding: 0.75rem 1.25rem;
 }
 
-.alert-icon {
+.dp-alert__icon{
     color: var(--warning);
     font-size: 1.25rem;
 }

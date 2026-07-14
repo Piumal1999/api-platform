@@ -16,7 +16,7 @@
  * under the License.
  */
  -->
- <div class="page-container">
+ <div class="dp-page__container">
 <nav class="dp-breadcrumb">
   {{#if (eq apiType "Mcp")}}
     <a class="dp-breadcrumb-item" href="{{baseUrl}}/mcp">MCP Servers</a>
@@ -28,14 +28,14 @@
   <i class="bi bi-chevron-right dp-breadcrumb-sep"></i>
   <span class="dp-breadcrumb-current">Documentation</span>
 </nav>
-<div class="page-header">
-  <h1 class="page-title">Documentation</h1>
+<div class="dp-page__header">
+  <h1 class="dp-page__title">Documentation</h1>
 </div>
 
-<div class="adoc-wrap">
+<div class="dp-doc__wrap">
   {{> docs-nav}}
 
-  <div class="adoc-content-card">
+  <div class="dp-doc__content-card">
     {{> api-doc}}
   </div>
 

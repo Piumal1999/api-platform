@@ -16,7 +16,7 @@
  * under the License.
  -->
 
-<div id="application-api-keys-config" style="display:none"
+<div id="dp-applications__api-keys-config" style="display:none"
     data-org-id="{{orgId}}"
     data-app-id="{{applicationMetadata.id}}"
     data-read-only="{{#if isReadOnlyMode}}true{{else}}false{{/if}}"
@@ -27,7 +27,7 @@
   <div class="d-flex justify-content-between align-items-start mb-3">
     <div>
       <h2 class="h5 mb-1">API keys</h2>
-      <p class="ak-page-desc" style="margin:0;font-size:0.84375rem;color:#56657a;">
+      <p class="dp-api-key__page-desc" style="margin:0;font-size:0.84375rem;color:#56657a;">
         Keys associated with this app, for usage analytics only — association has no effect on a key's validity.
       </p>
     </div>
@@ -39,30 +39,30 @@
   </div>
 
   {{#if associatedApiKeys.length}}
-  <div class="ak-tablewrap">
-    <table class="ak-table" id="application-api-keys-table">
+  <div class="dp-api-key__tablewrap">
+    <table class="dp-api-key__table" id="dp-applications__api-keys-table">
       <thead>
         <tr>
           <th>Name</th>
           <th>API</th>
           <th>Status</th>
-          <th class="ak-th-right">Actions</th>
+          <th class="dp-api-key__th-right">Actions</th>
         </tr>
       </thead>
       <tbody>
         {{#each associatedApiKeys}}
         <tr>
-          <td><span class="ak-key-name">{{this.displayName}}</span></td>
+          <td><span class="dp-api-key__key-name">{{this.displayName}}</span></td>
           <td>{{this.apiName}}</td>
           <td>
-            <span class="ak-status {{#if (eq this.status 'active')}}ak-status--active{{else}}ak-status--inactive{{/if}}">
-              <span class="ak-status-dot"></span>{{this.status}}
+            <span class="dp-api-key__status {{#if (eq this.status 'active')}}dp-api-key__status--active{{else}}dp-api-key__status--inactive{{/if}}">
+              <span class="dp-api-key__status-dot"></span>{{this.status}}
             </span>
           </td>
           <td>
             {{#unless @root.isReadOnlyMode}}
-            <div class="ak-actions">
-              <button type="button" class="ak-btn-revoke btn-remove-key-association" data-key-id="{{this.id}}" data-api-id="{{this.apiId}}" data-key-name="{{this.displayName}}">
+            <div class="dp-api-key__actions">
+              <button type="button" class="dp-api-key__btn-revoke btn-remove-key-association" data-key-id="{{this.id}}" data-api-id="{{this.apiId}}" data-key-name="{{this.displayName}}">
                 <i class="bi bi-x-circle"></i> Remove
               </button>
             </div>
@@ -84,27 +84,27 @@
 
 {{#unless isReadOnlyMode}}
 <!-- Associate existing key modal -->
-<div class="ak-overlay" id="associate-key-modal">
-  <div class="ak-modal">
-    <div class="ak-modal-head">
-      <h2 class="ak-modal-title">Associate existing key</h2>
-      <button type="button" class="ak-modal-close" id="associate-key-close" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+<div class="dp-api-key__overlay" id="associate-key-modal">
+  <div class="dp-api-key__modal">
+    <div class="dp-api-key__modal-head">
+      <h2 class="dp-api-key__modal-title">Associate existing key</h2>
+      <button type="button" class="dp-api-key__modal-close" id="associate-key-close" aria-label="Close"><i class="bi bi-x-lg"></i></button>
     </div>
-    <div class="ak-modal-body">
-      <div class="ak-form-group">
+    <div class="dp-api-key__modal-body">
+      <div class="dp-api-key__form-group">
         <label for="associate-key-api-select">API</label>
-        <select id="associate-key-api-select" class="ak-form-input">
+        <select id="associate-key-api-select" class="dp-api-key__form-input">
           <option value="">— Select an API —</option>
         </select>
       </div>
-      <div class="ak-form-group">
+      <div class="dp-api-key__form-group">
         <label for="associate-key-select">Key</label>
-        <select id="associate-key-select" class="ak-form-input" disabled>
+        <select id="associate-key-select" class="dp-api-key__form-input" disabled>
           <option value="">— Select an API first —</option>
         </select>
       </div>
     </div>
-    <div class="ak-modal-footer">
+    <div class="dp-api-key__modal-footer">
       <button type="button" class="dp-btn dp-btn--outline" id="associate-key-cancel">Cancel</button>
       <button type="button" class="dp-btn dp-btn--primary" id="btn-submit-associate-key" disabled>Associate</button>
     </div>

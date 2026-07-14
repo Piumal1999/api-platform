@@ -20,14 +20,14 @@
     {{{slots.head}}}
 </head>
 
-<body class="main-body">
+<body class="dp-shell__main-body">
     {{> header
         profile=profile
         baseUrl=baseUrl
         devportalMode=devportalMode
         showApiWorkflowsNav=showApiWorkflowsNav
     }}
-    <div class="layout-body">
+    <div class="dp-shell__layout-body">
         {{> sidebar
             profile=profile
             baseUrl=baseUrl
@@ -35,7 +35,7 @@
             showApiKeysNav=showApiKeysNav
             showApiWorkflowsNav=showApiWorkflowsNav
         }}
-        <main class="main-container">
+        <main class="dp-shell__main-container">
             <div class="content-area">
             {{{ body }}}
             </div>

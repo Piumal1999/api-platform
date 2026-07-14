@@ -129,44 +129,44 @@
   <link rel="stylesheet" href="/technical-styles/graphql-tryout.css">
 {{/pageHead}}
 <main>
-  <div class="graphql-tryout-container">
-    <div class="graphql-controls" id="graphql-controls">
-      <div class="graphql-control graphql-control-row">
-        <div class="graphql-endpoint-type-wrapper">
-          <label for="graphql-endpoint-type">Environment</label>
-          <select id="graphql-endpoint-type" aria-label="Endpoint type">
+  <div class="dp-graphql__tryout-container">
+    <div class="dp-graphql__controls" id="dp-graphql__controls">
+      <div class="dp-graphql__control dp-graphql__control-row">
+        <div class="dp-graphql__endpoint-type-wrapper">
+          <label for="dp-graphql__endpoint-type">Environment</label>
+          <select id="dp-graphql__endpoint-type" aria-label="Endpoint type">
             <option value="production">Production</option>
             {{#if apiMetadata.endPoints.sandboxURL}}<option value="sandbox">Sandbox</option>{{/if}}
           </select>
         </div>
-        <div class="graphql-endpoint-input-wrapper">
-          <label for="graphql-endpoint-input">Endpoint URL</label>
-          <input id="graphql-endpoint-input" type="text" spellcheck="false" />
-          <div class="control-hint" id="graphql-endpoint-status"></div>
+        <div class="dp-graphql__endpoint-input-wrapper">
+          <label for="dp-graphql__endpoint-input">Endpoint URL</label>
+          <input id="dp-graphql__endpoint-input" type="text" spellcheck="false" />
+          <div class="dp-graphql__control-hint" id="dp-graphql__endpoint-status"></div>
         </div>
       </div>
-      <div class="graphql-control" id="graphql-auth-control">
-        <div class="graphql-auth-tabs" id="graphql-auth-tabs" style="display:none;">
-          <button type="button" class="graphql-auth-tab active" id="graphql-tab-oauth" data-tab="oauth">OAuth</button>
-          <button type="button" class="graphql-auth-tab" id="graphql-tab-apikey" data-tab="apikey">API Key</button>
+      <div class="dp-graphql__control" id="dp-graphql__auth-control">
+        <div class="dp-graphql__auth-tabs" id="dp-graphql__auth-tabs" style="display:none;">
+          <button type="button" class="dp-graphql__auth-tab active" id="dp-graphql__tab-oauth" data-tab="oauth">OAuth</button>
+          <button type="button" class="dp-graphql__auth-tab" id="dp-graphql__tab-apikey" data-tab="apikey">API Key</button>
         </div>
-        <div id="graphql-auth-oauth" class="graphql-auth-panel">
-          <label for="graphql-token-input">Authorization Header</label>
-          <input id="graphql-token-input" type="text" placeholder="Bearer &lt;token&gt;" spellcheck="false" autocomplete="off" />
-          <div class="control-hint" id="graphql-token-status"></div>
+        <div id="dp-graphql__auth-oauth" class="dp-graphql__auth-panel">
+          <label for="dp-graphql__token-input">Authorization Header</label>
+          <input id="dp-graphql__token-input" type="text" placeholder="Bearer &lt;token&gt;" spellcheck="false" autocomplete="off" />
+          <div class="dp-graphql__control-hint" id="dp-graphql__token-status"></div>
         </div>
-        <div id="graphql-auth-apikey" class="graphql-auth-panel" style="display:none;">
+        <div id="dp-graphql__auth-apikey" class="dp-graphql__auth-panel" style="display:none;">
           <div style="display:flex; gap:8px;">
             <div style="display:flex; flex-direction:column; gap:4px; flex: 0 0 180px;">
-              <label for="graphql-apikey-header-input">Header Name</label>
-              <input id="graphql-apikey-header-input" type="text" placeholder="apikey" spellcheck="false" />
+              <label for="dp-graphql__apikey-header-input">Header Name</label>
+              <input id="dp-graphql__apikey-header-input" type="text" placeholder="apikey" spellcheck="false" />
             </div>
             <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
-              <label for="graphql-apikey-input">API Key Value</label>
-              <input id="graphql-apikey-input" type="text" placeholder="Enter API key" spellcheck="false" autocomplete="off" />
+              <label for="dp-graphql__apikey-input">API Key Value</label>
+              <input id="dp-graphql__apikey-input" type="text" placeholder="Enter API key" spellcheck="false" autocomplete="off" />
             </div>
           </div>
-          <div class="control-hint" id="graphql-apikey-status"></div>
+          <div class="dp-graphql__control-hint" id="dp-graphql__apikey-status"></div>
         </div>
       </div>
     </div>
@@ -176,7 +176,7 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/graphiql@3/graphiql.min.js"></script>
   <script src="https://unpkg.com/@graphiql/plugin-explorer@3/dist/index.umd.js"></script>
-  <script id="graphql-schema-introspection-json" type="application/json">{{{graphqlSchemaAsIntrospectionJSON}}}</script>
+  <script id="dp-graphql__schema-introspection-json" type="application/json">{{{graphqlSchemaAsIntrospectionJSON}}}</script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const apiEndpoint = '{{ apiMetadata.endPoints.productionURL }}';
@@ -186,17 +186,17 @@
       const rootElement = document.getElementById('root');
       rootElement.innerHTML = '<div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: montserrat;">Loading GraphiQL...</div>';
 
-      const endpointInput = document.getElementById('graphql-endpoint-input');
-      const endpointStatus = document.getElementById('graphql-endpoint-status');
-      const endpointTypeSelect = document.getElementById('graphql-endpoint-type');
-      const tokenInput = document.getElementById('graphql-token-input');
-      const tokenStatus = document.getElementById('graphql-token-status');
-      const apikeyHeaderInput = document.getElementById('graphql-apikey-header-input');
-      const apikeyInput = document.getElementById('graphql-apikey-input');
-      const apikeyStatus = document.getElementById('graphql-apikey-status');
-      const authTabs = document.getElementById('graphql-auth-tabs');
-      const authOAuthPanel = document.getElementById('graphql-auth-oauth');
-      const authApiKeyPanel = document.getElementById('graphql-auth-apikey');
+      const endpointInput = document.getElementById('dp-graphql__endpoint-input');
+      const endpointStatus = document.getElementById('dp-graphql__endpoint-status');
+      const endpointTypeSelect = document.getElementById('dp-graphql__endpoint-type');
+      const tokenInput = document.getElementById('dp-graphql__token-input');
+      const tokenStatus = document.getElementById('dp-graphql__token-status');
+      const apikeyHeaderInput = document.getElementById('dp-graphql__apikey-header-input');
+      const apikeyInput = document.getElementById('dp-graphql__apikey-input');
+      const apikeyStatus = document.getElementById('dp-graphql__apikey-status');
+      const authTabs = document.getElementById('dp-graphql__auth-tabs');
+      const authOAuthPanel = document.getElementById('dp-graphql__auth-oauth');
+      const authApiKeyPanel = document.getElementById('dp-graphql__auth-apikey');
       let selectedEndpointType = 'production';
       let currentEndpoint = apiEndpoint || '';
       let authToken = '';
@@ -219,10 +219,10 @@
 
       if (authTabs) {
         authTabs.addEventListener('click', function (event) {
-          const tab = event.target.closest('.graphql-auth-tab');
+          const tab = event.target.closest('.dp-graphql__auth-tab');
           if (!tab) return;
           const target = tab.dataset.tab;
-          authTabs.querySelectorAll('.graphql-auth-tab').forEach(function (t) {
+          authTabs.querySelectorAll('.dp-graphql__auth-tab').forEach(function (t) {
             t.classList.remove('active');
           });
           tab.classList.add('active');
@@ -318,7 +318,7 @@
       updateTokenStatus();
       updateApiKeyStatus();
 
-      const schemaScript = document.getElementById('graphql-schema-introspection-json');
+      const schemaScript = document.getElementById('dp-graphql__schema-introspection-json');
       let schemaIntrospectionJSON = null;      
       try {
         if (!schemaScript || !schemaScript.textContent || schemaScript.textContent.trim() === '' || schemaScript.textContent === 'null') {
@@ -409,20 +409,20 @@
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/wso2/api-developer-portal-core@refs/heads/main/libs/graphql-schema-viewer/dist/graphql-schema-viewer.umd.js"></script>
-  <script id="graphql-schema-data" type="application/json">{{{graphql}}}</script>
-  <script id="graphql-api-metadata" type="application/json">{{{apiMetadataJSON}}}</script>
+  <script id="dp-graphql__schema-data" type="application/json">{{{graphql}}}</script>
+  <script id="dp-graphql__api-metadata" type="application/json">{{{apiMetadataJSON}}}</script>
   <script>
       document.addEventListener('DOMContentLoaded', function () {
         let schemaData = '';
         let apiMetadata = {};
         
         try {
-          const schemaScript = document.getElementById('graphql-schema-data');
+          const schemaScript = document.getElementById('dp-graphql__schema-data');
           if (schemaScript && schemaScript.textContent) {
             schemaData = JSON.parse(schemaScript.textContent);
           }
           
-          const metadataScript = document.getElementById('graphql-api-metadata');
+          const metadataScript = document.getElementById('dp-graphql__api-metadata');
           if (metadataScript && metadataScript.textContent) {
             apiMetadata = JSON.parse(metadataScript.textContent);
           }

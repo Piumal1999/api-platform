@@ -81,19 +81,19 @@
         var isSusp = status === 'INACTIVE';
         var badge = document.getElementById('mcpManageStatusBadge');
         badge.textContent = isSusp ? 'Suspended' : 'Active';
-        badge.className = 'mc-manage-status-badge ' + (isSusp ? 'mc-manage-status-badge--suspended' : 'mc-manage-status-badge--active');
+        badge.className = 'dp-mcp__manage-status-badge ' + (isSusp ? 'dp-mcp__manage-status-badge--suspended' : 'dp-mcp__manage-status-badge--active');
 
         var suspendBtn = document.getElementById('mcpManageSuspendBtn');
         var suspendIcon = suspendBtn.querySelector('i');
-        var suspendLabel = suspendBtn.querySelector('.mc-suspend-label');
+        var suspendLabel = suspendBtn.querySelector('.dp-mcp__suspend-label');
         suspendIcon.className = 'bi bi-' + (isSusp ? 'play-circle' : 'pause-circle');
         suspendLabel.textContent = isSusp ? 'Resume' : 'Suspend';
-        suspendBtn.className = 'dp-btn mc-manage-action-btn ' + (isSusp ? 'mc-manage-action-btn--resume' : 'mc-manage-action-btn--suspend');
+        suspendBtn.className = 'dp-btn dp-mcp__manage-action-btn ' + (isSusp ? 'dp-mcp__manage-action-btn--resume' : 'dp-mcp__manage-action-btn--suspend');
       }
 
       function resetManageCopyBtn() {
         var btn = document.getElementById('mcpManageCopyBtn');
-        if (btn) btn.classList.remove('copy-btn--copied');
+        if (btn) btn.classList.remove('dp-copy__btn--copied');
       }
 
       async function revealToken() {
@@ -123,7 +123,7 @@
           document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
         }
         var btn = document.getElementById('mcpManageCopyBtn');
-        if (btn) btn.classList.add('copy-btn--copied');
+        if (btn) btn.classList.add('dp-copy__btn--copied');
         if (_mCopyTimer) clearTimeout(_mCopyTimer);
         _mCopyTimer = setTimeout(resetManageCopyBtn, 1600);
       }
@@ -155,14 +155,14 @@
       }
 
       function updateCardSuspendedState(planName, isSuspended) {
-        var card = document.querySelector('#subscriptionPlans .aov-plan-card[data-policy-name="' + planName + '"]');
+        var card = document.querySelector('#subscriptionPlans .dp-api-overview__plan-card[data-policy-name="' + planName + '"]');
         if (!card) return;
-        var label = card.querySelector('.mcp-ribbon-label');
+        var label = card.querySelector('.dp-mcp__ribbon-label');
         if (isSuspended) {
-          card.classList.add('aov-plan-card--suspended');
+          card.classList.add('dp-api-overview__plan-card--suspended');
           if (label) label.textContent = 'SUSPENDED';
         } else {
-          card.classList.remove('aov-plan-card--suspended');
+          card.classList.remove('dp-api-overview__plan-card--suspended');
           if (label) label.textContent = 'SUBSCRIBED';
         }
       }
@@ -199,7 +199,7 @@
         document.getElementById('mcpUnsubDialog').style.display = 'none';
         if (_unsubAction === 'switch') {
           var pendingBtn = (_switchArgs && _switchArgs.btn) || window.__pendingPlanSwitchBtn;
-          if (pendingBtn) pendingBtn.classList.remove('aov-btn-loading');
+          if (pendingBtn) pendingBtn.classList.remove('dp-api-overview__btn-loading');
           window.__pendingPlanSwitchBtn = null;
           _activeSubCard = null;
         }
@@ -289,15 +289,15 @@
             document.getElementById('mcpTokenPlanName').textContent = planName || '';
             document.getElementById('mcpTokenValue').textContent = token || '';
             var copyBtn = document.getElementById('mcpTokenCopyBtn');
-            if (copyBtn) copyBtn.classList.remove('copy-btn--copied');
+            if (copyBtn) copyBtn.classList.remove('dp-copy__btn--copied');
             modal.style.display = 'flex';
           });
         };
 
         /* Relabel subscribe buttons to "Switch plan" when a subscription already exists */
         if ((window.existingSubscriptions || []).length > 0) {
-          document.querySelectorAll('#subscriptionPlans .subscribe-btn').forEach(function (btn) {
-            var span = btn.querySelector('span.aov-plan-spinner');
+          document.querySelectorAll('#subscriptionPlans .dp-api__subscribe-btn').forEach(function (btn) {
+            var span = btn.querySelector('span.dp-api-overview__plan-spinner');
             btn.childNodes.forEach(function (n) { if (n.nodeType === 3) n.textContent = 'Switch plan'; });
           });
         }
@@ -310,7 +310,7 @@
         });
 
         /* View subscription buttons */
-        document.querySelectorAll('#subscriptionPlans .mcp-view-sub-btn').forEach(function (btn) {
+        document.querySelectorAll('#subscriptionPlans .dp-mcp__view-sub-btn').forEach(function (btn) {
           btn.addEventListener('click', function () { openManage(btn.dataset.policyName); });
         });
 
@@ -342,27 +342,27 @@
             if (!tokenModal._token) return;
             var btn = document.getElementById('mcpTokenCopyBtn');
             try { navigator.clipboard.writeText(tokenModal._token).catch(function () {}); } catch (e) {}
-            btn.classList.add('copy-btn--copied');
+            btn.classList.add('dp-copy__btn--copied');
             if (btn._copyTimer) clearTimeout(btn._copyTimer);
-            btn._copyTimer = setTimeout(function () { btn.classList.remove('copy-btn--copied'); }, 1600);
+            btn._copyTimer = setTimeout(function () { btn.classList.remove('dp-copy__btn--copied'); }, 1600);
           });
           tokenModal.addEventListener('click', function (e) { if (e.target === tokenModal) closeTokenModal(); });
         }
 
         /* Per-card error wiring (mirror api-subscription-plans logic) */
         var _activeSubCard = null;
-        document.querySelectorAll('#subscriptionPlans .subscribe-btn:not([disabled])').forEach(function (btn) {
+        document.querySelectorAll('#subscriptionPlans .dp-api__subscribe-btn:not([disabled])').forEach(function (btn) {
           if (btn.dataset.aovWired) return;
           btn.dataset.aovWired = '1';
           btn.addEventListener('click', function () {
-            var card = btn.closest('.aov-plan-card');
+            var card = btn.closest('.dp-api-overview__plan-card');
             if (!card) return;
-            var errBlock = card.querySelector('.aov-plan-error');
-            if (errBlock) errBlock.classList.remove('aov-plan-error--visible');
-            btn.classList.add('aov-btn-loading');
+            var errBlock = card.querySelector('.dp-api-overview__plan-error');
+            if (errBlock) errBlock.classList.remove('dp-api-overview__plan-error--visible');
+            btn.classList.add('dp-api-overview__btn-loading');
             _activeSubCard = card;
             setTimeout(function () {
-              if (_activeSubCard === card) { _activeSubCard = null; btn.classList.remove('aov-btn-loading'); }
+              if (_activeSubCard === card) { _activeSubCard = null; btn.classList.remove('dp-api-overview__btn-loading'); }
             }, 10000);
           });
         });
@@ -372,10 +372,10 @@
           if (type === 'error' && _activeSubCard) {
             var card = _activeSubCard;
             _activeSubCard = null;
-            var btn = card.querySelector('.subscribe-btn');
-            if (btn) btn.classList.remove('aov-btn-loading');
-            var errBlock = card.querySelector('.aov-plan-error');
-            if (errBlock) errBlock.classList.add('aov-plan-error--visible');
+            var btn = card.querySelector('.dp-api__subscribe-btn');
+            if (btn) btn.classList.remove('dp-api-overview__btn-loading');
+            var errBlock = card.querySelector('.dp-api-overview__plan-error');
+            if (errBlock) errBlock.classList.add('dp-api-overview__plan-error--visible');
           }
           return origShowAlert ? origShowAlert(message, type) : Promise.resolve();
         };

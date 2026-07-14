@@ -18,7 +18,7 @@
 /* eslint-disable no-undef */
 
 (function () {
-  var _cfg = document.getElementById('cfg-page-config') || { dataset: {} };
+  var _cfg = document.getElementById('dp-settings__page-config') || { dataset: {} };
   var ORG_ID      = _cfg.dataset.orgId || '';
   var BASE_URL    = _cfg.dataset.baseUrl || '';
   var currentStep = 0;
@@ -33,20 +33,20 @@
   var policyChips = [];
   var contentZipFile = null;
   var hasContentStep = false;   /* the Content step exists only for existing, non-MCP APIs */
-  var wizardOrigin = 'cfg-apis'; /* tab that launched the wizard: 'cfg-apis' or 'cfg-mcps' */
+  var wizardOrigin = 'dp-settings__apis'; /* tab that launched the wizard: 'dp-settings__apis' or 'dp-settings__mcps' */
 
   /* build id→api lookup and load all policies from server-rendered data blobs */
   var apiMap = {};
   (function() {
     try {
-      var el = document.getElementById('cfg-org-apis-data');
+      var el = document.getElementById('dp-settings__org-apis-data');
       if (el) {
         var list = JSON.parse(el.textContent);
         list.forEach(function(api) { apiMap[api.apiId] = api; });
       }
     } catch(e) {}
     try {
-      var pe = document.getElementById('cfg-plans-data');
+      var pe = document.getElementById('dp-settings__plans-data');
       if (pe) allPolicies = JSON.parse(pe.textContent) || [];
     } catch(e) {}
   }());
@@ -61,12 +61,12 @@
 
   /* type-color map */
   var typeMap = {
-    RestApi:   { av:'cfg-api-avatar--rest',    tb:'cfg-type-badge--rest',    label:'REST' },
-    WS:        { av:'cfg-api-avatar--ws',      tb:'cfg-type-badge--ws',      label:'WebSocket' },
-    GRAPHQL:   { av:'cfg-api-avatar--graphql', tb:'cfg-type-badge--graphql', label:'GraphQL' },
-    SOAP:      { av:'cfg-api-avatar--soap',    tb:'cfg-type-badge--soap',    label:'SOAP' },
-    WebSubApi: { av:'cfg-api-avatar--websub',  tb:'cfg-type-badge--websub',  label:'WebSub' },
-    Mcp:       { av:'cfg-api-avatar--mcp',     tb:'cfg-type-badge--mcp',     label:'MCP' },
+    RestApi:   { av:'dp-settings__api-avatar--rest',    tb:'dp-settings__type-badge--rest',    label:'REST' },
+    WS:        { av:'dp-settings__api-avatar--ws',      tb:'dp-settings__type-badge--ws',      label:'WebSocket' },
+    GRAPHQL:   { av:'dp-settings__api-avatar--graphql', tb:'dp-settings__type-badge--graphql', label:'GraphQL' },
+    SOAP:      { av:'dp-settings__api-avatar--soap',    tb:'dp-settings__type-badge--soap',    label:'SOAP' },
+    WebSubApi: { av:'dp-settings__api-avatar--websub',  tb:'dp-settings__type-badge--websub',  label:'WebSub' },
+    Mcp:       { av:'dp-settings__api-avatar--mcp',     tb:'dp-settings__type-badge--mcp',     label:'MCP' },
   };
   function typeInfo(t) { return typeMap[t] || typeMap['RestApi']; }
   function initials(name) { var w=String(name||'').trim().split(/\s+/); return (w[0]?w[0][0]:'') + (w[1]?w[1][0]:''); }
@@ -112,10 +112,10 @@
     container.innerHTML = '';
     policyChips.forEach(function(pol) {
       var chip = document.createElement('span');
-      chip.className = 'cfg-chip';
+      chip.className = 'dp-settings__chip';
       chip.innerHTML = esc(pol.displayName || pol.planName) +
-        '<button type="button" class="cfg-chip-remove" data-name="'+esc(pol.planName)+'" title="Remove"><i class="bi bi-x"></i></button>';
-      chip.querySelector('.cfg-chip-remove').addEventListener('click', function(e) {
+        '<button type="button" class="dp-settings__chip-remove" data-name="'+esc(pol.planName)+'" title="Remove"><i class="bi bi-x"></i></button>';
+      chip.querySelector('.dp-settings__chip-remove').addEventListener('click', function(e) {
         e.stopPropagation();
         var name = e.currentTarget.dataset.name;
         policyChips = policyChips.filter(function(p){ return p.planName !== name; });
@@ -137,15 +137,15 @@
              (p.description||'').toLowerCase().indexOf(q) >= 0;
     });
     if (!matches.length) {
-      dd.innerHTML = '<div class="cfg-chip-dd-empty">No matching plans</div>';
+      dd.innerHTML = '<div class="dp-settings__chip-dd-empty">No matching plans</div>';
     } else {
       dd.innerHTML = matches.map(function(p) {
-        return '<div class="cfg-chip-dd-item" data-name="'+esc(p.planName)+'">' +
-          '<div class="cfg-chip-dd-name">'+esc(p.displayName||p.planName)+'</div>' +
-          (p.description ? '<div class="cfg-chip-dd-desc">'+esc(p.description)+'</div>' : '') +
+        return '<div class="dp-settings__chip-dd-item" data-name="'+esc(p.planName)+'">' +
+          '<div class="dp-settings__chip-dd-name">'+esc(p.displayName||p.planName)+'</div>' +
+          (p.description ? '<div class="dp-settings__chip-dd-desc">'+esc(p.description)+'</div>' : '') +
           '</div>';
       }).join('');
-      dd.querySelectorAll('.cfg-chip-dd-item').forEach(function(item) {
+      dd.querySelectorAll('.dp-settings__chip-dd-item').forEach(function(item) {
         item.addEventListener('mousedown', function(e) {
           e.preventDefault();
           var name = item.dataset.name;
@@ -202,22 +202,22 @@
     /* MCP servers and APIs share this wizard. Derive the "kind" from the record being
        edited, or from the launching button (kindHint) when adding. */
     var isMcp = api ? (api.apiType === 'Mcp') : (kindHint === 'mcp');
-    wizardOrigin = isMcp ? 'cfg-mcps' : 'cfg-apis';
+    wizardOrigin = isMcp ? 'dp-settings__mcps' : 'dp-settings__apis';
 
-    /* The wizard markup lives inside #cfg-apis; reveal that panel (with its list hidden)
+    /* The wizard markup lives inside #dp-settings__apis; reveal that panel (with its list hidden)
        regardless of which tab launched it, and keep the launching tab highlighted. */
-    document.querySelectorAll('.cfg-panel').forEach(function(p) { p.style.display = p.id === 'cfg-apis' ? 'flex' : 'none'; });
-    document.querySelectorAll('.cfg-nav-item').forEach(function(a) { a.classList.toggle('active', a.dataset.panel === wizardOrigin); });
-    document.getElementById('cfg-apis-list').style.display = 'none';
-    document.getElementById('cfg-apis-wizard').style.display = 'flex';
+    document.querySelectorAll('.dp-settings__panel').forEach(function(p) { p.style.display = p.id === 'dp-settings__apis' ? 'flex' : 'none'; });
+    document.querySelectorAll('.dp-settings__nav-item').forEach(function(a) { a.classList.toggle('active', a.dataset.panel === wizardOrigin); });
+    document.getElementById('dp-settings__apis-list').style.display = 'none';
+    document.getElementById('dp-settings__apis-wizard').style.display = 'flex';
 
-    var backLink = document.getElementById('cfg-wizard-back-link');
+    var backLink = document.getElementById('dp-settings__wizard-back-link');
     if (backLink) backLink.innerHTML = '<i class="bi bi-arrow-left"></i> ' + (isMcp ? 'Back to MCP Servers' : 'Back to Manage APIs');
 
     /* MCP servers carry a tools schema instead of an API contract — relabel the Spec step. */
-    var specStepLabel = document.querySelector('#cfg-apis-wizard .cfg-step[data-step="1"] .cfg-step-label');
+    var specStepLabel = document.querySelector('#dp-settings__apis-wizard .dp-settings__step[data-step="1"] .dp-settings__step-label');
     if (specStepLabel) specStepLabel.textContent = isMcp ? 'Tools Schema' : 'Spec';
-    var specDesc = document.querySelector('#cfg-wstep-1 .cfg-wstep-desc');
+    var specDesc = document.querySelector('#dp-settings__wstep-1 .dp-settings__wstep-desc');
     if (specDesc) specDesc.innerHTML = isMcp
       ? 'Upload the MCP tools schema that defines this server’s tools. <span class="required">*</span> Required. Accepted: YAML or JSON (e.g. <code>schemaDefinition.yaml</code>).'
       : 'Upload the contract that defines this API. <span class="required">*</span> Required. Accepted: OpenAPI (.json / .yaml), AsyncAPI, GraphQL SDL (.graphql), or WSDL (.wsdl / .xml).';
@@ -232,7 +232,7 @@
     if (api) {
       /* edit mode */
       editingId = api.apiId;
-      document.getElementById('cfg-wizard-title').textContent = isMcp ? 'Edit MCP Server' : 'Edit API';
+      document.getElementById('dp-settings__wizard-title').textContent = isMcp ? 'Edit MCP Server' : 'Edit API';
       sv('wz-name',       api.apiName);
       sv('wz-handle',     api.apiHandle);   handleTouched = true;
       sv('wz-version',    api.apiVersion);
@@ -250,12 +250,12 @@
       document.getElementById('wz-vis-visible').classList.toggle('active', agentVis !== 'Hidden');
       document.getElementById('wz-vis-hidden').classList.toggle('active',  agentVis === 'Hidden');
       setSelectedPolicies(api.subscriptionPlans || []);
-      /* existing docs are embedded server-side in cfg-org-apis-data */
+      /* existing docs are embedded server-side in dp-settings__org-apis-data */
       existingDocs = api.existingDocs || [];
     } else {
       /* add mode */
       editingId = null;
-      document.getElementById('cfg-wizard-title').textContent = isMcp ? 'Add MCP Server' : 'Add API';
+      document.getElementById('dp-settings__wizard-title').textContent = isMcp ? 'Add MCP Server' : 'Add API';
       ['wz-name','wz-version','wz-handle','wz-desc','wz-tags','wz-prod','wz-sandbox','wz-tech-owner','wz-tech-email','wz-biz-owner','wz-biz-email'].forEach(function(id){ sv(id,''); });
       sel('wz-type', isMcp ? 'Mcp' : 'RestApi'); sel('wz-status','PUBLISHED');
       agentVis = 'Visible';
@@ -271,7 +271,7 @@
       var el = document.getElementById(eid); if (el) el.style.display = 'none';
     });
     ['wz-name','wz-version','wz-handle','wz-desc','wz-prod','wz-tech-email','wz-biz-email'].forEach(function(fid) {
-      var el = document.getElementById(fid); if (el) el.classList.remove('cfg-form-input--error');
+      var el = document.getElementById(fid); if (el) el.classList.remove('dp-settings__form-input--error');
     });
 
     document.getElementById('wz-spec-chip').classList.remove('visible');
@@ -287,8 +287,8 @@
        The /apis/{handle}/assets endpoint resolves only REST/SOAP/WS/WebSub/GraphQL APIs;
        MCP servers manage content via /mcp-servers/{id}/assets instead. */
     hasContentStep = editMode && !!api && api.apiType !== 'Mcp';
-    var contentStepEl = document.getElementById('cfg-step-content');
-    var contentConnEl = document.getElementById('cfg-step-connector-content');
+    var contentStepEl = document.getElementById('dp-settings__step-content');
+    var contentConnEl = document.getElementById('dp-settings__step-connector-content');
     if (contentStepEl) contentStepEl.style.display = hasContentStep ? '' : 'none';
     if (contentConnEl) contentConnEl.style.display = hasContentStep ? '' : 'none';
     resetContentUpload();
@@ -297,11 +297,11 @@
   }
 
   function hideWizard() {
-    document.getElementById('cfg-apis-wizard').style.display = 'none';
-    document.getElementById('cfg-apis-list').style.display = '';
+    document.getElementById('dp-settings__apis-wizard').style.display = 'none';
+    document.getElementById('dp-settings__apis-list').style.display = '';
     editingId = null;
     /* Return to the tab that launched the wizard (activate() also clears wizard state). */
-    if (window.cfgActivatePanel) window.cfgActivatePanel(wizardOrigin || 'cfg-apis');
+    if (window.cfgActivatePanel) window.cfgActivatePanel(wizardOrigin || 'dp-settings__apis');
   }
 
   /* ── step navigation ── */
@@ -310,20 +310,20 @@
     /* Content (step 3) is the terminal step when present (edit, non-MCP); otherwise Documentation (2). */
     var lastStep = hasContentStep ? 3 : 2;
     for (var i=0; i<4; i++) {
-      var p = document.getElementById('cfg-wstep-'+i);
+      var p = document.getElementById('dp-settings__wstep-'+i);
       if (p) p.style.display = i===step ? 'flex' : 'none';
     }
-    var stepEls = document.querySelectorAll('#cfg-apis-wizard .cfg-step');
-    var connEls = document.querySelectorAll('#cfg-apis-wizard .cfg-step-connector');
+    var stepEls = document.querySelectorAll('#dp-settings__apis-wizard .dp-settings__step');
+    var connEls = document.querySelectorAll('#dp-settings__apis-wizard .dp-settings__step-connector');
     stepEls.forEach(function(el,i) {
-      el.classList.remove('cfg-step--active','cfg-step--done');
-      var circ = el.querySelector('.cfg-step-circle');
-      if (i < step) { el.classList.add('cfg-step--done'); circ.innerHTML='<i class="bi bi-check" style="font-size:.75rem;line-height:1;"></i>'; }
-      else          { if(i===step) el.classList.add('cfg-step--active'); circ.textContent=String(i+1); }
+      el.classList.remove('dp-settings__step--active','dp-settings__step--done');
+      var circ = el.querySelector('.dp-settings__step-circle');
+      if (i < step) { el.classList.add('dp-settings__step--done'); circ.innerHTML='<i class="bi bi-check" style="font-size:.75rem;line-height:1;"></i>'; }
+      else          { if(i===step) el.classList.add('dp-settings__step--active'); circ.textContent=String(i+1); }
     });
-    connEls.forEach(function(el,i) { el.classList.toggle('cfg-step-connector--done', i < step); });
-    var backBtn = document.getElementById('cfg-wizard-back-step');
-    var nextBtn = document.getElementById('cfg-wizard-next');
+    connEls.forEach(function(el,i) { el.classList.toggle('dp-settings__step-connector--done', i < step); });
+    var backBtn = document.getElementById('dp-settings__wizard-back-step');
+    var nextBtn = document.getElementById('dp-settings__wizard-next');
     backBtn.style.display = step > 0 ? 'inline-flex' : 'none';
     nextBtn.textContent = step === lastStep ? (editingId ? 'Save changes' : 'Save API') : 'Next';
     nextBtn.disabled = false;
@@ -405,7 +405,7 @@
     if (!tbody) return;
 
     function selected() {
-      return Array.prototype.slice.call(tbody.querySelectorAll('.cfg-row-check:checked'));
+      return Array.prototype.slice.call(tbody.querySelectorAll('.dp-settings__row-check:checked'));
     }
     function sync() {
       var checks = selected();
@@ -413,7 +413,7 @@
       var countEl = document.getElementById(cfg.countId);
       if (bar) bar.style.display = checks.length > 0 ? 'flex' : 'none';
       if (countEl) countEl.textContent = checks.length + ' ' + cfg.noun + (checks.length === 1 ? '' : 's') + ' selected';
-      var allChecks = tbody.querySelectorAll('.cfg-row-check');
+      var allChecks = tbody.querySelectorAll('.dp-settings__row-check');
       var selectAll = document.getElementById(cfg.selectAllId);
       if (selectAll) {
         selectAll.checked = allChecks.length > 0 && checks.length === allChecks.length;
@@ -424,12 +424,12 @@
     var selectAll = document.getElementById(cfg.selectAllId);
     if (selectAll) selectAll.addEventListener('change', function() {
       var checked = this.checked;
-      tbody.querySelectorAll('.cfg-row-check').forEach(function(c) { c.checked = checked; });
+      tbody.querySelectorAll('.dp-settings__row-check').forEach(function(c) { c.checked = checked; });
       sync();
     });
 
     tbody.addEventListener('change', function(e) {
-      if (e.target.classList.contains('cfg-row-check')) sync();
+      if (e.target.classList.contains('dp-settings__row-check')) sync();
     });
 
     var delBtn = document.getElementById(cfg.deleteBtnId);
@@ -439,24 +439,24 @@
       pendingBulkIds = checks.map(function(c) { return { id: c.dataset.id, name: c.dataset.name }; });
       pendingDelId = null;
       var label = checks.length + ' selected ' + cfg.noun + (checks.length === 1 ? '' : 's');
-      document.getElementById('cfg-del-api-name-txt').textContent = label;
-      document.getElementById('cfg-delete-api-modal').style.display = 'flex';
+      document.getElementById('dp-settings__del-api-name-txt').textContent = label;
+      document.getElementById('dp-settings__delete-api-modal').style.display = 'flex';
     });
   }
 
-  initBulkSelect({ tbodyId: 'cfg-apis-tbody', selectAllId: 'cfg-select-all',      barId: 'cfg-bulk-bar',      countId: 'cfg-bulk-bar-count',      deleteBtnId: 'cfg-bulk-delete-btn',      noun: 'API' });
-  initBulkSelect({ tbodyId: 'cfg-mcps-tbody', selectAllId: 'cfg-mcps-select-all', barId: 'cfg-mcps-bulk-bar', countId: 'cfg-mcps-bulk-bar-count', deleteBtnId: 'cfg-mcps-bulk-delete-btn', noun: 'MCP server' });
+  initBulkSelect({ tbodyId: 'dp-settings__apis-tbody', selectAllId: 'dp-settings__select-all',      barId: 'dp-settings__bulk-bar',      countId: 'dp-settings__bulk-bar-count',      deleteBtnId: 'dp-settings__bulk-delete-btn',      noun: 'API' });
+  initBulkSelect({ tbodyId: 'dp-settings__mcps-tbody', selectAllId: 'dp-settings__mcps-select-all', barId: 'dp-settings__mcps-bulk-bar', countId: 'dp-settings__mcps-bulk-bar-count', deleteBtnId: 'dp-settings__mcps-bulk-delete-btn', noun: 'MCP server' });
 
   /* ── delete ── */
   var pendingDelId = null;
-  document.getElementById('cfg-del-api-cancel').addEventListener('click', function() {
-    document.getElementById('cfg-delete-api-modal').style.display = 'none';
+  document.getElementById('dp-settings__del-api-cancel').addEventListener('click', function() {
+    document.getElementById('dp-settings__delete-api-modal').style.display = 'none';
   });
-  document.getElementById('cfg-delete-api-modal').addEventListener('click', function(e) {
+  document.getElementById('dp-settings__delete-api-modal').addEventListener('click', function(e) {
     if (e.target===this) this.style.display='none';
   });
-  document.getElementById('cfg-del-api-confirm').addEventListener('click', async function() {
-    document.getElementById('cfg-delete-api-modal').style.display = 'none';
+  document.getElementById('dp-settings__del-api-confirm').addEventListener('click', async function() {
+    document.getElementById('dp-settings__delete-api-modal').style.display = 'none';
 
     if (pendingBulkIds && pendingBulkIds.length) {
       var ids = pendingBulkIds.slice();
@@ -469,14 +469,14 @@
             headers: { 'X-CSRF-Token': window.devportalApi.csrfToken() },
           });
           if (r.ok || r.status===204) {
-            var row = document.getElementById('cfg-api-row-'+item.id);
+            var row = document.getElementById('dp-settings__api-row-'+item.id);
             if (row) row.remove();
           } else { failCount++; }
         } catch(e) { failCount++; }
       }));
-      document.querySelectorAll('.cfg-row-check').forEach(function(c){ c.checked = false; });
-      document.querySelectorAll('#cfg-select-all, #cfg-mcps-select-all').forEach(function(sa){ sa.checked = false; sa.indeterminate = false; });
-      document.querySelectorAll('.cfg-bulk-bar').forEach(function(b){ b.style.display = 'none'; });
+      document.querySelectorAll('.dp-settings__row-check').forEach(function(c){ c.checked = false; });
+      document.querySelectorAll('#dp-settings__select-all, #dp-settings__mcps-select-all').forEach(function(sa){ sa.checked = false; sa.indeterminate = false; });
+      document.querySelectorAll('.dp-settings__bulk-bar').forEach(function(b){ b.style.display = 'none'; });
       await showAlert(
         failCount > 0 ? failCount + ' record(s) could not be deleted.' : 'Deleted.',
         failCount > 0 ? 'error' : 'success'
@@ -492,7 +492,7 @@
       });
       if (res.ok || res.status===204) {
         await showAlert(mutationBasePath(pendingDelId) === '/mcp-servers' ? 'MCP server deleted.' : 'API deleted.', 'success');
-        var row = document.getElementById('cfg-api-row-'+pendingDelId);
+        var row = document.getElementById('dp-settings__api-row-'+pendingDelId);
         if (row) row.remove();
         pendingDelId = null;
       } else {
@@ -505,15 +505,15 @@
   /* ── deprecate confirmation modal ── */
   var pendingDeprecateId   = null;
   var pendingDeprecateName = null;
-  document.getElementById('cfg-dep-api-cancel').addEventListener('click', function() {
-    document.getElementById('cfg-deprecate-api-modal').style.display = 'none';
+  document.getElementById('dp-settings__dep-api-cancel').addEventListener('click', function() {
+    document.getElementById('dp-settings__deprecate-api-modal').style.display = 'none';
     pendingDeprecateId = pendingDeprecateName = null;
   });
-  document.getElementById('cfg-deprecate-api-modal').addEventListener('click', function(e) {
+  document.getElementById('dp-settings__deprecate-api-modal').addEventListener('click', function(e) {
     if (e.target === this) { this.style.display = 'none'; pendingDeprecateId = pendingDeprecateName = null; }
   });
-  document.getElementById('cfg-dep-api-confirm').addEventListener('click', async function() {
-    document.getElementById('cfg-deprecate-api-modal').style.display = 'none';
+  document.getElementById('dp-settings__dep-api-confirm').addEventListener('click', async function() {
+    document.getElementById('dp-settings__deprecate-api-modal').style.display = 'none';
     if (!pendingDeprecateId) return;
     await setApiStatus(pendingDeprecateId, pendingDeprecateName, 'DEPRECATED');
     pendingDeprecateId = pendingDeprecateName = null;
@@ -565,63 +565,63 @@
   /* ── event delegation for table actions ── */
   document.addEventListener('click', function(e) {
     /* open dropdown */
-    if (e.target.closest('.cfg-menu-trigger')) {
+    if (e.target.closest('.dp-settings__menu-trigger')) {
       e.stopPropagation();
-      var t  = e.target.closest('.cfg-menu-trigger');
-      var dd = t.parentElement.querySelector('.cfg-dropdown');
+      var t  = e.target.closest('.dp-settings__menu-trigger');
+      var dd = t.parentElement.querySelector('.dp-settings__dropdown');
       var open = dd.style.display === 'flex';
-      document.querySelectorAll('.cfg-dropdown').forEach(function(d){ d.style.display='none'; });
+      document.querySelectorAll('.dp-settings__dropdown').forEach(function(d){ d.style.display='none'; });
       if (!open) dd.style.display = 'flex';
       return;
     }
-    if (!e.target.closest('.cfg-dropdown')) {
-      document.querySelectorAll('.cfg-dropdown').forEach(function(d){ d.style.display='none'; });
+    if (!e.target.closest('.dp-settings__dropdown')) {
+      document.querySelectorAll('.dp-settings__dropdown').forEach(function(d){ d.style.display='none'; });
     }
 
     /* view details */
-    if (e.target.closest('.cfg-view-trigger')) {
-      var btn = e.target.closest('.cfg-view-trigger');
-      document.querySelectorAll('.cfg-dropdown').forEach(function(d){ d.style.display='none'; });
+    if (e.target.closest('.dp-settings__view-trigger')) {
+      var btn = e.target.closest('.dp-settings__view-trigger');
+      document.querySelectorAll('.dp-settings__dropdown').forEach(function(d){ d.style.display='none'; });
       openDrawer(apiDataFromRow(btn.dataset.id));
       return;
     }
 
     /* edit */
-    if (e.target.closest('.cfg-edit-trigger')) {
-      var btn = e.target.closest('.cfg-edit-trigger');
-      document.querySelectorAll('.cfg-dropdown').forEach(function(d){ d.style.display='none'; });
+    if (e.target.closest('.dp-settings__edit-trigger')) {
+      var btn = e.target.closest('.dp-settings__edit-trigger');
+      document.querySelectorAll('.dp-settings__dropdown').forEach(function(d){ d.style.display='none'; });
       var api = apiDataFromRow(btn.dataset.id);
       if (api) showWizard(api);
       return;
     }
 
     /* publish */
-    if (e.target.closest('.cfg-publish-trigger')) {
-      var btn = e.target.closest('.cfg-publish-trigger');
-      document.querySelectorAll('.cfg-dropdown').forEach(function(d){ d.style.display='none'; });
+    if (e.target.closest('.dp-settings__publish-trigger')) {
+      var btn = e.target.closest('.dp-settings__publish-trigger');
+      document.querySelectorAll('.dp-settings__dropdown').forEach(function(d){ d.style.display='none'; });
       setApiStatus(btn.dataset.id, btn.dataset.name, 'PUBLISHED');
       return;
     }
 
     /* deprecate */
-    if (e.target.closest('.cfg-unpublish-trigger')) {
-      var btn = e.target.closest('.cfg-unpublish-trigger');
-      document.querySelectorAll('.cfg-dropdown').forEach(function(d){ d.style.display='none'; });
+    if (e.target.closest('.dp-settings__unpublish-trigger')) {
+      var btn = e.target.closest('.dp-settings__unpublish-trigger');
+      document.querySelectorAll('.dp-settings__dropdown').forEach(function(d){ d.style.display='none'; });
       pendingDeprecateId   = btn.dataset.id;
       pendingDeprecateName = btn.dataset.name;
-      document.getElementById('cfg-dep-api-name-txt').textContent = btn.dataset.name;
-      document.getElementById('cfg-deprecate-api-modal').style.display = 'flex';
+      document.getElementById('dp-settings__dep-api-name-txt').textContent = btn.dataset.name;
+      document.getElementById('dp-settings__deprecate-api-modal').style.display = 'flex';
       return;
     }
 
     /* delete */
-    if (e.target.closest('.cfg-delete-trigger')) {
-      var btn = e.target.closest('.cfg-delete-trigger');
+    if (e.target.closest('.dp-settings__delete-trigger')) {
+      var btn = e.target.closest('.dp-settings__delete-trigger');
       e.stopPropagation();
-      document.querySelectorAll('.cfg-dropdown').forEach(function(d){ d.style.display='none'; });
+      document.querySelectorAll('.dp-settings__dropdown').forEach(function(d){ d.style.display='none'; });
       pendingDelId = btn.dataset.id;
-      document.getElementById('cfg-del-api-name-txt').textContent = btn.dataset.name;
-      document.getElementById('cfg-delete-api-modal').style.display = 'flex';
+      document.getElementById('dp-settings__del-api-name-txt').textContent = btn.dataset.name;
+      document.getElementById('dp-settings__delete-api-modal').style.display = 'flex';
       return;
     }
   });
@@ -632,7 +632,7 @@
     var errEl   = document.getElementById(errorId);
     var inputEl = document.getElementById(inputId);
     if (errEl)   { errEl.textContent = msg; errEl.style.display = msg ? 'block' : 'none'; }
-    if (inputEl) { inputEl.classList.toggle('cfg-form-input--error', !!msg); }
+    if (inputEl) { inputEl.classList.toggle('dp-settings__form-input--error', !!msg); }
   }
 
   function validateStep0() {
@@ -690,12 +690,12 @@
     return ok;
   }
 
-  document.getElementById('cfg-add-api-btn').addEventListener('click', function() { showWizard(null); });
-  document.getElementById('cfg-add-mcp-btn').addEventListener('click', function() { showWizard(null, 'mcp'); });
+  document.getElementById('dp-settings__add-api-btn').addEventListener('click', function() { showWizard(null); });
+  document.getElementById('dp-settings__add-mcp-btn').addEventListener('click', function() { showWizard(null, 'mcp'); });
 
   /* ── Seed sample APIs (demo mode only) ── */
   (function() {
-    var btn = document.getElementById('cfg-seed-samples-btn');
+    var btn = document.getElementById('dp-settings__seed-samples-btn');
     if (!btn) return;
     var originalHtml = btn.innerHTML;
     btn.addEventListener('click', async function() {
@@ -725,10 +725,10 @@
       }
     });
   }());
-  document.getElementById('cfg-wizard-back-link').addEventListener('click', function(e) { e.preventDefault(); hideWizard(); });
-  document.getElementById('cfg-wizard-cancel').addEventListener('click', function() { hideWizard(); });
-  document.getElementById('cfg-wizard-back-step').addEventListener('click', function() { if(currentStep>0) updateWizardStep(currentStep-1); });
-  document.getElementById('cfg-wizard-next').addEventListener('click', async function() {
+  document.getElementById('dp-settings__wizard-back-link').addEventListener('click', function(e) { e.preventDefault(); hideWizard(); });
+  document.getElementById('dp-settings__wizard-cancel').addEventListener('click', function() { hideWizard(); });
+  document.getElementById('dp-settings__wizard-back-step').addEventListener('click', function() { if(currentStep>0) updateWizardStep(currentStep-1); });
+  document.getElementById('dp-settings__wizard-next').addEventListener('click', async function() {
     if (currentStep === 0) {
       if (!validateStep0()) return;
       updateWizardStep(1);
@@ -746,7 +746,7 @@
     }
   });
 
-  document.querySelectorAll('#cfg-apis-wizard .cfg-step').forEach(function(el) {
+  document.querySelectorAll('#dp-settings__apis-wizard .dp-settings__step').forEach(function(el) {
     el.addEventListener('click', function() {
       var s = parseInt(el.getAttribute('data-step'),10);
       if (s < currentStep) updateWizardStep(s);
@@ -787,17 +787,17 @@
     zone.addEventListener('dragover', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      zone.classList.add('cfg-upload-zone--active');
+      zone.classList.add('dp-settings__upload-zone--active');
     });
     zone.addEventListener('dragleave', function(e) {
       if (!zone.contains(e.relatedTarget)) {
-        zone.classList.remove('cfg-upload-zone--active');
+        zone.classList.remove('dp-settings__upload-zone--active');
       }
     });
     zone.addEventListener('drop', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      zone.classList.remove('cfg-upload-zone--active');
+      zone.classList.remove('dp-settings__upload-zone--active');
       var files = e.dataTransfer && e.dataTransfer.files;
       if (files && files.length) handleSpecFile(files[0]);
     });
@@ -810,11 +810,11 @@
     list.innerHTML = '';
     existingDocs.forEach(function(name) {
       var item = document.createElement('div');
-      item.className = 'cfg-docs-item';
-      item.innerHTML = '<span class="cfg-docs-icon"><i class="bi bi-file-text"></i></span>' +
-        '<span class="cfg-docs-name">' + esc(name) + '</span>' +
-        '<button type="button" class="cfg-docs-remove" title="Remove"><i class="bi bi-trash"></i></button>';
-      item.querySelector('.cfg-docs-remove').addEventListener('click', function() {
+      item.className = 'dp-settings__docs-item';
+      item.innerHTML = '<span class="dp-settings__docs-icon"><i class="bi bi-file-text"></i></span>' +
+        '<span class="dp-settings__docs-name">' + esc(name) + '</span>' +
+        '<button type="button" class="dp-settings__docs-remove" title="Remove"><i class="bi bi-trash"></i></button>';
+      item.querySelector('.dp-settings__docs-remove').addEventListener('click', function() {
         existingDocs = existingDocs.filter(function(n) { return n !== name; });
         docsToRemove.push(name);
         renderExistingDocs();
@@ -848,28 +848,28 @@
     zone.addEventListener('dragover', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      zone.classList.add('cfg-upload-compact--active');
+      zone.classList.add('dp-settings__upload-compact--active');
     });
     zone.addEventListener('dragleave', function(e) {
       if (!zone.contains(e.relatedTarget)) {
-        zone.classList.remove('cfg-upload-compact--active');
+        zone.classList.remove('dp-settings__upload-compact--active');
       }
     });
     zone.addEventListener('drop', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      zone.classList.remove('cfg-upload-compact--active');
+      zone.classList.remove('dp-settings__upload-compact--active');
       handleDocsFiles(e.dataTransfer && e.dataTransfer.files);
     });
   }());
   function appendDocItem(f) {
     var list = document.getElementById('wz-docs-list');
     var item = document.createElement('div');
-    item.className = 'cfg-docs-item';
-    item.innerHTML = '<span class="cfg-docs-icon"><i class="bi bi-file-text"></i></span>' +
-      '<span class="cfg-docs-name">'+esc(f.name)+'</span>' +
-      '<button type="button" class="cfg-docs-remove" title="Remove"><i class="bi bi-trash"></i></button>';
-    item.querySelector('.cfg-docs-remove').addEventListener('click', function() {
+    item.className = 'dp-settings__docs-item';
+    item.innerHTML = '<span class="dp-settings__docs-icon"><i class="bi bi-file-text"></i></span>' +
+      '<span class="dp-settings__docs-name">'+esc(f.name)+'</span>' +
+      '<button type="button" class="dp-settings__docs-remove" title="Remove"><i class="bi bi-trash"></i></button>';
+    item.querySelector('.dp-settings__docs-remove').addEventListener('click', function() {
       docFiles = docFiles.filter(function(x){ return x.name!==f.name; });
       item.remove();
       document.getElementById('wz-docs-empty').style.display = docFiles.length ? 'none' : 'block';
@@ -953,14 +953,14 @@
     if (zone) {
       zone.addEventListener('dragover', function(e) {
         e.preventDefault(); e.stopPropagation();
-        zone.classList.add('cfg-upload-zone--active');
+        zone.classList.add('dp-settings__upload-zone--active');
       });
       zone.addEventListener('dragleave', function(e) {
-        if (!zone.contains(e.relatedTarget)) zone.classList.remove('cfg-upload-zone--active');
+        if (!zone.contains(e.relatedTarget)) zone.classList.remove('dp-settings__upload-zone--active');
       });
       zone.addEventListener('drop', function(e) {
         e.preventDefault(); e.stopPropagation();
-        zone.classList.remove('cfg-upload-zone--active');
+        zone.classList.remove('dp-settings__upload-zone--active');
         handleContentZipFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]);
       });
     }
@@ -971,24 +971,24 @@
     if (!api) return;
     var ti = typeInfo(api.apiType);
     var av = document.getElementById('drw-avatar');
-    av.className = 'cfg-drawer-avatar ' + ti.av;
+    av.className = 'dp-settings__drawer-avatar ' + ti.av;
     av.textContent = initials(api.apiName).toUpperCase();
     document.getElementById('drw-name').textContent   = api.apiName;
     document.getElementById('drw-handle').textContent = '/' + api.apiHandle;
     var metaRow = document.getElementById('drw-meta-row');
-    var statusClass = api.apiStatus === 'PUBLISHED'   ? 'cfg-status-badge cfg-status-published'   :
-                      api.apiStatus === 'DEPRECATED'  ? 'cfg-status-badge cfg-status-deprecated'  :
-                                                        'cfg-status-badge cfg-status-draft';
-    var statusLabel = api.apiStatus === 'PUBLISHED'   ? '<span class="cfg-status-dot"></span>Published'  :
-                      api.apiStatus === 'DEPRECATED'  ? '<span class="cfg-status-dot"></span>Deprecated' :
-                                                        '<span class="cfg-status-dot"></span>Draft';
+    var statusClass = api.apiStatus === 'PUBLISHED'   ? 'dp-settings__status-badge dp-settings__status-published'   :
+                      api.apiStatus === 'DEPRECATED'  ? 'dp-settings__status-badge dp-settings__status-deprecated'  :
+                                                        'dp-settings__status-badge dp-settings__status-draft';
+    var statusLabel = api.apiStatus === 'PUBLISHED'   ? '<span class="dp-settings__status-dot"></span>Published'  :
+                      api.apiStatus === 'DEPRECATED'  ? '<span class="dp-settings__status-dot"></span>Deprecated' :
+                                                        '<span class="dp-settings__status-dot"></span>Draft';
     metaRow.innerHTML =
-      '<span class="cfg-type-badge '+ti.tb+'">'+esc(ti.label)+'</span>' +
+      '<span class="dp-settings__type-badge '+ti.tb+'">'+esc(ti.label)+'</span>' +
       '<span class="'+statusClass+'">'+statusLabel+'</span>';
     document.getElementById('drw-desc').textContent = api.apiDescription || '';
     var grid = document.getElementById('drw-grid');
     function row(lbl, val, mono) {
-      return '<span class="cfg-drawer-lbl">'+esc(lbl)+'</span><span class="cfg-drawer-val'+(mono?' cfg-drawer-val--mono':'')+'">'+esc(val||'—')+'</span>';
+      return '<span class="dp-settings__drawer-lbl">'+esc(lbl)+'</span><span class="dp-settings__drawer-val'+(mono?' dp-settings__drawer-val--mono':'')+'">'+esc(val||'—')+'</span>';
     }
     var polNames = (api.subscriptionPlans||[]).map(function(p){ return typeof p === 'string' ? p : (p.planName||''); }).filter(Boolean);
     grid.innerHTML = [
@@ -999,19 +999,19 @@
       row('Tags', Array.isArray(api.tags) ? api.tags.join(', ') : api.tags),
       row('Plans', polNames.join(', ')),
     ].join('');
-    document.getElementById('cfg-drawer-edit-btn').onclick = function() {
-      document.getElementById('cfg-detail-drawer').classList.remove('open');
+    document.getElementById('dp-settings__drawer-edit-btn').onclick = function() {
+      document.getElementById('dp-settings__detail-drawer').classList.remove('open');
       showWizard(api);
     };
-    document.getElementById('cfg-detail-drawer').classList.add('open');
+    document.getElementById('dp-settings__detail-drawer').classList.add('open');
   }
-  document.getElementById('cfg-drawer-close').addEventListener('click', function() {
-    document.getElementById('cfg-detail-drawer').classList.remove('open');
+  document.getElementById('dp-settings__drawer-close').addEventListener('click', function() {
+    document.getElementById('dp-settings__detail-drawer').classList.remove('open');
   });
-  document.getElementById('cfg-drawer-close-foot').addEventListener('click', function() {
-    document.getElementById('cfg-detail-drawer').classList.remove('open');
+  document.getElementById('dp-settings__drawer-close-foot').addEventListener('click', function() {
+    document.getElementById('dp-settings__detail-drawer').classList.remove('open');
   });
-  document.getElementById('cfg-detail-drawer').addEventListener('click', function(e) {
+  document.getElementById('dp-settings__detail-drawer').addEventListener('click', function(e) {
     if (e.target === this) this.classList.remove('open');
   });
 }());

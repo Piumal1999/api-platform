@@ -1,12 +1,12 @@
 /* General Reset */
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 /* Body Styling */
-body {
+body{
     font-family: var(--font-family-sans);
     height: 100vh;
     display: flex;
@@ -15,7 +15,7 @@ body {
 }
 
 /* Login Container */
-.login-container {
+.dp-login__container{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,7 +24,7 @@ body {
 }
 
 /* Login Box */
-.login-box {
+.dp-login__box{
     background: var(--primary-light);
     padding: 40px 30px;
     border-radius: 12px;
@@ -35,7 +35,7 @@ body {
 }
 
 /* Login Title */
-.login-title {
+.dp-login__title{
     font-size: 1.875rem;
     font-weight: bold;
     color: var(--primary);
@@ -43,12 +43,12 @@ body {
 }
 
 /* Form Styling */
-.login-form .form-group {
+.dp-login__form .form-group{
     margin-bottom: 20px;
     text-align: left;
 }
 
-.login-form label {
+.dp-login__form label{
     display: block;
     font-size: 14px;
     color: var(--text);
@@ -56,7 +56,7 @@ body {
     margin-bottom: 8px;
 }
 
-.login-form .form-control {
+.dp-login__form .form-control{
     width: 100%;
     padding: 10px 15px;
     font-size: 14px;
@@ -69,13 +69,13 @@ body {
     transition: all 0.3s ease;
 }
 
-.login-form .form-control:focus {
+.dp-login__form .form-control:focus{
     border-color: #3498db;
     box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
 
 /* Button Styling */
-.btn-login {
+.dp-auth-login__btn-login{
     width: 100%;
     padding: 12px 15px;
     font-size: 16px;
@@ -87,36 +87,36 @@ body {
     transition: background 0.3s ease;
 }
 
-.btn-login:hover {
+.dp-auth-login__btn-login:hover{
     background: #2980b9;
 }
 
 /* Footer Links */
-.form-footer {
+.dp-auth-login__form-footer{
     margin-top: 15px;
 }
 
-.forgot-password {
+.dp-auth-login__forgot-password{
     font-size: 14px;
     color: #3498db;
     text-decoration: none;
 }
 
-.forgot-password:hover {
+.dp-auth-login__forgot-password:hover{
     text-decoration: underline;
 }
 
 /* Responsive Design */
 @media (max-width: 480px) {
-    .login-box {
+    .dp-login__box{
         padding: 30px 20px;
     }
 
-    .login-title {
+    .dp-login__title{
         font-size: 20px;
     }
 
-    .btn-login {
+    .dp-auth-login__btn-login{
         font-size: 14px;
     }
 }

@@ -1,27 +1,27 @@
-<aside class="adoc-nav">
+<aside class="dp-doc__nav">
     {{#docTypes}}
 
     {{#if (eq type "Specification")}}
-    <div class="adoc-nav-group">
-      <div class="adoc-nav-group-title">SPECIFICATION</div>
-      <div class="adoc-nav-items">
+    <div class="dp-doc__nav-group">
+      <div class="dp-doc__nav-group-title">SPECIFICATION</div>
+      <div class="dp-doc__nav-items">
         <a href="{{../baseDocUrl}}/docs/specification"
-          class="adoc-nav-item doc-link{{#if ../isAPIDefinition}} adoc-nav-item--active{{/if}}">
+          class="dp-doc__nav-item doc-link{{#if ../isAPIDefinition}} dp-doc__nav-item--active{{/if}}">
           <i class="bi bi-code-slash"></i>
           <span>{{#if (eq ../apiType "Mcp")}}MCP Playground{{else}}API Definition{{/if}}</span>
         </a>
         {{#if (eq ../apiType "WS")}}
-        <a href="{{../baseDocUrl}}/docs/specification?tryout=true" class="adoc-nav-item doc-link">
+        <a href="{{../baseDocUrl}}/docs/specification?tryout=true" class="dp-doc__nav-item doc-link">
           <i class="bi bi-play-circle"></i><span>Tryout</span>
         </a>
         {{/if}}
         {{#if (eq ../apiType "WebSubApi")}}
-        <a href="{{../baseDocUrl}}/docs/specification?tryout=true" class="adoc-nav-item doc-link">
+        <a href="{{../baseDocUrl}}/docs/specification?tryout=true" class="dp-doc__nav-item doc-link">
           <i class="bi bi-play-circle"></i><span>Tryout</span>
         </a>
         {{/if}}
         {{#if (eq ../apiType "GRAPHQL")}}
-        <a href="{{../baseDocUrl}}/docs/specification?tryout=true" class="adoc-nav-item doc-link">
+        <a href="{{../baseDocUrl}}/docs/specification?tryout=true" class="dp-doc__nav-item doc-link">
           <i class="bi bi-play-circle"></i><span>Tryout</span>
         </a>
         {{/if}}
@@ -29,12 +29,12 @@
     </div>
 
     {{else}}
-    <div class="adoc-nav-group">
-      <div class="adoc-nav-group-title">{{type}}</div>
-      <div class="adoc-nav-items">
+    <div class="dp-doc__nav-group">
+      <div class="dp-doc__nav-group-title">{{type}}</div>
+      <div class="dp-doc__nav-items">
         {{#names}}
         <a href="{{../../baseDocUrl}}/docs/{{../type}}/{{stripMdExtension this}}"
-          class="adoc-nav-item doc-link{{#if (eq ../../currentDocName (stripMdExtension this))}} adoc-nav-item--active{{/if}}">
+          class="dp-doc__nav-item doc-link{{#if (eq ../../currentDocName (stripMdExtension this))}} dp-doc__nav-item--active{{/if}}">
           <i class="bi bi-file-text"></i>
           <span>{{beforeSeparator this "."}}</span>
         </a>

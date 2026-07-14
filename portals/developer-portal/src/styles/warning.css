@@ -1,4 +1,4 @@
-.delete-alert .modal-dialog {
+.dp-delete__alert .modal-dialog{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,14 +8,14 @@
     z-index: 1055;
 }
 
-.delete-alert .modal-content {
+.dp-delete__alert .modal-content{
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     padding: 0;
 }
 
-.delete-alert .modal-body {
+.dp-delete__alert .modal-body{
     font-size: 14px; 
     height: 100%;
     display: flex;

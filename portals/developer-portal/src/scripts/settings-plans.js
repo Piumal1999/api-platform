@@ -28,7 +28,7 @@
   /* ── limit row builder ── */
   function makeLimitRow(limit) {
     var row = document.createElement('div');
-    row.className = 'cfg-limit-row';
+    row.className = 'dp-settings__limit-row';
     row.style.cssText = 'display:flex;gap:8px;align-items:center;margin-bottom:8px;';
 
     var typeOpts = LIMIT_TYPES.map(function(t){
@@ -39,17 +39,17 @@
     }).join('');
 
     row.innerHTML =
-      '<select class="cfg-form-input cfg-limit-type" style="flex:2;">'+typeOpts+'</select>'+
-      '<input type="number" class="cfg-form-input cfg-form-input--mono cfg-limit-count" style="flex:1.5;" '+
+      '<select class="dp-settings__form-input dp-settings__limit-type" style="flex:2;">'+typeOpts+'</select>'+
+      '<input type="number" class="dp-settings__form-input dp-settings__form-input--mono dp-settings__limit-count" style="flex:1.5;" '+
         'placeholder="count" value="'+(limit?limit.limitCount:'')+'" />'+
       '<span style="color:var(--text-muted);font-size:.8rem;white-space:nowrap;">/ per</span>'+
-      '<input type="number" class="cfg-form-input cfg-form-input--mono cfg-limit-amount" style="flex:.7;" '+
+      '<input type="number" class="dp-settings__form-input dp-settings__form-input--mono dp-settings__limit-amount" style="flex:.7;" '+
         'placeholder="1" value="'+(limit&&limit.timeAmount!=null?limit.timeAmount:1)+'" min="1" />'+
-      '<select class="cfg-form-input cfg-limit-unit" style="flex:1.2;">'+unitOpts+'</select>'+
-      '<button type="button" class="cfg-icon-btn cfg-icon-btn--danger cfg-limit-remove-btn" title="Remove">'+
+      '<select class="dp-settings__form-input dp-settings__limit-unit" style="flex:1.2;">'+unitOpts+'</select>'+
+      '<button type="button" class="dp-settings__icon-btn dp-settings__icon-btn--danger dp-settings__limit-remove-btn" title="Remove">'+
         '<i class="bi bi-x-lg"></i></button>';
 
-    row.querySelector('.cfg-limit-remove-btn').addEventListener('click', function(){ row.remove(); });
+    row.querySelector('.dp-settings__limit-remove-btn').addEventListener('click', function(){ row.remove(); });
     return row;
   }
 
@@ -58,12 +58,12 @@
   });
 
   function readLimits() {
-    var rows = document.querySelectorAll('#pol-limits-list .cfg-limit-row');
+    var rows = document.querySelectorAll('#pol-limits-list .dp-settings__limit-row');
     var limits = [];
     rows.forEach(function(row){
-      var rawCount = row.querySelector('.cfg-limit-count').value.trim();
+      var rawCount = row.querySelector('.dp-settings__limit-count').value.trim();
       var count = rawCount === '-1' ? -1 : parseInt(rawCount, 10);
-      var rawAmount = row.querySelector('.cfg-limit-amount').value.trim();
+      var rawAmount = row.querySelector('.dp-settings__limit-amount').value.trim();
       var amount = rawAmount === '' ? 1 : parseInt(rawAmount, 10);
       if (isNaN(count) || (count !== -1 && count <= 0)) {
         throw new Error('Limit count must be -1 (unlimited) or a positive number.');
@@ -72,9 +72,9 @@
         throw new Error('Limit time amount must be a positive number.');
       }
       limits.push({
-        limitType:  row.querySelector('.cfg-limit-type').value,
+        limitType:  row.querySelector('.dp-settings__limit-type').value,
         limitCount: count,
-        timeUnit:   row.querySelector('.cfg-limit-unit').value || null,
+        timeUnit:   row.querySelector('.dp-settings__limit-unit').value || null,
         timeAmount: amount,
       });
     });
@@ -84,8 +84,8 @@
   /* ── open / close modal ── */
   function openPlanModal(mode, data) {
     editPlanId = mode === 'edit' ? data.planId : null;
-    document.getElementById('cfg-plan-modal-title').textContent = mode === 'edit' ? 'Edit subscription plan' : 'Add subscription plan';
-    document.getElementById('cfg-plan-modal-save').textContent  = mode === 'edit' ? 'Save changes' : 'Add plan';
+    document.getElementById('dp-settings__plan-modal-title').textContent = mode === 'edit' ? 'Edit subscription plan' : 'Add subscription plan';
+    document.getElementById('dp-settings__plan-modal-save').textContent  = mode === 'edit' ? 'Save changes' : 'Add plan';
     document.getElementById('pol-display').value = mode === 'edit' ? (data.displayName||'') : '';
     document.getElementById('pol-name').value    = mode === 'edit' ? (data.planName||'')    : '';
     document.getElementById('pol-desc').value    = mode === 'edit' ? (data.description||'') : '';
@@ -99,13 +99,13 @@
     }
     existing.forEach(function(l){ list.appendChild(makeLimitRow(l)); });
 
-    document.getElementById('cfg-plan-modal').style.display = 'flex';
+    document.getElementById('dp-settings__plan-modal').style.display = 'flex';
     document.getElementById('pol-display').focus();
   }
-  function closePlanModal() { document.getElementById('cfg-plan-modal').style.display='none'; editPlanId=null; }
+  function closePlanModal() { document.getElementById('dp-settings__plan-modal').style.display='none'; editPlanId=null; }
 
   /* ── save ── */
-  document.getElementById('cfg-plan-modal-save').addEventListener('click', async function() {
+  document.getElementById('dp-settings__plan-modal-save').addEventListener('click', async function() {
     var displayName = v('pol-display');
     var planName    = v('pol-name');
     if (!displayName || !planName) { await showAlert('Display name and name are required.', 'error'); return; }
@@ -143,16 +143,16 @@
     } catch(e) { await showAlert('Error: '+e.message, 'error'); }
   });
 
-  document.getElementById('cfg-plan-modal-close').addEventListener('click', closePlanModal);
-  document.getElementById('cfg-plan-modal-cancel').addEventListener('click', closePlanModal);
-  document.getElementById('cfg-plan-modal').addEventListener('click', function(e){ if(e.target===this) closePlanModal(); });
-  document.getElementById('cfg-add-plan-btn').addEventListener('click', function() { openPlanModal('add'); });
+  document.getElementById('dp-settings__plan-modal-close').addEventListener('click', closePlanModal);
+  document.getElementById('dp-settings__plan-modal-cancel').addEventListener('click', closePlanModal);
+  document.getElementById('dp-settings__plan-modal').addEventListener('click', function(e){ if(e.target===this) closePlanModal(); });
+  document.getElementById('dp-settings__add-plan-btn').addEventListener('click', function() { openPlanModal('add'); });
 
   /* ── edit / delete delegation ── */
   var pendingDelPlanId = null;
   document.addEventListener('click', function(e) {
-    if (e.target.closest('.cfg-plan-edit-btn')) {
-      var btn = e.target.closest('.cfg-plan-edit-btn');
+    if (e.target.closest('.dp-settings__plan-edit-btn')) {
+      var btn = e.target.closest('.dp-settings__plan-edit-btn');
       openPlanModal('edit', {
         planId:      btn.dataset.id,
         planName:    btn.dataset.name,
@@ -163,22 +163,22 @@
       });
       return;
     }
-    if (e.target.closest('.cfg-plan-delete-btn')) {
-      var btn = e.target.closest('.cfg-plan-delete-btn');
+    if (e.target.closest('.dp-settings__plan-delete-btn')) {
+      var btn = e.target.closest('.dp-settings__plan-delete-btn');
       pendingDelPlanId = btn.dataset.id;
-      document.getElementById('cfg-del-plan-name-txt').textContent = btn.dataset.display || btn.dataset.name;
-      document.getElementById('cfg-delete-plan-modal').style.display = 'flex';
+      document.getElementById('dp-settings__del-plan-name-txt').textContent = btn.dataset.display || btn.dataset.name;
+      document.getElementById('dp-settings__delete-plan-modal').style.display = 'flex';
       return;
     }
   });
 
-  document.getElementById('cfg-del-plan-cancel').addEventListener('click', function() {
-    document.getElementById('cfg-delete-plan-modal').style.display = 'none';
+  document.getElementById('dp-settings__del-plan-cancel').addEventListener('click', function() {
+    document.getElementById('dp-settings__delete-plan-modal').style.display = 'none';
   });
-  document.getElementById('cfg-delete-plan-modal').addEventListener('click', function(e){ if(e.target===this) this.style.display='none'; });
-  document.getElementById('cfg-del-plan-confirm').addEventListener('click', async function() {
+  document.getElementById('dp-settings__delete-plan-modal').addEventListener('click', function(e){ if(e.target===this) this.style.display='none'; });
+  document.getElementById('dp-settings__del-plan-confirm').addEventListener('click', async function() {
     if (!pendingDelPlanId) return;
-    document.getElementById('cfg-delete-plan-modal').style.display = 'none';
+    document.getElementById('dp-settings__delete-plan-modal').style.display = 'none';
     try {
       var res = await fetch(window.devportalApi.root('/subscription-plans/'+encodeURIComponent(pendingDelPlanId)), {
         method: 'DELETE',

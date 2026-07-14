@@ -1,34 +1,34 @@
-<div class="mk-km-card {{#if isSandbox}}mk-km-card-sandbox{{/if}}">
+<div class="dp-keys__km-card {{#if isSandbox}}dp-keys__km-card--sandbox{{/if}}">
 
     {{!-- Card header --}}
-    <div class="mk-km-header">
-        <div class="mk-km-icon {{#if isSandbox}}mk-km-icon-sandbox{{/if}}">
+    <div class="dp-keys__km-header">
+        <div class="dp-keys__km-icon {{#if isSandbox}}dp-keys__km-icon--sandbox{{/if}}">
             <i class="bi bi-key-fill"></i>
         </div>
-        <div class="mk-km-info">
-            <span class="mk-km-name">{{kmName}}</span>
+        <div class="dp-keys__km-info">
+            <span class="dp-keys__km-name">{{kmName}}</span>
         </div>
-        <span class="mk-km-badge {{#if isSandbox}}mk-km-badge-sandbox{{/if}}">
-            <span class="mk-km-badge-dot"></span> Active
+        <span class="dp-keys__km-badge {{#if isSandbox}}dp-keys__km-badge--sandbox{{/if}}">
+            <span class="dp-keys__km-badge-dot"></span> Active
         </span>
     </div>
 
     {{!-- Inner tab nav — only visible when credentials exist --}}
-    <div class="mk-km-tabnav" id="keyTabNav-{{keyType}}" role="tablist"
+    <div class="dp-keys__km-tabnav" id="keyTabNav-{{keyType}}" role="tablist"
         style="{{#unless keys.consumerKey}}display:none{{/unless}}">
-        <button class="mk-km-tab active" type="button" role="tab"
+        <button class="dp-keys__km-tab active" type="button" role="tab"
             id="tab-btn-creds-{{kmId}}-{{keyType}}"
             data-bs-toggle="tab" data-bs-target="#tab-creds-{{kmId}}-{{keyType}}"
             aria-controls="tab-creds-{{kmId}}-{{keyType}}" aria-selected="true">
             <i class="bi bi-key"></i> Credentials
         </button>
-        <button class="mk-km-tab" type="button" role="tab"
+        <button class="dp-keys__km-tab" type="button" role="tab"
             id="tab-btn-token-{{kmId}}-{{keyType}}"
             data-bs-toggle="tab" data-bs-target="#tab-token-{{kmId}}-{{keyType}}"
             aria-controls="tab-token-{{kmId}}-{{keyType}}" aria-selected="false">
             <i class="bi bi-lightning-fill"></i> Generate Token
         </button>
-        <button class="mk-km-tab" type="button" role="tab"
+        <button class="dp-keys__km-tab" type="button" role="tab"
             id="tab-btn-curl-{{kmId}}-{{keyType}}"
             data-bs-toggle="tab" data-bs-target="#tab-curl-{{kmId}}-{{keyType}}"
             aria-controls="tab-curl-{{kmId}}-{{keyType}}" aria-selected="false">
@@ -37,24 +37,24 @@
     </div>
 
     {{!-- Tab content — only rendered when credentials exist --}}
-    <div class="tab-content mk-km-tab-content" id="consumerKeyContainer-{{keyType}}"
+    <div class="tab-content dp-keys__km-tab-content" id="consumerKeyContainer-{{keyType}}"
         style="{{#unless keys.consumerKey}}display:none{{/unless}}">
 
         {{!-- ── Credentials tab ── --}}
         <div class="tab-pane fade show active" id="tab-creds-{{kmId}}-{{keyType}}"
             role="tabpanel" aria-labelledby="tab-btn-creds-{{kmId}}-{{keyType}}" tabindex="0">
-            <div class="mk-km-body">
-                <div class="mk-cred-grid mk-cred-grid-single">
-                    <div class="mk-field" id="consumerKey-{{keyType}}-view">
-                        <label class="mk-field-label">Consumer Key (Client ID)</label>
-                        <div class="mk-input-row">
+            <div class="dp-keys__km-body">
+                <div class="dp-keys__cred-grid dp-keys__cred-grid--single">
+                    <div class="dp-keys__field" id="consumerKey-{{keyType}}-view">
+                        <label class="dp-keys__field-label">Consumer Key (Client ID)</label>
+                        <div class="dp-keys__input-row">
                             <input type="text" id="consumer-key-{{kmId}}-{{keyType}}-view"
-                                class="mk-input" name="consumerKey-{{keyType}}"
+                                class="dp-keys__input" name="consumerKey-{{keyType}}"
                                 value="{{keys.consumerKey}}" readonly disabled />
-                            <button class="mk-icon-btn copy-btn"
+                            <button class="dp-keys__icon-btn dp-copy__btn"
                                 onclick="copyConsumerKey('consumer-key-{{kmId}}-{{keyType}}-view')" title="Copy">
-                                <span class="copy-btn-icon"><i class="bi bi-copy"></i></span>
-                                <span class="copy-btn-check"><i class="bi bi-check"></i> Copied</span>
+                                <span class="dp-copy__btn-icon"><i class="bi bi-copy"></i></span>
+                                <span class="dp-copy__btn-check"><i class="bi bi-check"></i> Copied</span>
                             </button>
                         </div>
                         <input type="hidden" id="app-ref-{{kmId}}-{{keyType}}" name="appRefId" value="{{keys.appRefId}}" />
@@ -63,13 +63,13 @@
                 </div>
             </div>
             {{!-- Revoke footer — part of Credentials tab --}}
-            <div class="mk-km-footer" id="keyActionsContainer-{{keyType}}">
-                <span class="mk-secret-note">
+            <div class="dp-keys__km-footer" id="keyActionsContainer-{{keyType}}">
+                <span class="dp-keys__secret-note">
                     <i class="bi bi-info-circle"></i>
                     Revoking removes all credentials. Tokens already issued remain valid until they expire.
                 </span>
-                <div class="mk-footer-actions">
-                    <button class="mk-btn-danger {{#if isReadOnlyMode}}disabled{{/if}}"
+                <div class="dp-keys__footer-actions">
+                    <button class="dp-keys__btn--danger {{#if isReadOnlyMode}}disabled{{/if}}"
                         style="{{#if isReadOnlyMode}}pointer-events:none;opacity:.5{{/if}}"
                         onclick="confirmAndRevokeKeys('{{appId}}', '{{keys.keyMappingId}}', '{{keyType}}')">
                         <i class="bi bi-trash3"></i> Revoke keys
@@ -81,10 +81,10 @@
         {{!-- ── Generate Token tab ── --}}
         <div class="tab-pane fade" id="tab-token-{{kmId}}-{{keyType}}"
             role="tabpanel" aria-labelledby="tab-btn-token-{{kmId}}-{{keyType}}" tabindex="0">
-            <div class="mk-token-form mk-km-body">
-                <div class="mk-field mk-field-wide">
-                    <label class="mk-field-label">Request Permissions (Scopes)</label>
-                    <div class="input-scopes mk-scope-input"
+            <div class="dp-keys__token-form dp-keys__km-body">
+                <div class="dp-keys__field dp-keys__field--wide">
+                    <label class="dp-keys__field-label">Request Permissions (Scopes)</label>
+                    <div class="dp-keys__input-scopes dp-keys__scope-input"
                         id="scopeContainer-{{appId}}-{{keyType}}"
                         data-scopes="{{json subscriptionScopes}}">
                         <input type="text" class="text-input"
@@ -93,19 +93,19 @@
                     </div>
                 </div>
                 <form id="inlineTokenForm-{{kmId}}-{{keyType}}" style="display:none"></form>
-                <div class="mk-token-actions">
+                <div class="dp-keys__token-actions">
                     <button id="tokenKeyBtn-{{keyType}}"
-                        class="mk-btn-primary {{#if isReadOnlyMode}}disabled{{/if}}"
+                        class="dp-keys__btn--primary {{#if isReadOnlyMode}}disabled{{/if}}"
                         data-app-id="{{appId}}"
                         data-keymappingid="{{keys.keyMappingId}}"
                         style="{{#if isReadOnlyMode}}pointer-events:none;opacity:.5{{/if}}"
                         onclick="openGenerateTokenModal('inlineTokenForm-{{kmId}}-{{keyType}}', '{{appId}}', '{{keys.keyMappingId}}', '{{kmName}}', '{{appName}}', '{{json subscriptionScopes}}', '{{keyType}}')">
                         <span class="button-normal-state"><i class="bi bi-lightning-fill"></i> Generate access token</span>
-                        <span class="button-loading-state" style="display:none">
+                        <span class="dp-app__button-loading" style="display:none">
                             <span class="spinner-border spinner-border-sm" role="status"></span> Generating…
                         </span>
                     </button>
-                    <span class="mk-token-note">Uses the consumer key &amp; secret of this key set.</span>
+                    <span class="dp-keys__token-note">Uses the consumer key &amp; secret of this key set.</span>
                 </div>
             </div>
         </div>
@@ -113,33 +113,33 @@
         {{!-- ── cURL tab ── --}}
         <div class="tab-pane fade" id="tab-curl-{{kmId}}-{{keyType}}"
             role="tabpanel" aria-labelledby="tab-btn-curl-{{kmId}}-{{keyType}}" tabindex="0">
-            <div class="mk-curl-body mk-km-body">
-                <p class="mk-curl-desc">Use the following cURL command to generate an access token with the client credentials grant type.</p>
-                <div class="mk-curl-details">
-                    <div class="mk-curl-row">
-                        <span class="mk-curl-label">Token Endpoint</span>
-                        <code class="mk-curl-value">{{tokenEndpoint}}</code>
+            <div class="dp-keys__curl-body dp-keys__km-body">
+                <p class="dp-keys__curl-desc">Use the following cURL command to generate an access token with the client credentials grant type.</p>
+                <div class="dp-keys__curl-details">
+                    <div class="dp-keys__curl-row">
+                        <span class="dp-keys__curl-label">Token Endpoint</span>
+                        <code class="dp-keys__curl-value">{{tokenEndpoint}}</code>
                     </div>
-                    <div class="mk-curl-row">
-                        <span class="mk-curl-label">Authorization</span>
-                        <code class="mk-curl-value">Basic Base64(consumer_key:consumer_secret)</code>
+                    <div class="dp-keys__curl-row">
+                        <span class="dp-keys__curl-label">Authorization</span>
+                        <code class="dp-keys__curl-value">Basic Base64(consumer_key:consumer_secret)</code>
                     </div>
-                    <div class="mk-curl-row">
-                        <span class="mk-curl-label">Content-Type</span>
-                        <code class="mk-curl-value">application/x-www-form-urlencoded</code>
+                    <div class="dp-keys__curl-row">
+                        <span class="dp-keys__curl-label">Content-Type</span>
+                        <code class="dp-keys__curl-value">application/x-www-form-urlencoded</code>
                     </div>
-                    <div class="mk-curl-row">
-                        <span class="mk-curl-label">Payload</span>
-                        <code class="mk-curl-value">grant_type=client_credentials</code>
+                    <div class="dp-keys__curl-row">
+                        <span class="dp-keys__curl-label">Payload</span>
+                        <code class="dp-keys__curl-value">grant_type=client_credentials</code>
                     </div>
                 </div>
-                <div class="mk-code-block">
-                    <button class="mk-curl-copy-btn copy-btn"
+                <div class="dp-keys__code-block">
+                    <button class="dp-keys__curl-copy-btn dp-copy__btn"
                         data-endpoint="{{tokenEndpoint}}"
                         aria-label="Copy cURL command"
                         onclick="copyRealCurl(this)">
-                        <span class="copy-btn-icon"><i class="bi bi-copy"></i></span>
-                        <span class="copy-btn-check"><i class="bi bi-check"></i> Copied</span>
+                        <span class="dp-copy__btn-icon"><i class="bi bi-copy"></i></span>
+                        <span class="dp-copy__btn-check"><i class="bi bi-check"></i> Copied</span>
                     </button>
                     <code id="curl_{{kmName}}_{{keyType}}">curl -k -X POST &lt;TOKEN_ENDPOINT_URL&gt; -d "grant_type=client_credentials" -H "Authorization: Basic Base64(&lt;CONSUMER_KEY&gt;:&lt;CONSUMER_SECRET&gt;)"</code>
                 </div>
@@ -148,30 +148,30 @@
 
     </div>{{!-- /tab-content --}}
 
-    <div id="keyGenerationErrorContainer-{{keyType}}" class="mk-error" style="display:none"></div>
+    <div id="keyGenerationErrorContainer-{{keyType}}" class="dp-keys__error" style="display:none"></div>
 
     {{!-- Empty state — paste an externally-created client_id --}}
-    <div class="mk-km-empty" id="generateKeyContainer-{{keyType}}"
+    <div class="dp-keys__km-empty" id="generateKeyContainer-{{keyType}}"
         style="{{#if keys.consumerKey}}display:none{{/if}}">
-        <div class="mk-empty-icon-wrap {{#if isSandbox}}mk-empty-icon-sandbox{{/if}}">
+        <div class="dp-keys__empty-icon-wrap {{#if isSandbox}}dp-keys__empty-icon--sandbox{{/if}}">
             <i class="bi bi-key"></i>
         </div>
-        <p class="mk-empty-title">No client ID linked yet</p>
-        <p class="mk-empty-desc">
+        <p class="dp-keys__empty-title">No client ID linked yet</p>
+        <p class="dp-keys__empty-desc">
             Create an OAuth application directly in <strong>{{kmName}}</strong>, then paste its client ID below to
             link it to this application.
         </p>
-        <div id="addClientIdError-{{kmId}}-{{keyType}}" class="mk-error" style="display:none"></div>
-        <div class="mk-add-clientid-row">
-            <input type="text" class="mk-input" id="addClientIdInput-{{kmId}}-{{keyType}}"
+        <div id="addClientIdError-{{kmId}}-{{keyType}}" class="dp-keys__error" style="display:none"></div>
+        <div class="dp-keys__add-clientid-row">
+            <input type="text" class="dp-keys__input" id="addClientIdInput-{{kmId}}-{{keyType}}"
                 placeholder="Paste client ID" {{#if isReadOnlyMode}}disabled{{/if}} />
             <button data-cyid="addClientId-{{keyType}}" id="addClientIdBtn-{{kmId}}-{{keyType}}"
-                class="mk-btn-primary {{#if isSandbox}}mk-btn-sandbox{{/if}} {{#if isReadOnlyMode}}disabled{{/if}}"
+                class="dp-keys__btn--primary {{#if isSandbox}}dp-keys__btn--sandbox{{/if}} {{#if isReadOnlyMode}}disabled{{/if}}"
                 style="{{#if isReadOnlyMode}}pointer-events:none;opacity:.5{{/if}}"
                 {{#if isReadOnlyMode}}disabled{{/if}}
                 onclick="addClientId('{{kmId}}', '{{keyType}}', '{{appId}}', '{{orgId}}', '{{kmName}}')">
                 <span class="button-normal-state"><i class="bi bi-plus-lg me-1"></i>Add</span>
-                <span class="button-loading-state" style="display:none">
+                <span class="dp-app__button-loading" style="display:none">
                     <span class="spinner-border spinner-border-sm me-1" role="status"></span>Adding…
                 </span>
             </button>

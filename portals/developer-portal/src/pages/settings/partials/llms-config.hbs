@@ -6,27 +6,27 @@
 {{{ json llmsConfigContext }}}
 </script>
 
-<div class="cfg-panel-header">
+<div class="dp-settings__panel-header">
     <div>
-        <h2 class="cfg-panel-title">LLM Instructions</h2>
-        <p class="cfg-panel-desc">Control how AI agents discover and understand your developer portal via
+        <h2 class="dp-settings__panel-title">LLM Instructions</h2>
+        <p class="dp-settings__panel-desc">Control how AI agents discover and understand your developer portal via
         <a href="{{baseUrl}}/llms.txt" target="_blank" class="text-muted text-decoration-none"><code>llms.txt</code></a>.</p>
     </div>
 </div>
 
-{{> view-combo hash="cfg-llm" label="instructions"}}
+{{> view-combo hash="dp-settings__llm" label="instructions"}}
 
 {{!-- AI-discoverable toggle --}}
-<div class="llms-config-toggle-card mb-4">
+<div class="dp-llms__config-toggle-card mb-4">
     <div class="d-flex align-items-center justify-content-between gap-3">
         <div class="d-flex align-items-center gap-3">
-            <div class="llms-toggle-icon">
+            <div class="dp-llms__toggle-icon">
                 <i class="bi bi-robot"></i>
             </div>
             <div>
                 <div class="fw-semibold mb-0">Portal is AI-discoverable</div>
                 <div class="text-muted small mt-1">
-                    <code class="llms-url-code">{{baseUrl}}/llms.txt</code> is live · agents can find this portal
+                    <code class="dp-llms__url-code">{{baseUrl}}/llms.txt</code> is live · agents can find this portal
                 </div>
             </div>
         </div>
@@ -38,11 +38,11 @@
 
 {{!-- Form + Preview split --}}
 <div id="llmsConfigFormArea">
-    <div class="llms-config-split">
+    <div class="dp-llms__config-split">
         {{!-- Left: editor --}}
-        <div class="llms-config-editor-pane">
+        <div class="dp-llms__config-editor-pane">
 
-            <div class="llms-section-label">Portal Identity</div>
+            <div class="dp-llms__section-label">Portal Identity</div>
 
             <div class="mb-3">
                 <label class="form-label fw-semibold small" for="llmsPortalName">Portal name
@@ -70,19 +70,19 @@
         </div>
 
         {{!-- Right: preview --}}
-        <div class="llms-config-preview-pane">
-            <div class="llms-config-preview-header">
+        <div class="dp-llms__config-preview-pane">
+            <div class="dp-llms__config-preview-header">
                 <span class="fw-semibold small"><i class="bi bi-eye me-1"></i>Preview</span>
                 <div class="d-flex align-items-center gap-2">
-                    <span class="llms-preview-refreshing text-muted small" id="llmsPreviewRefreshing" style="display:none;">
+                    <span class="dp-llms__preview-refreshing text-muted small" id="llmsPreviewRefreshing" style="display:none;">
                         <span class="spinner-border spinner-border-sm me-1"></span>Refreshing…
                     </span>
-                    <a href="{{baseUrl}}/llms.txt" target="_blank" class="small text-muted llms-preview-link">
+                    <a href="{{baseUrl}}/llms.txt" target="_blank" class="small text-muted dp-llms__preview-link">
                         <i class="bi bi-box-arrow-up-right"></i>
                     </a>
                 </div>
             </div>
-            <pre id="llmsPreviewContent" class="llms-config-preview-body"></pre>
+            <pre id="llmsPreviewContent" class="dp-llms__config-preview-body"></pre>
         </div>
     </div>
 </div>

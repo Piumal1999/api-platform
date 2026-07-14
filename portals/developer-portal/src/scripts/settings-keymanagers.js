@@ -27,7 +27,7 @@
   var kmMap = {};
   (function() {
     try {
-      var el = document.getElementById('cfg-keymanagers-data');
+      var el = document.getElementById('dp-settings__keymanagers-data');
       if (el) {
         var list = JSON.parse(el.textContent || '[]');
         list.forEach(function(km) { kmMap[km.id] = km; });
@@ -38,17 +38,17 @@
   /* ── open modal ── */
   function openKmModal(mode, data) {
     editKmId = mode === 'edit' ? data.id : null;
-    document.getElementById('cfg-km-modal-title').textContent = mode === 'edit' ? 'Edit key manager' : 'Add key manager';
-    document.getElementById('cfg-km-modal-save').textContent  = mode === 'edit' ? 'Save changes' : 'Add key manager';
+    document.getElementById('dp-settings__km-modal-title').textContent = mode === 'edit' ? 'Edit key manager' : 'Add key manager';
+    document.getElementById('dp-settings__km-modal-save').textContent  = mode === 'edit' ? 'Save changes' : 'Add key manager';
     sv('km-display',        mode === 'edit' ? data.displayName    : '');
     sv('km-handle',         mode === 'edit' ? data.id             : '');
     sv('km-token-endpoint', mode === 'edit' ? data.tokenEndpoint  : '');
     document.getElementById('km-type').value    = mode === 'edit' ? data.type : document.getElementById('km-type').options[0].value;
     document.getElementById('km-enabled').checked = mode === 'edit' ? !!data.enabled : true;
-    document.getElementById('cfg-km-modal').style.display = 'flex';
+    document.getElementById('dp-settings__km-modal').style.display = 'flex';
     document.getElementById('km-display').focus();
   }
-  function closeKmModal() { document.getElementById('cfg-km-modal').style.display = 'none'; editKmId = null; }
+  function closeKmModal() { document.getElementById('dp-settings__km-modal').style.display = 'none'; editKmId = null; }
 
   /* ── auto-slug display → handle ── */
   document.getElementById('km-display').addEventListener('input', function() {
@@ -57,7 +57,7 @@
   });
 
   /* ── save ── */
-  document.getElementById('cfg-km-modal-save').addEventListener('click', async function() {
+  document.getElementById('dp-settings__km-modal-save').addEventListener('click', async function() {
     var displayName   = v('km-display');
     var handle        = v('km-handle');
     var type          = v('km-type');
@@ -100,37 +100,37 @@
     } catch(e) { await showAlert('Error: ' + e.message, 'error'); }
   });
 
-  document.getElementById('cfg-km-modal-close').addEventListener('click', closeKmModal);
-  document.getElementById('cfg-km-modal-cancel').addEventListener('click', closeKmModal);
-  document.getElementById('cfg-km-modal').addEventListener('click', function(e){ if(e.target===this) closeKmModal(); });
+  document.getElementById('dp-settings__km-modal-close').addEventListener('click', closeKmModal);
+  document.getElementById('dp-settings__km-modal-cancel').addEventListener('click', closeKmModal);
+  document.getElementById('dp-settings__km-modal').addEventListener('click', function(e){ if(e.target===this) closeKmModal(); });
 
-  document.getElementById('cfg-add-km-btn').addEventListener('click', function() { openKmModal('add'); });
+  document.getElementById('dp-settings__add-km-btn').addEventListener('click', function() { openKmModal('add'); });
 
   /* ── edit / delete via event delegation ── */
   var pendingDelKmId = null;
   document.addEventListener('click', function(e) {
-    if (e.target.closest('.cfg-km-edit-btn')) {
-      var btn = e.target.closest('.cfg-km-edit-btn');
+    if (e.target.closest('.dp-settings__km-edit-btn')) {
+      var btn = e.target.closest('.dp-settings__km-edit-btn');
       var data = kmMap[btn.dataset.id];
       if (data) openKmModal('edit', data);
       return;
     }
-    if (e.target.closest('.cfg-km-delete-btn')) {
-      var btn = e.target.closest('.cfg-km-delete-btn');
+    if (e.target.closest('.dp-settings__km-delete-btn')) {
+      var btn = e.target.closest('.dp-settings__km-delete-btn');
       pendingDelKmId = btn.dataset.id;
-      document.getElementById('cfg-del-km-name-txt').textContent = btn.dataset.name;
-      document.getElementById('cfg-delete-km-modal').style.display = 'flex';
+      document.getElementById('dp-settings__del-km-name-txt').textContent = btn.dataset.name;
+      document.getElementById('dp-settings__delete-km-modal').style.display = 'flex';
       return;
     }
   });
 
-  document.getElementById('cfg-del-km-cancel').addEventListener('click', function() {
-    document.getElementById('cfg-delete-km-modal').style.display = 'none';
+  document.getElementById('dp-settings__del-km-cancel').addEventListener('click', function() {
+    document.getElementById('dp-settings__delete-km-modal').style.display = 'none';
   });
-  document.getElementById('cfg-delete-km-modal').addEventListener('click', function(e){ if(e.target===this) this.style.display='none'; });
-  document.getElementById('cfg-del-km-confirm').addEventListener('click', async function() {
+  document.getElementById('dp-settings__delete-km-modal').addEventListener('click', function(e){ if(e.target===this) this.style.display='none'; });
+  document.getElementById('dp-settings__del-km-confirm').addEventListener('click', async function() {
     if (!pendingDelKmId) return;
-    document.getElementById('cfg-delete-km-modal').style.display = 'none';
+    document.getElementById('dp-settings__delete-km-modal').style.display = 'none';
     try {
       var res = await fetch(window.devportalApi.root('/key-managers/' + encodeURIComponent(pendingDelKmId)), {
         method: 'DELETE',

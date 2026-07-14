@@ -17,49 +17,49 @@
  */
 --}}
 {{#if subscriptionPlans.length}}
-<section id="subscriptionPlans" class="aov-plans-wrap mcp-plans-wrap" data-org-id="{{@root.orgId}}">
-  <h2 class="aov-plans-title" style="margin-bottom:0.875rem;">Subscription plans</h2>
+<section id="subscriptionPlans" class="dp-api-overview__plans-wrap mcp__plans-wrap" data-org-id="{{@root.orgId}}">
+  <h2 class="dp-api-overview__plans-title" style="margin-bottom:0.875rem;">Subscription plans</h2>
 
   {{#each subscriptionPlans}}
-  <div class="aov-plan-card subscription-card{{#if (isCurrentPlan id @root.subscriptions)}} aov-plan-card--subscribed{{/if}}"
+  <div class="dp-api-overview__plan-card dp-subscription__card{{#if (isCurrentPlan id @root.subscriptions)}} dp-api-overview__plan-card--subscribed{{/if}}"
     id="subscriptionCard-{{id}}"
     data-policy-name="{{id}}">
-    <div class="aov-plan-ribbon" aria-hidden="true">
-      <div class="aov-plan-ribbon-label mcp-ribbon-label">SUBSCRIBED</div>
+    <div class="dp-api-overview__plan-ribbon" aria-hidden="true">
+      <div class="dp-api-overview__plan-ribbon-label dp-mcp__ribbon-label">SUBSCRIBED</div>
     </div>
-    <div class="aov-plan-card-head">
-      <div class="aov-plan-name-row">
-        <span class="aov-plan-icon" style="background:#eef1f5;color:#3a4f6a;">
+    <div class="dp-api-overview__plan-card-head">
+      <div class="dp-api-overview__plan-name-row">
+        <span class="dp-api-overview__plan-icon" style="background:#eef1f5;color:#3a4f6a;">
           <i class="bi bi-lightning-charge-fill"></i>
         </span>
-        <span class="aov-plan-name">{{#if displayName}}{{displayName}}{{else}}{{id}}{{/if}}</span>
+        <span class="dp-api-overview__plan-name">{{#if displayName}}{{displayName}}{{else}}{{id}}{{/if}}</span>
       </div>
       {{#unless (isCurrentPlan id @root.subscriptions)}}
-      <span class="aov-recommended-badge mcp-recommended-badge" style="display:none;">RECOMMENDED</span>
+      <span class="dp-api-overview__recommended-badge mcp-recommended-badge" style="display:none;">RECOMMENDED</span>
       {{/unless}}
     </div>
-    <div class="aov-plan-limit">
+    <div class="dp-api-overview__plan-limit">
       {{#if limits.length}}{{#with (lookup limits 0)}}
-      <span class="aov-plan-count">{{#if (eq limitCount -1)}}∞{{else}}{{limitCount}}{{/if}}</span>
-      <span class="aov-plan-unit">{{limitTypeLabel limitType}}{{#if timeUnit}} / {{#unless (eq timeAmount 1)}}{{timeAmount}} {{/unless}}{{timeUnitLabel timeUnit}}{{/if}}</span>
+      <span class="dp-api-overview__plan-count">{{#if (eq limitCount -1)}}∞{{else}}{{limitCount}}{{/if}}</span>
+      <span class="dp-api-overview__plan-unit">{{limitTypeLabel limitType}}{{#if timeUnit}} / {{#unless (eq timeAmount 1)}}{{timeAmount}} {{/unless}}{{timeUnitLabel timeUnit}}{{/if}}</span>
       {{/with}}{{else if requestCount}}
-      <span class="aov-plan-count">{{requestCount}}</span>
-      <span class="aov-plan-unit">requests / min</span>
+      <span class="dp-api-overview__plan-count">{{requestCount}}</span>
+      <span class="dp-api-overview__plan-unit">requests / min</span>
       {{else}}
-      <span class="aov-plan-count">—</span>
+      <span class="dp-api-overview__plan-count">—</span>
       {{/if}}
     </div>
     <div class="position-relative">
       {{#if ../isAuthenticated}}
         {{#if (isCurrentPlan id @root.subscriptions)}}
         <button type="button"
-          class="dp-btn dp-btn--outline dp-btn--block mcp-view-sub-btn"
+          class="dp-btn dp-btn--outline dp-btn--block dp-mcp__view-sub-btn"
           data-policy-name="{{id}}">
           <i class="bi bi-eye"></i> View subscription
         </button>
         {{else}}
-        <button id="subscribe-btn-{{id}}" type="button"
-          class="dp-btn dp-btn--outline dp-btn--block subscribe-btn {{#if @root.isReadOnlyMode}}disabled{{/if}}"
+        <button id="dp-api__subscribe-btn-{{id}}" type="button"
+          class="dp-btn dp-btn--outline dp-btn--block dp-api__subscribe-btn {{#if @root.isReadOnlyMode}}disabled{{/if}}"
           data-org-id="{{@root.orgId}}"
           data-api-id="{{../apiMetadata.id}}"
           data-plan-id="{{id}}"
@@ -68,17 +68,17 @@
           data-policy-name="{{id}}"
           data-display-name="{{displayName}}"
           onclick="handlePlanSubscription(this)"
-          {{#if @root.isReadOnlyMode}}disabled{{/if}}><span class="aov-plan-spinner"></span>Subscribe</button>
+          {{#if @root.isReadOnlyMode}}disabled{{/if}}><span class="dp-api-overview__plan-spinner"></span>Subscribe</button>
         {{/if}}
       {{else}}
       <a class="dp-btn dp-btn--outline dp-btn--block" href="{{@root.baseUrl}}/login">Subscribe</a>
       {{/if}}
     </div>
-    <div class="aov-plan-error">
+    <div class="dp-api-overview__plan-error">
       <i class="bi bi-exclamation-circle-fill" style="color:#c62828;font-size:15px;flex:none;margin-top:1px;"></i>
       <div>
-        <div class="aov-plan-error-title">Subscription failed</div>
-        <div class="aov-plan-error-desc">We couldn't subscribe you to this plan. Please try again.</div>
+        <div class="dp-api-overview__plan-error-title">Subscription failed</div>
+        <div class="dp-api-overview__plan-error-desc">We couldn't subscribe you to this plan. Please try again.</div>
       </div>
     </div>
   </div>
@@ -89,33 +89,33 @@
 </section>
 
 <!-- Subscription created token modal -->
-<div id="mcpTokenModal" class="mc-overlay" style="display:none;" role="dialog" aria-modal="true">
-  <div class="mc-token-modal">
-    <button id="mcpTokenModalClose" class="mc-modal-close" aria-label="Close">&times;</button>
-    <div class="mc-token-modal-header">
-      <div class="mc-token-success-icon">
+<div id="mcpTokenModal" class="dp-mcp__overlay" style="display:none;" role="dialog" aria-modal="true">
+  <div class="dp-mcp__token-modal">
+    <button id="mcpTokenModalClose" class="dp-mcp__modal-close" aria-label="Close">&times;</button>
+    <div class="dp-mcp__token-modal-header">
+      <div class="dp-mcp__token-success-icon">
         <i class="bi bi-check-lg"></i>
       </div>
-      <h2 class="mc-token-modal-title">Subscription created</h2>
-      <p class="mc-token-modal-sub">Your subscription to the <strong id="mcpTokenPlanName"></strong> plan is now active.</p>
+      <h2 class="dp-mcp__token-modal-title">Subscription created</h2>
+      <p class="dp-mcp__token-modal-sub">Your subscription to the <strong id="mcpTokenPlanName"></strong> plan is now active.</p>
     </div>
-    <div class="mc-token-modal-body">
-      <div class="mc-token-label">
+    <div class="dp-mcp__token-modal-body">
+      <div class="dp-mcp__token-label">
         <i class="bi bi-key" style="color:#637282;"></i>
         <span>Subscription token</span>
       </div>
-      <div class="mc-token-field mc-token-field--pink">
-        <div id="mcpTokenValue" class="mc-token-val mc-token-val--pink"></div>
-        <button id="mcpTokenCopyBtn" class="copy-btn mc-token-copy-btn" title="Copy token">
-          <span class="copy-btn-icon"><i class="bi bi-copy"></i></span>
-          <span class="copy-btn-check"><i class="bi bi-check"></i> Copied</span>
+      <div class="dp-mcp__token-field dp-mcp__token-field--pink">
+        <div id="mcpTokenValue" class="dp-mcp__token-val dp-mcp__token-val--pink"></div>
+        <button id="mcpTokenCopyBtn" class="dp-copy__btn dp-mcp__token-copy-btn" title="Copy token">
+          <span class="dp-copy__btn-icon"><i class="bi bi-copy"></i></span>
+          <span class="dp-copy__btn-check"><i class="bi bi-check"></i> Copied</span>
         </button>
       </div>
-      <div class="mc-token-warning">
+      <div class="dp-mcp__token-warning">
         <i class="bi bi-exclamation-triangle-fill" style="color:#b8860b;flex:none;margin-top:1px;"></i>
-        <span>Use this token as the <code class="mc-inline-code">Subscription-Key</code> header when invoking the MCP server.</span>
+        <span>Use this token as the <code class="dp-mcp__inline-code">Subscription-Key</code> header when invoking the MCP server.</span>
       </div>
-      <div class="mc-token-modal-footer">
+      <div class="dp-mcp__token-modal-footer">
         <button id="mcpTokenModalDone" class="dp-btn dp-btn--primary">Done</button>
       </div>
     </div>
@@ -123,47 +123,47 @@
 </div>
 
 <!-- Manage subscription modal -->
-<div id="mcpManageModal" class="mc-overlay" style="display:none;" role="dialog" aria-modal="true">
-  <div class="mc-manage-modal">
-    <div class="mc-manage-header">
-      <div class="mc-manage-header-info">
-        <span class="mc-manage-plan-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+<div id="mcpManageModal" class="dp-mcp__overlay" style="display:none;" role="dialog" aria-modal="true">
+  <div class="dp-mcp__manage-modal">
+    <div class="dp-mcp__manage-header">
+      <div class="dp-mcp__manage-header-info">
+        <span class="dp-mcp__manage-plan-icon"><i class="bi bi-lightning-charge-fill"></i></span>
         <div>
-          <h2 id="mcpManagePlanName" class="mc-manage-plan-name"></h2>
-          <div id="mcpManageSubtitle" class="mc-manage-subtitle">MCP subscription</div>
+          <h2 id="mcpManagePlanName" class="dp-mcp__manage-plan-name"></h2>
+          <div id="mcpManageSubtitle" class="dp-mcp__manage-subtitle">MCP subscription</div>
         </div>
       </div>
-      <button id="mcpManageClose" class="mc-modal-close" aria-label="Close">&times;</button>
+      <button id="mcpManageClose" class="dp-mcp__modal-close" aria-label="Close">&times;</button>
     </div>
-    <div class="mc-manage-body">
-      <div class="mc-manage-status-row">
-        <span class="mc-manage-status-label">Status</span>
-        <span id="mcpManageStatusBadge" class="mc-manage-status-badge mc-manage-status-badge--active">Active</span>
+    <div class="dp-mcp__manage-body">
+      <div class="dp-mcp__manage-status-row">
+        <span class="dp-mcp__manage-status-label">Status</span>
+        <span id="mcpManageStatusBadge" class="dp-mcp__manage-status-badge dp-mcp__manage-status-badge--active">Active</span>
       </div>
-      <div class="mc-token-label" style="margin-top:1.25rem;">
+      <div class="dp-mcp__token-label" style="margin-top:1.25rem;">
         <i class="bi bi-key" style="color:#637282;"></i>
         <span>Subscription token</span>
       </div>
-      <div class="mc-token-field mc-token-field--manage">
-        <div id="mcpManageTokenVal" class="mc-token-val mc-token-val--manage"></div>
-        <div class="mc-token-field-actions">
-          <button id="mcpManageRevealBtn" class="mc-token-action-btn" title="Reveal token">
+      <div class="dp-mcp__token-field dp-mcp__token-field--manage">
+        <div id="mcpManageTokenVal" class="dp-mcp__token-val dp-mcp__token-val--manage"></div>
+        <div class="dp-mcp__token-field-actions">
+          <button id="mcpManageRevealBtn" class="dp-mcp__token-action-btn" title="Reveal token">
             <i id="mcpManageRevealIcon" class="bi bi-eye"></i>
           </button>
-          <button id="mcpManageCopyBtn" class="copy-btn mc-token-copy-btn" title="Copy token">
-            <span class="copy-btn-icon"><i class="bi bi-copy"></i></span>
-            <span class="copy-btn-check"><i class="bi bi-check"></i> Copied</span>
+          <button id="mcpManageCopyBtn" class="dp-copy__btn dp-mcp__token-copy-btn" title="Copy token">
+            <span class="dp-copy__btn-icon"><i class="bi bi-copy"></i></span>
+            <span class="dp-copy__btn-check"><i class="bi bi-check"></i> Copied</span>
           </button>
         </div>
       </div>
-      <p class="mc-config-note" style="margin:0.625rem 0 0;">Use this token as the <code class="mc-inline-code">Subscription-Key</code> header when invoking the MCP server.</p>
-      <hr class="mc-manage-divider">
-      <div class="mc-manage-actions">
-        <button id="mcpManageSuspendBtn" class="dp-btn mc-manage-action-btn mc-manage-action-btn--suspend">
+      <p class="dp-mcp__config-note" style="margin:0.625rem 0 0;">Use this token as the <code class="dp-mcp__inline-code">Subscription-Key</code> header when invoking the MCP server.</p>
+      <hr class="dp-mcp__manage-divider">
+      <div class="dp-mcp__manage-actions">
+        <button id="mcpManageSuspendBtn" class="dp-btn dp-mcp__manage-action-btn dp-mcp__manage-action-btn--suspend">
           <i class="bi bi-pause-circle"></i>
-          <span class="mc-suspend-label">Suspend</span>
+          <span class="dp-mcp__suspend-label">Suspend</span>
         </button>
-        <button id="mcpManageUnsubBtn" class="dp-btn mc-manage-action-btn mc-manage-action-btn--unsub">
+        <button id="mcpManageUnsubBtn" class="dp-btn dp-mcp__manage-action-btn dp-mcp__manage-action-btn--unsub">
           <i class="bi bi-trash"></i> Unsubscribe
         </button>
       </div>
@@ -172,16 +172,16 @@
 </div>
 
 <!-- Unsubscribe warning dialog -->
-<div id="mcpUnsubDialog" class="mc-overlay" style="display:none;" role="dialog" aria-modal="true">
-  <div class="mc-unsub-dialog">
-    <div class="mc-unsub-header">
-      <span class="mc-unsub-icon"><i class="bi bi-exclamation-triangle-fill"></i></span>
-      <h2 id="mcpUnsubTitle" class="mc-unsub-title">Unsubscribe from <span id="mcpUnsubPlanName"></span> plan?</h2>
+<div id="mcpUnsubDialog" class="dp-mcp__overlay" style="display:none;" role="dialog" aria-modal="true">
+  <div class="dp-mcp__unsub-dialog">
+    <div class="dp-mcp__unsub-header">
+      <span class="dp-mcp__unsub-icon"><i class="bi bi-exclamation-triangle-fill"></i></span>
+      <h2 id="mcpUnsubTitle" class="dp-mcp__unsub-title">Unsubscribe from <span id="mcpUnsubPlanName"></span> plan?</h2>
     </div>
-    <p id="mcpUnsubDesc" class="mc-unsub-desc">Your applications will lose access to this MCP server, and any tokens using this subscription will stop working. You can re-subscribe at any time.</p>
-    <div class="mc-unsub-actions">
+    <p id="mcpUnsubDesc" class="dp-mcp__unsub-desc">Your applications will lose access to this MCP server, and any tokens using this subscription will stop working. You can re-subscribe at any time.</p>
+    <div class="dp-mcp__unsub-actions">
       <button id="mcpUnsubKeepBtn" class="dp-btn dp-btn--outline">Cancel</button>
-      <button id="mcpUnsubConfirmBtn" class="dp-btn mc-unsub-confirm-btn">Unsubscribe</button>
+      <button id="mcpUnsubConfirmBtn" class="dp-btn dp-mcp__unsub-confirm-btn">Unsubscribe</button>
     </div>
   </div>
 </div>

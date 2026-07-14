@@ -13,7 +13,7 @@ if (typeof window.closeModal !== 'function') {
 }
 
 document.addEventListener('click', function (e) {
-    const btn = e.target.closest('.subscription-plan-subscribe-btn');
+    const btn = e.target.closest('.dp-subscription__plan-subscribe-btn');
     if (!btn) return;
 
     // Only handle buttons inside the subscription modal
@@ -34,7 +34,7 @@ document.addEventListener('click', function (e) {
 // Close visible modal on Escape
 document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    const modals = document.querySelectorAll('.modal.custom-modal');
+    const modals = document.querySelectorAll('.modal.dp-ui__modal');
     modals.forEach(m => {
         if (m.style.display && m.style.display !== 'none') {
             // find id and call closeModal if available
@@ -56,7 +56,7 @@ async function prepareSubscriptionModal(modalId) {
     let apiRefId = modal.dataset.apiRefid || '';
     if (!apiRefId) apiRefId = apiId;
     const subscriptionContainer = document.getElementById('subscriptionContent-' + apiId);
-    const plansBody = modal.querySelector('.subscription-plans-body');
+    const plansBody = modal.querySelector('.dp-subscription__plans-body');
 
     // Only clear the token area if it has no fresh content (i.e. left from a prior modal session)
     var tokenArea = document.getElementById('subscriptionTokenArea-' + apiId);
@@ -129,7 +129,7 @@ async function prepareSubscriptionModal(modalId) {
                 const tokenDisplay = document.createElement('div');
                 tokenDisplay.className = 'token-display';
                 const tokenCode = document.createElement('code');
-                tokenCode.className = 'masked-token';
+                tokenCode.className = 'dp-ui__masked-token';
                 tokenCode.id = 'token-' + sub.subscriptionId;
                 tokenCode.dataset.revealed = 'false';
                 tokenCode.textContent = '****';
@@ -185,7 +185,7 @@ async function prepareSubscriptionModal(modalId) {
         // Render subscription plans from CP if available
         if (plans && plans.length > 0) {
             const header = document.createElement('div');
-            header.className = 'container-header mb-3';
+            header.className = 'dp-ui__container-header mb-3';
             header.textContent = 'Subscription Plans';
             subscriptionContainer.appendChild(header);
 
@@ -195,20 +195,20 @@ async function prepareSubscriptionModal(modalId) {
                 const col = document.createElement('div');
                 col.className = 'col-xl-3 col-lg-4 col-md-6 col-12';
                 col.innerHTML = `
-                    <div class="card dev-card subscription-card">
+                    <div class="card dp-ui__dev-card dp-subscription__card">
                         <div class="card-body align-items-center text-center p-0">
-                            <span class="subscription-plans-card-title">${escapeHtml(plan.displayName || plan.subscriptionPlanName || '')}</span>
-                            <h1 class="subscription-plans-request-count">${escapeHtml(formatPlanLimitSummary(plan))}</h1>
-                            <p class="subscription-plans-card-subtitle pt-0">${escapeHtml(formatPlanLimitSubtitle(plan))}</p>
+                            <span class="dp-subscription__plans-card-title">${escapeHtml(plan.displayName || plan.subscriptionPlanName || '')}</span>
+                            <h1 class="dp-subscription__plans-request-count">${escapeHtml(formatPlanLimitSummary(plan))}</h1>
+                            <p class="dp-subscription__plans-card-subtitle pt-0">${escapeHtml(formatPlanLimitSubtitle(plan))}</p>
                         </div>
                         <div class="position-relative">
-                            <div class="message-overlay hidden"><div class="message-content"><i class="bi message-icon"></i><p class="message-text"></p></div><button type="button" class="close-message" aria-label="Close">&times;</button></div>
+                            <div class="dp-message__overlay hidden"><div class="dp-message__content"><i class="bi dp-message__icon"></i><p class="dp-message__text"></p></div><button type="button" class="close-message" aria-label="Close">&times;</button></div>
                         </div>
                     </div>
                 `;
                 const card = col.querySelector('.card');
                 const btn = document.createElement('button');
-                btn.className = 'common-btn-primary subscribe-btn w-100';
+                btn.className = 'dp-common__btn-primary dp-api__subscribe-btn w-100';
                 btn.textContent = 'Subscribe';
                 btn.dataset.orgId = orgId;
                 btn.dataset.apiId = apiId;

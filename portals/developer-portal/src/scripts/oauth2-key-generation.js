@@ -17,7 +17,7 @@ async function addClientId(kmId, keyType, appId, orgId, keyManager) {
     }
 
     const normalState = btn?.querySelector('.button-normal-state');
-    const loadingState = btn?.querySelector('.button-loading-state');
+    const loadingState = btn?.querySelector('.dp-app__button-loading');
     if (normalState && loadingState && btn) {
         normalState.style.display = 'none';
         loadingState.style.display = 'inline-block';
@@ -151,7 +151,7 @@ async function generateOauthKey(formId, appId, keyMappingId, keyManager, clientN
                 scopeContainer.setAttribute("data-scopes", regenerateBtn.dataset?.scopes);
             }
 
-            const existingScopes = Array.from(scopeContainer.querySelectorAll('.span-tag'))
+            const existingScopes = Array.from(scopeContainer.querySelectorAll('.dp-ui__span-tag'))
             .map(el => el.textContent.replace('×', '').trim());
             if (existingScopes.length > 0) {
                 subscribedScopes = existingScopes;
@@ -171,7 +171,7 @@ async function generateOauthKey(formId, appId, keyMappingId, keyManager, clientN
 
     const scopesData = scopeContainer?.dataset?.scopes;
     if (scopesData) {
-        scopeContainer.querySelectorAll('.span-tag').forEach(el => el.remove());
+        scopeContainer.querySelectorAll('.dp-ui__span-tag').forEach(el => el.remove());
         try {
             const scopes = JSON.parse(scopesData);
             scopes.forEach(scope => {
@@ -203,7 +203,7 @@ async function generateOauthKey(formId, appId, keyMappingId, keyManager, clientN
         span.innerHTML = `${scope}<span class="remove">&times;</span>`;
 
         // Append the new span to the scope container only if it doesn't already exist
-        const existingScopes = Array.from(scopeContainer.querySelectorAll('.span-tag'))
+        const existingScopes = Array.from(scopeContainer.querySelectorAll('.dp-ui__span-tag'))
             .map(el => el.textContent.replace('×', '').trim());
 
         if (!existingScopes.includes(scope)) {
@@ -224,10 +224,10 @@ async function generateOauthKey(formId, appId, keyMappingId, keyManager, clientN
     });
 
     const normalState = tokenBtn.querySelector('.button-normal-state');
-    const loadingState = tokenBtn.querySelector('.button-loading-state');
+    const loadingState = tokenBtn.querySelector('.dp-app__button-loading');
 
     const regenerateNormalState = regenerateBtn?.querySelector('.button-normal-state');
-    const regenerateLoadingState = regenerateBtn?.querySelector('.button-loading-state');
+    const regenerateLoadingState = regenerateBtn?.querySelector('.dp-app__button-loading');
 
     if (regenerateNormalState && regenerateLoadingState && regenerateBtn) {
         regenerateNormalState.style.display = 'none';
@@ -390,9 +390,9 @@ async function copyToken(btn, tokenId) {
     const tokenText = tokenElement.textContent.trim();
     try { navigator.clipboard.writeText(tokenText).catch(function(){}); } catch(e) {}
     if (!btn) return;
-    btn.classList.add('copy-btn--copied');
+    btn.classList.add('dp-copy__btn--copied');
     if (btn._copyTimer) clearTimeout(btn._copyTimer);
-    btn._copyTimer = setTimeout(function() { btn.classList.remove('copy-btn--copied'); }, 1600);
+    btn._copyTimer = setTimeout(function() { btn.classList.remove('dp-copy__btn--copied'); }, 1600);
 }
 
 /**
@@ -424,9 +424,9 @@ async function copyConsumerKey(inputId) {
     const buttonElement = inputElement.nextElementSibling;
     try {
         await navigator.clipboard.writeText(inputElement.value);
-        buttonElement.classList.add('copy-btn--copied');
+        buttonElement.classList.add('dp-copy__btn--copied');
         if (buttonElement._copyTimer) clearTimeout(buttonElement._copyTimer);
-        buttonElement._copyTimer = setTimeout(() => { buttonElement.classList.remove('copy-btn--copied'); }, 1600);
+        buttonElement._copyTimer = setTimeout(() => { buttonElement.classList.remove('dp-copy__btn--copied'); }, 1600);
     } catch (err) {
         console.error('Could not copy text:', err);
     }
@@ -443,9 +443,9 @@ async function copyRealCurl(button) {
     try {
         const curlCommand = `curl -k -X POST ${tokenEndpoint} -d "grant_type=client_credentials" -H "Authorization: Basic $(echo -n '${consumerKey}:<your_consumer_secret>' | base64)"`;
         await navigator.clipboard.writeText(curlCommand);
-        button.classList.add('copy-btn--copied');
+        button.classList.add('dp-copy__btn--copied');
         if (button._copyTimer) clearTimeout(button._copyTimer);
-        button._copyTimer = setTimeout(() => { button.classList.remove('copy-btn--copied'); }, 1600);
+        button._copyTimer = setTimeout(() => { button.classList.remove('dp-copy__btn--copied'); }, 1600);
     } catch (err) {
         console.error('Could not copy text:', err);
     }

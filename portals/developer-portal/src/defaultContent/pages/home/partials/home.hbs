@@ -1,24 +1,24 @@
 <!-- ── Hero ───────────────────────────────────────────────── -->
-<section class="hero" aria-label="Portal hero">
-  <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
+<section class="dp-hero" aria-label="Portal hero">
+  <div class="dp-hero__particles" id="dp-hero__particles" aria-hidden="true"></div>
 
-  <div class="hero-hero-body">
-    <span class="hero-pill">
+  <div class="dp-hero__dp-hero__body">
+    <span class="dp-hero__pill">
       <i class="bi bi-stars" aria-hidden="true"></i>
       Ready for AI agents
     </span>
 
-    <h1 class="hero-headline">
+    <h1 class="dp-hero__headline">
       {{#if (eq devportalMode "MCP_SERVERS_ONLY")}}
-      <span class="hero-headline-accent">MCP servers</span><br>built for AI agents.
+      <span class="dp-hero__headline-accent">MCP servers</span><br>built for AI agents.
       {{else if (eq devportalMode "APIS_ONLY")}}
-      <span class="hero-headline-accent">APIs &amp; workflows</span><br>built for Developers and AI Agents.
+      <span class="dp-hero__headline-accent">APIs &amp; workflows</span><br>built for Developers and AI Agents.
       {{else}}
-      <span class="hero-headline-accent">APIs, MCP servers &amp; workflows</span><br>built for Developers and AI Agents.
+      <span class="dp-hero__headline-accent">APIs, MCP servers &amp; workflows</span><br>built for Developers and AI Agents.
       {{/if}}
     </h1>
 
-    <p class="hero-desc">
+    <p class="dp-hero__desc">
       {{#if (eq devportalMode "MCP_SERVERS_ONLY")}}
       Discover MCP tools and servers, configure them for your AI agents, and get up and running in minutes.
       {{else if (eq devportalMode "APIS_ONLY")}}
@@ -28,19 +28,19 @@
       {{/if}}
     </p>
 
-    <div class="hero-ctas">
+    <div class="dp-hero__ctas">
       {{#in devportalMode values="DEFAULT,APIS_ONLY"}}
-      <a href="{{baseUrl}}/apis" class="hero-btn hero-btn--gradient">
+      <a href="{{baseUrl}}/apis" class="dp-hero__btn dp-hero__btn--gradient">
         Browse our APIs <i class="bi bi-arrow-right" aria-hidden="true"></i>
       </a>
       {{/in}}
       {{#in devportalMode values="DEFAULT,MCP_SERVERS_ONLY"}}
-      <a href="{{baseUrl}}/mcps" class="hero-btn hero-btn--gradient">
+      <a href="{{baseUrl}}/mcps" class="dp-hero__btn dp-hero__btn--gradient">
         Browse our MCP servers <i class="bi bi-arrow-right" aria-hidden="true"></i>
       </a>
       {{/in}}
       {{#if showApiWorkflowsNav}}
-      <button type="button" class="hero-btn hero-btn--ai" data-bs-toggle="modal" data-bs-target="#discoverAiModal">
+      <button type="button" class="dp-hero__btn dp-hero__btn--ai" data-bs-toggle="modal" data-bs-target="#discoverAiModal">
         <i class="bi bi-stars" aria-hidden="true"></i> Discover with AI
       </button>
       {{/if}}
@@ -52,40 +52,40 @@
 {{#if showApiWorkflowsNav}}
 <div class="modal fade" id="discoverAiModal" tabindex="-1" aria-labelledby="discoverAiModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
-    <div class="modal-content hero-modal">
+    <div class="modal-content dp-hero__modal">
 
       <!-- Modal header -->
-      <div class="hero-modal-header">
-        <div class="hero-modal-title-row">
-          <span class="hero-modal-icon"><i class="bi bi-stars" aria-hidden="true"></i></span>
-          <h2 class="hero-modal-title" id="discoverAiModalLabel">Discover with AI agents</h2>
+      <div class="dp-hero__modal-header">
+        <div class="dp-hero__modal-title-row">
+          <span class="dp-hero__modal-icon"><i class="bi bi-stars" aria-hidden="true"></i></span>
+          <h2 class="dp-hero__modal-title" id="discoverAiModalLabel">Discover with AI agents</h2>
         </div>
-        <button type="button" class="hero-modal-close" data-bs-dismiss="modal" aria-label="Close">
+        <button type="button" class="dp-hero__modal-close" data-bs-dismiss="modal" aria-label="Close">
           <i class="bi bi-x-lg" aria-hidden="true"></i>
         </button>
       </div>
 
       <!-- Info bar -->
-      <div class="hero-modal-info">
-        <p class="hero-modal-info-text">Use this prompt to let your AI agent explore and discover what's available in this portal.</p>
-        <button type="button" class="hero-run-btn" id="discoverBtnRunClaude">
+      <div class="dp-hero__modal-info">
+        <p class="dp-hero__modal-info-text">Use this prompt to let your AI agent explore and discover what's available in this portal.</p>
+        <button type="button" class="dp-hero__run-btn" id="discoverBtnRunClaude">
           <i class="bi bi-play-fill" aria-hidden="true"></i> Run in Claude
         </button>
       </div>
 
       <!-- Prompt body -->
-      <div class="modal-body hero-modal-body">
-        <div class="hero-prompt-card">
-          <div class="hero-prompt-actions">
-            <button type="button" class="hero-prompt-tool" id="discoverBtnDownloadPrompt" title="Download as .txt">
+      <div class="modal-body dp-hero__modal-body">
+        <div class="dp-hero__prompt-card">
+          <div class="dp-hero__prompt-actions">
+            <button type="button" class="dp-hero__prompt-tool" id="discoverBtnDownloadPrompt" title="Download as .txt">
               <i class="bi bi-download"></i>
             </button>
-            <button type="button" class="hero-prompt-tool copy-btn" id="discoverBtnCopyPrompt" title="Copy prompt">
-              <span class="copy-btn-icon"><i class="bi bi-copy"></i></span>
-              <span class="copy-btn-check"><i class="bi bi-check"></i> Copied</span>
+            <button type="button" class="dp-hero__prompt-tool dp-copy__btn" id="discoverBtnCopyPrompt" title="Copy prompt">
+              <span class="dp-copy__btn-icon"><i class="bi bi-copy"></i></span>
+              <span class="dp-copy__btn-check"><i class="bi bi-check"></i> Copied</span>
             </button>
           </div>
-          <pre class="hero-prompt-pre" id="discoverPromptText"></pre>
+          <pre class="dp-hero__prompt-pre" id="discoverPromptText"></pre>
         </div>
       </div>
 

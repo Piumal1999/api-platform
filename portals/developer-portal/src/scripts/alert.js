@@ -5,8 +5,8 @@ function showAlert(message, type) {
             resolve();
             return;
         }
-        const alertMessage = alertElement.querySelector('.alert-toast-message');
-        const alertIcon = alertElement.querySelector('.alert-icon');
+        const alertMessage = alertElement.querySelector('.dp-alert__toast-message');
+        const alertIcon = alertElement.querySelector('.dp-alert__icon');
 
         if (alertMessage) {
             alertMessage.textContent = message;
@@ -17,7 +17,7 @@ function showAlert(message, type) {
 
         // Set appropriate icon based on alert type
         if (alertIcon) {
-            alertIcon.className = 'alert-icon bi';
+            alertIcon.className = 'dp-alert__icon bi';
             if (type === 'success') {
                 alertIcon.classList.add('bi-check-circle-fill');
             } else if (type === 'error') {
@@ -26,14 +26,14 @@ function showAlert(message, type) {
         }
 
         // Show the toast
-        alertElement.classList.remove('alert-toast-hidden');
-        alertElement.classList.add('alert-toast-visible');
+        alertElement.classList.remove('dp-alert__toast--hidden');
+        alertElement.classList.add('dp-alert__toast--visible');
 
         setTimeout(() => {
-            alertElement.classList.add('alert-toast-fade-out');
+            alertElement.classList.add('dp-alert__toast--fade-out');
             setTimeout(() => {
-                alertElement.classList.remove('alert-toast-visible', 'alert-toast-fade-out');
-                alertElement.classList.add('alert-toast-hidden');
+                alertElement.classList.remove('dp-alert__toast--visible', 'dp-alert__toast--fade-out');
+                alertElement.classList.add('dp-alert__toast--hidden');
                 resolve();
             }, 500);
         }, 2300);

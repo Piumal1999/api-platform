@@ -1,20 +1,20 @@
-/* Login page — ln-* prefix (loaded alongside auth-shell.css) */
+/* Login page — dp-auth-login BEM block (loaded alongside auth-shell.css) */
 
 /* ── Brand panel: feature list ──────────────────────────────── */
-.ln-features {
+.dp-auth-login__features{
   display: flex;
   flex-direction: column;
   gap: 1.125rem;
   margin-top: 2.375rem;
 }
 
-.ln-feature-item {
+.dp-auth-login__feature{
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.ln-feature-icon {
+.dp-auth-login__feature-icon{
   flex: none;
   width: 2.625rem;
   height: 2.625rem;
@@ -28,19 +28,19 @@
   font-size: 1.0625rem;
 }
 
-.ln-feature-text {
+.dp-auth-login__feature-text{
   font-size: 0.96875rem;
   line-height: 1.45;
   color: var(--white);
 }
 
 /* ── Right panel width override ─────────────────────────────── */
-.ln-form-inner {
+.dp-auth-login__form-inner{
   width: 24.5rem;
 }
 
 /* ── Form fields ────────────────────────────────────────────── */
-.ln-fields {
+.dp-auth-login__fields{
   display: flex;
   flex-direction: column;
   gap: 1.125rem;
@@ -48,9 +48,9 @@
 }
 
 /* Password toggle button */
-.ln-pw-input { padding-right: 2.75rem; }
+.dp-auth-login__password-input{ padding-right: 2.75rem; }
 
-.ln-pw-toggle {
+.dp-auth-login__password-toggle{
   position: absolute;
   right: 0.75rem;
   top: 50%;
@@ -66,16 +66,15 @@
   align-items: center;
 }
 
-.ln-pw-toggle:hover { color: var(--text); }
+.dp-auth-login__password-toggle:hover{ color: var(--text); }
 
-
-/* Sign in button — reuses auth-continue-btn, just change the tag */
-.ln-signin-btn {
+/* Sign in button — reuses dp-auth__submit, just change the tag */
+.dp-auth-login__submit{
   margin-top: 0.25rem;
 }
 
 /* Error banner */
-.ln-error-banner {
+.dp-auth-login__error{
   display: flex;
   align-items: center;
   gap: 0.5625rem;
@@ -89,4 +88,4 @@
   color: var(--danger);
 }
 
-.ln-error-banner i { flex: none; font-size: 0.9375rem; }
+.dp-auth-login__error i{ flex: none; font-size: 0.9375rem; }

@@ -18,7 +18,7 @@
 /* eslint-disable no-undef */
 
 (function () {
-  var _cfg = document.getElementById('cfg-page-config') || { dataset: {} };
+  var _cfg = document.getElementById('dp-settings__page-config') || { dataset: {} };
   var ORG_ID = _cfg.dataset.orgId || '';
   var editWebhookId = null;
 
@@ -28,7 +28,7 @@
   var webhookMap = {};
   (function() {
     try {
-      var el = document.getElementById('cfg-webhooks-data');
+      var el = document.getElementById('dp-settings__webhooks-data');
       if (el) {
         var list = JSON.parse(el.textContent || '[]');
         list.forEach(function(wh) { webhookMap[wh.id] = wh; });
@@ -67,8 +67,8 @@
   /* ── open modal ── */
   function openWebhookModal(mode, data) {
     editWebhookId = mode === 'edit' ? data.id : null;
-    document.getElementById('cfg-webhook-modal-title').textContent = mode === 'edit' ? 'Edit webhook' : 'Add webhook';
-    document.getElementById('cfg-webhook-modal-save').textContent  = mode === 'edit' ? 'Save changes' : 'Add webhook';
+    document.getElementById('dp-settings__webhook-modal-title').textContent = mode === 'edit' ? 'Edit webhook' : 'Add webhook';
+    document.getElementById('dp-settings__webhook-modal-save').textContent  = mode === 'edit' ? 'Save changes' : 'Add webhook';
     document.getElementById('wh-display').value   = mode === 'edit' ? (data.displayName || '') : '';
     document.getElementById('wh-handle').value    = mode === 'edit' ? (data.id || '')          : '';
     document.getElementById('wh-url').value       = mode === 'edit' ? (data.targetUrl || '')       : '';
@@ -79,10 +79,10 @@
     document.getElementById('wh-secret-hint').style.display    = mode === 'edit' && data.hasSecret ? 'block' : 'none';
     document.getElementById('wh-publickey-hint').style.display = mode === 'edit' && data.hasPublicKey ? 'block' : 'none';
     setSelectedEvents(mode === 'edit' ? data.events : []);
-    document.getElementById('cfg-webhook-modal').style.display = 'flex';
+    document.getElementById('dp-settings__webhook-modal').style.display = 'flex';
     document.getElementById('wh-display').focus();
   }
-  function closeWebhookModal() { document.getElementById('cfg-webhook-modal').style.display = 'none'; editWebhookId = null; }
+  function closeWebhookModal() { document.getElementById('dp-settings__webhook-modal').style.display = 'none'; editWebhookId = null; }
 
   /* ── auto-slug display → handle ── */
   document.getElementById('wh-display').addEventListener('input', function() {
@@ -91,7 +91,7 @@
   });
 
   /* ── save ── */
-  document.getElementById('cfg-webhook-modal-save').addEventListener('click', async function() {
+  document.getElementById('dp-settings__webhook-modal-save').addEventListener('click', async function() {
     var displayName = v('wh-display');
     var handle      = v('wh-handle');
     var url         = v('wh-url');
@@ -151,37 +151,37 @@
     } catch(e) { await showAlert('Error: ' + e.message, 'error'); }
   });
 
-  document.getElementById('cfg-webhook-modal-close').addEventListener('click', closeWebhookModal);
-  document.getElementById('cfg-webhook-modal-cancel').addEventListener('click', closeWebhookModal);
-  document.getElementById('cfg-webhook-modal').addEventListener('click', function(e){ if(e.target===this) closeWebhookModal(); });
+  document.getElementById('dp-settings__webhook-modal-close').addEventListener('click', closeWebhookModal);
+  document.getElementById('dp-settings__webhook-modal-cancel').addEventListener('click', closeWebhookModal);
+  document.getElementById('dp-settings__webhook-modal').addEventListener('click', function(e){ if(e.target===this) closeWebhookModal(); });
 
-  document.getElementById('cfg-add-webhook-btn').addEventListener('click', function() { openWebhookModal('add'); });
+  document.getElementById('dp-settings__add-webhook-btn').addEventListener('click', function() { openWebhookModal('add'); });
 
   /* ── edit / delete via event delegation ── */
   var pendingDelWebhookId = null;
   document.addEventListener('click', function(e) {
-    if (e.target.closest('.cfg-webhook-edit-btn')) {
-      var btn = e.target.closest('.cfg-webhook-edit-btn');
+    if (e.target.closest('.dp-settings__webhook-edit-btn')) {
+      var btn = e.target.closest('.dp-settings__webhook-edit-btn');
       var data = webhookMap[btn.dataset.id];
       if (data) openWebhookModal('edit', data);
       return;
     }
-    if (e.target.closest('.cfg-webhook-delete-btn')) {
-      var btn = e.target.closest('.cfg-webhook-delete-btn');
+    if (e.target.closest('.dp-settings__webhook-delete-btn')) {
+      var btn = e.target.closest('.dp-settings__webhook-delete-btn');
       pendingDelWebhookId = btn.dataset.id;
-      document.getElementById('cfg-del-webhook-name-txt').textContent = btn.dataset.name;
-      document.getElementById('cfg-delete-webhook-modal').style.display = 'flex';
+      document.getElementById('dp-settings__del-webhook-name-txt').textContent = btn.dataset.name;
+      document.getElementById('dp-settings__delete-webhook-modal').style.display = 'flex';
       return;
     }
   });
 
-  document.getElementById('cfg-del-webhook-cancel').addEventListener('click', function() {
-    document.getElementById('cfg-delete-webhook-modal').style.display = 'none';
+  document.getElementById('dp-settings__del-webhook-cancel').addEventListener('click', function() {
+    document.getElementById('dp-settings__delete-webhook-modal').style.display = 'none';
   });
-  document.getElementById('cfg-delete-webhook-modal').addEventListener('click', function(e){ if(e.target===this) this.style.display='none'; });
-  document.getElementById('cfg-del-webhook-confirm').addEventListener('click', async function() {
+  document.getElementById('dp-settings__delete-webhook-modal').addEventListener('click', function(e){ if(e.target===this) this.style.display='none'; });
+  document.getElementById('dp-settings__del-webhook-confirm').addEventListener('click', async function() {
     if (!pendingDelWebhookId) return;
-    document.getElementById('cfg-delete-webhook-modal').style.display = 'none';
+    document.getElementById('dp-settings__delete-webhook-modal').style.display = 'none';
     try {
       var res = await fetch(window.devportalApi.root('/webhook-subscribers/' + encodeURIComponent(pendingDelWebhookId)), {
         method: 'DELETE',

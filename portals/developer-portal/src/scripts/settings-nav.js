@@ -18,17 +18,17 @@
 /* eslint-disable no-undef */
 
 (function () {
-  var PANELS   = ['cfg-organizations', 'cfg-views', 'cfg-labels', 'cfg-plans', 'cfg-keymanagers', 'cfg-apis', 'cfg-mcps', 'cfg-webhooks', 'cfg-llm', 'cfg-workflows', 'cfg-theming'];
-  var navItems = document.querySelectorAll('.cfg-nav-item');
-  var panels   = document.querySelectorAll('.cfg-panel');
+  var PANELS   = ['dp-settings__organizations', 'dp-settings__views', 'dp-settings__labels', 'dp-settings__plans', 'dp-settings__keymanagers', 'dp-settings__apis', 'dp-settings__mcps', 'dp-settings__webhooks', 'dp-settings__llm', 'dp-settings__workflows', 'dp-settings__theming'];
+  var navItems = document.querySelectorAll('.dp-settings__nav-item');
+  var panels   = document.querySelectorAll('.dp-settings__panel');
 
   function activate(id) {
-    if (!PANELS.includes(id)) id = 'cfg-organizations';
-    // The shared API/MCP wizard lives inside #cfg-apis. Any sidebar navigation exits it
+    if (!PANELS.includes(id)) id = 'dp-settings__organizations';
+    // The shared API/MCP wizard lives inside #dp-settings__apis. Any sidebar navigation exits it
     // and restores the APIs list, so we never land on a panel with the wizard still open.
-    var wizard = document.getElementById('cfg-apis-wizard');
+    var wizard = document.getElementById('dp-settings__apis-wizard');
     if (wizard) wizard.style.display = 'none';
-    var apisList = document.getElementById('cfg-apis-list');
+    var apisList = document.getElementById('dp-settings__apis-list');
     if (apisList) apisList.style.display = '';
     navItems.forEach(function(a) { a.classList.toggle('active', a.dataset.panel === id); });
     panels.forEach(function(p)   { p.style.display = p.id === id ? 'flex' : 'none'; });
@@ -43,18 +43,18 @@
   });
 
   var hash = location.hash.replace('#', '');
-  var legacyMap = { 'apiworkflows': 'cfg-workflows', 'llm-instruction': 'cfg-llm' };
+  var legacyMap = { 'apiworkflows': 'dp-settings__workflows', 'llm-instruction': 'dp-settings__llm' };
   activate(legacyMap[hash] || hash);
 }());
 
 (function () {
-  document.querySelectorAll('.cfg-view-combo').forEach(function (combo) {
-    var trigger = combo.querySelector('.cfg-view-combo-trigger');
-    var menu    = combo.querySelector('.cfg-view-combo-menu');
+  document.querySelectorAll('.dp-settings__view-combo').forEach(function (combo) {
+    var trigger = combo.querySelector('.dp-settings__view-combo-trigger');
+    var menu    = combo.querySelector('.dp-settings__view-combo-menu');
     if (!trigger || !menu) return; // single-view org: trigger is a disabled display-only pill
-    var input   = combo.querySelector('.cfg-view-combo-input');
-    var empty   = combo.querySelector('.cfg-view-combo-empty');
-    var options = Array.prototype.slice.call(combo.querySelectorAll('.cfg-view-combo-option'));
+    var input   = combo.querySelector('.dp-settings__view-combo-input');
+    var empty   = combo.querySelector('.dp-settings__view-combo-empty');
+    var options = Array.prototype.slice.call(combo.querySelectorAll('.dp-settings__view-combo-option'));
 
     function visibleOptions() { return options.filter(function (o) { return o.style.display !== 'none'; }); }
     function filter(q) {

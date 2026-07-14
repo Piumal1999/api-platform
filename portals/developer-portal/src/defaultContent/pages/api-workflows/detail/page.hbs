@@ -18,7 +18,7 @@
 {{/pageHead}}
 
 <div data-flow-handle="{{flow.handle}}" data-flow-content-type="{{flow.contentType}}">
-    <div class="flow-detail-section">
+    <div class="dp-workflow__detail-section">
         {{!-- Breadcrumb --}}
         <nav class="dp-breadcrumb">
           <a class="dp-breadcrumb-item" href="{{baseUrl}}/api-workflows">API Workflows</a>
@@ -27,14 +27,14 @@
         </nav>
 
         {{!-- Header --}}
-        <div class="flow-detail-header">
-            <div class="flow-detail-header-content">
+        <div class="dp-workflow__detail-header">
+            <div class="dp-workflow__detail-header-content">
                 <h1>{{flow.displayName}}</h1>
                 <p>{{flow.description}}</p>
             </div>
-            <div class="flow-header-actions">
+            <div class="dp-workflow__header-actions">
                 {{#unless (eq flow.agentVisibility "HIDDEN")}}
-                <button class="common-btn-primary discover-ai-btn" id="openPromptBtn" data-bs-toggle="modal" data-bs-target="#agentPromptModal">
+                <button class="dp-common__btn-primary dp-discover__ai-btn" id="openPromptBtn" data-bs-toggle="modal" data-bs-target="#agentPromptModal">
                     <img src="https://raw.githubusercontent.com/wso2/docs-bijira/refs/heads/main/en/devportal-theming/ai-stars-icon.svg" width="16" height="16" aria-hidden="true" alt="" style="margin-right:6px;vertical-align:middle;">Try with AI
                 </button>
                 {{/unless}}
@@ -42,13 +42,13 @@
         </div>
 
         {{!-- Content --}}
-        <div class="flow-detail-content">
+        <div class="dp-workflow__detail-content">
             {{#if (eq flow.contentType "MD")}}
             {{!-- Markdown Preview --}}
-            <div class="af-md-detail-container" id="markdownViewer"></div>
+            <div class="dp-workflow__md-detail-container" id="markdownViewer"></div>
             {{else}}
             {{!-- Arazzo UI Viewer --}}
-            <div class="arazzo-viewer-container">
+            <div class="dp-workflow__arazzo-viewer">
                 <div id="arazzoViewer"></div>
             </div>
             {{/if}}

@@ -1,20 +1,20 @@
 {{!-- MCP Server URL --}}
-<div class="aov-section">
-  <div class="aov-section-header">
-    <h2 class="aov-section-title">MCP Server URL</h2>
+<div class="dp-api-overview__section">
+  <div class="dp-api-overview__section-header">
+    <h2 class="dp-api-overview__section-title">MCP Server URL</h2>
   </div>
   {{#if (eq resources.serverDetails "")}}
-  <div class="aov-endpoint-card">
+  <div class="dp-api-overview__endpoint-card">
     <span style="font-size:13px;color:#8a93a0;">No endpoints available</span>
   </div>
   {{else}}
   {{#unless (eq resources.serverDetails.productionURL "")}}
-  <div class="aov-endpoint-url-row" style="margin-top:0;">
+  <div class="dp-api-overview__endpoint-url-row" style="margin-top:0;">
     <i class="bi bi-link-45deg" style="color:#8a93a0;flex:none;"></i>
-    <pre id="token_mcp_prod_url" class="aov-endpoint-url token-text">{{resources.serverDetails.productionURL}}</pre>
-    <button type="button" class="copy-btn" title="Copy URL" onclick="copyToken(this, 'mcp_prod_url')">
-      <span class="copy-btn-icon"><i class="bi bi-copy"></i></span>
-      <span class="copy-btn-check"><i class="bi bi-check"></i> Copied</span>
+    <pre id="token_mcp_prod_url" class="dp-api-overview__endpoint-url dp-token__text">{{resources.serverDetails.productionURL}}</pre>
+    <button type="button" class="dp-copy__btn" title="Copy URL" onclick="copyToken(this, 'mcp_prod_url')">
+      <span class="dp-copy__btn-icon"><i class="bi bi-copy"></i></span>
+      <span class="dp-copy__btn-check"><i class="bi bi-check"></i> Copied</span>
     </button>
   </div>
   {{/unless}}
@@ -23,27 +23,27 @@
 
 {{!-- Tools --}}
 {{#if schemaDefinition.tools.length}}
-<div class="aov-section">
-  <div class="aov-section-header">
-    <h2 class="aov-section-title">Tools</h2>
-    <span class="aov-section-count">{{schemaDefinition.tools.length}} tools</span>
+<div class="dp-api-overview__section">
+  <div class="dp-api-overview__section-header">
+    <h2 class="dp-api-overview__section-title">Tools</h2>
+    <span class="dp-api-overview__section-count">{{schemaDefinition.tools.length}} tools</span>
   </div>
   {{#each schemaDefinition.tools}}
-  <div class="mc-accordion">
-    <div class="mc-accordion-head open" onclick="this.classList.toggle('open')">
-      <span class="mc-accordion-head-label">
+  <div class="dp-mcp__accordion">
+    <div class="dp-mcp__accordion-head open" onclick="this.classList.toggle('open')">
+      <span class="dp-mcp__accordion-head-label">
         <i class="bi bi-wrench"></i> {{this.name}}
       </span>
-      <i class="bi bi-chevron-up mc-accordion-chevron"></i>
+      <i class="bi bi-chevron-up dp-mcp__accordion-chevron"></i>
     </div>
-    <div class="mc-accordion-body">
+    <div class="dp-mcp__accordion-body">
       {{#if this.description}}
-      <p class="mc-accordion-desc">{{this.description}}</p>
+      <p class="dp-mcp__accordion-desc">{{this.description}}</p>
       {{else}}
-      <p class="mc-accordion-desc" style="color:#b0b8c4;">No description available.</p>
+      <p class="dp-mcp__accordion-desc" style="color:#b0b8c4;">No description available.</p>
       {{/if}}
       {{#if this.inputSchema}}
-      <div class="mc-json-block">
+      <div class="dp-mcp__json-block">
         <pre><code class="language-json">{{jsonBeautify this.inputSchema}}</code></pre>
       </div>
       {{/if}}
@@ -55,35 +55,35 @@
 
 {{!-- Resources --}}
 {{#if schemaDefinition.resources.length}}
-<div class="aov-section">
-  <div class="aov-section-header">
-    <h2 class="aov-section-title">Resources</h2>
-    <span class="aov-section-count">{{schemaDefinition.resources.length}} resources</span>
+<div class="dp-api-overview__section">
+  <div class="dp-api-overview__section-header">
+    <h2 class="dp-api-overview__section-title">Resources</h2>
+    <span class="dp-api-overview__section-count">{{schemaDefinition.resources.length}} resources</span>
   </div>
   {{#each schemaDefinition.resources}}
-  <div class="mc-accordion">
-    <div class="mc-accordion-head open" onclick="this.classList.toggle('open')">
-      <span class="mc-accordion-head-label">
+  <div class="dp-mcp__accordion">
+    <div class="dp-mcp__accordion-head open" onclick="this.classList.toggle('open')">
+      <span class="dp-mcp__accordion-head-label">
         <i class="bi bi-file-earmark-code"></i> {{this.name}}
       </span>
-      <i class="bi bi-chevron-up mc-accordion-chevron"></i>
+      <i class="bi bi-chevron-up dp-mcp__accordion-chevron"></i>
     </div>
-    <div class="mc-accordion-body">
+    <div class="dp-mcp__accordion-body">
       {{#if this.description}}
-      <p class="mc-accordion-desc">{{this.description}}</p>
+      <p class="dp-mcp__accordion-desc">{{this.description}}</p>
       {{else}}
-      <p class="mc-accordion-desc" style="color:#b0b8c4;">No description available.</p>
+      <p class="dp-mcp__accordion-desc" style="color:#b0b8c4;">No description available.</p>
       {{/if}}
       {{#if this.uri}}
-      <div class="mc-accordion-meta">
-        <span class="mc-accordion-meta-key">URI</span>
-        <code class="mc-accordion-meta-val">{{this.uri}}</code>
+      <div class="dp-mcp__accordion-meta">
+        <span class="dp-mcp__accordion-meta-key">URI</span>
+        <code class="dp-mcp__accordion-meta-val">{{this.uri}}</code>
       </div>
       {{/if}}
       {{#if this.mimeType}}
-      <div class="mc-accordion-meta">
-        <span class="mc-accordion-meta-key">MIME Type</span>
-        <code class="mc-accordion-meta-val">{{this.mimeType}}</code>
+      <div class="dp-mcp__accordion-meta">
+        <span class="dp-mcp__accordion-meta-key">MIME Type</span>
+        <code class="dp-mcp__accordion-meta-val">{{this.mimeType}}</code>
       </div>
       {{/if}}
     </div>
@@ -94,27 +94,27 @@
 
 {{!-- Prompts --}}
 {{#if schemaDefinition.prompts.length}}
-<div class="aov-section">
-  <div class="aov-section-header">
-    <h2 class="aov-section-title">Prompts</h2>
-    <span class="aov-section-count">{{schemaDefinition.prompts.length}} prompts</span>
+<div class="dp-api-overview__section">
+  <div class="dp-api-overview__section-header">
+    <h2 class="dp-api-overview__section-title">Prompts</h2>
+    <span class="dp-api-overview__section-count">{{schemaDefinition.prompts.length}} prompts</span>
   </div>
   {{#each schemaDefinition.prompts}}
-  <div class="mc-accordion">
-    <div class="mc-accordion-head open" onclick="this.classList.toggle('open')">
-      <span class="mc-accordion-head-label">
+  <div class="dp-mcp__accordion">
+    <div class="dp-mcp__accordion-head open" onclick="this.classList.toggle('open')">
+      <span class="dp-mcp__accordion-head-label">
         <i class="bi bi-chat-text"></i> {{this.name}}
       </span>
-      <i class="bi bi-chevron-up mc-accordion-chevron"></i>
+      <i class="bi bi-chevron-up dp-mcp__accordion-chevron"></i>
     </div>
-    <div class="mc-accordion-body">
+    <div class="dp-mcp__accordion-body">
       {{#if this.description}}
-      <p class="mc-accordion-desc">{{this.description}}</p>
+      <p class="dp-mcp__accordion-desc">{{this.description}}</p>
       {{else}}
-      <p class="mc-accordion-desc" style="color:#b0b8c4;">No description available.</p>
+      <p class="dp-mcp__accordion-desc" style="color:#b0b8c4;">No description available.</p>
       {{/if}}
       {{#if this.arguments}}
-      <div class="mc-json-block">
+      <div class="dp-mcp__json-block">
         <pre><code class="language-json">{{jsonBeautify this.arguments}}</code></pre>
       </div>
       {{/if}}

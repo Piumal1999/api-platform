@@ -1,4 +1,4 @@
-.app-overview-card {
+.dp-app__overview-card{
   background-color: var(--primary-surface) !important;
   border-radius: 0.75rem !important;
   padding: 2.5rem 2.5rem !important;
@@ -10,51 +10,63 @@
   align-items: flex-start;
 }
 
-.app-description {
+.dp-app__description{
   color: var(--text);
   font-size: 14px;
   font-weight: 300;
 }
 
-.app-subscription-count {
+.dp-app__subscription-count{
   font-weight: 500;
   font-size: 14px;
   color: var(--text);
   opacity: 0.7;
 }
 
-.app-overview-title {
+.dp-app__overview-title{
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--primary);
   margin: 0 0 0.5rem 0;
 }
 
-.edit-button {
+.dp-app__save-btn, .dp-app__cancel-btn{
+  padding: 0.25rem 0.5rem;
+  margin-left: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.dp-app__button-loading .spinner-border{
+  width: 0.8rem;
+  height: 0.8rem;
+  border-width: 0.15em;
+}
+
+.dp-edit__button{
   border-color: var(--primary);
   color: var(--primary);
   float: right;
 }
 
-.edit-button:hover {
+.dp-edit__button:hover{
   border-color: var(--primary);
   background-color: var(--primary);
   color: var(--white);
 }
 
 /* Inline editing styles */
-.edit-container {
+.dp-edit__container{
   position: relative;
   display: block;
   margin-bottom: 0;
 }
 
-.edit-container h4, .edit-container p {
+.dp-edit__container h4, .dp-edit__container p{
   display: inline-block;
   margin-right: 10px;
 }
 
-.edit-inline-btn {
+.dp-edit__inline-btn{
   opacity: 0.2;
   transition: opacity 0.2s;
   color: var(--primary);
@@ -62,39 +74,19 @@
   align-self: center;
 }
 
-.edit-container:hover .edit-inline-btn {
+.dp-edit__container:hover .dp-edit__inline-btn{
   opacity: 1;
 }
 
-.edit-actions {
+.dp-edit__actions{
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   display: inline-block;
   vertical-align: middle;
 }
 
-.save-btn, .cancel-btn {
-  padding: 0.25rem 0.5rem;
-  margin-left: 0.25rem;
-  border-radius: 0.25rem;
-}
-
-.button-loading-state .spinner-border {
-  width: 0.8rem;
-  height: 0.8rem;
-  border-width: 0.15em;
-}
-
-[contenteditable="true"] {
-  border: 1.5px solid var(--primary);
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  margin-bottom: 0;
-  min-width: 200px;
-}
-
 /* Error message styling */
-.edit-error-message {
+.dp-edit__error-message{
   color: var(--danger);
   font-size: 0.75rem;
   margin-top: 0.25rem;
@@ -103,28 +95,36 @@
   font-weight: 400;
 }
 
+[contenteditable="true"]{
+  border: 1.5px solid var(--primary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  margin-bottom: 0;
+  min-width: 200px;
+}
+
 @media (max-width: 992px) {
-  .app-overview-card {
+  .dp-app__overview-card{
     padding: 2rem 2.5rem !important;
   }
   
-  .app-overview-title {
+  .dp-app__overview-title{
     font-size: 1.85rem;
   }
 }
 
 @media (max-width: 768px) {
-  .app-overview-card {
+  .dp-app__overview-card{
     padding: 1.5rem 2rem !important;
   }
 }
 
 @media (max-width: 576px) {
-  .app-overview-card {
+  .dp-app__overview-card{
     padding: 1.25rem 1.5rem !important;
   }
   
-  .app-overview-title {
+  .dp-app__overview-title{
     font-size: 1.5rem;
   }
 }

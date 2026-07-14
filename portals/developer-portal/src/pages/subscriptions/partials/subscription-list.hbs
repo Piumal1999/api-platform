@@ -1,10 +1,10 @@
 {{#if subscriptions.length}}
-<div class="sub-scroll table-responsive">
-  <div class="sub-tablewrap">
+<div class="dp-subscription__scroll table-responsive">
+  <div class="dp-subscription__tablewrap">
     <script>
       window.__subscriptionOrgId = "{{@root.orgId}}";
     </script>
-    <table class="sub-table" id="subscriptions-table">
+    <table class="dp-subscription__table" id="subscriptions-table">
       <thead>
         <tr>
           <th>API</th>
@@ -24,23 +24,23 @@
             data-plan-name="{{this.planName}}"
             data-status="{{this.status}}">
           <td>
-            <a class="sub-api-link" href="{{../baseUrl}}/api/{{this.apiHandle}}">{{this.apiName}}</a>
+            <a class="dp-subscription__api-link" href="{{../baseUrl}}/api/{{this.apiHandle}}">{{this.apiName}}</a>
           </td>
           <td>{{this.apiVersion}}</td>
           <td>
-            <span class="sub-type-pill">Token-based</span>
+            <span class="dp-subscription__type-pill">Token-based</span>
           </td>
           <td>{{this.planName}}</td>
           <td style="color:#8a98a6;">{{#if this.applicationName}}{{this.applicationName}}{{else}}-{{/if}}</td>
           <td>
-            <span class="sub-status-pill {{#if (eq this.status 'ACTIVE')}}sub-status-pill--active{{else}}sub-status-pill--inactive{{/if}}">
-              <span class="sub-status-dot"></span>
+            <span class="dp-subscription__status-pill {{#if (eq this.status 'ACTIVE')}}dp-subscription__status-pill--active{{else}}dp-subscription__status-pill--inactive{{/if}}">
+              <span class="dp-subscription__status-dot"></span>
               {{this.status}}
             </span>
           </td>
           <td>
-            <div class="sub-actions">
-              <button class="sub-action-btn sub-action-btn--manage {{#if @root.isReadOnlyMode}}disabled{{/if}}"
+            <div class="dp-subscription__actions">
+              <button class="dp-subscription__action-btn dp-subscription__action-btn--manage {{#if @root.isReadOnlyMode}}disabled{{/if}}"
                 title="Manage subscription"
                 {{#unless @root.isReadOnlyMode}}onclick="openSubManage('{{this.id}}')"{{/unless}}
                 {{#if @root.isReadOnlyMode}}disabled{{/if}}>
@@ -66,50 +66,50 @@
 
 {{#unless @root.isReadOnlyMode}}
 <!-- Manage subscription modal -->
-<div id="subManageModal" class="mc-overlay" style="display:none;" role="dialog" aria-modal="true">
-  <div class="mc-manage-modal">
-    <div class="mc-manage-header">
-      <div class="mc-manage-header-info">
-        <span class="mc-manage-plan-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+<div id="subManageModal" class="dp-mcp__overlay" style="display:none;" role="dialog" aria-modal="true">
+  <div class="dp-mcp__manage-modal">
+    <div class="dp-mcp__manage-header">
+      <div class="dp-mcp__manage-header-info">
+        <span class="dp-mcp__manage-plan-icon"><i class="bi bi-lightning-charge-fill"></i></span>
         <div>
-          <h2 id="subManageApiName" class="mc-manage-plan-name"></h2>
-          <div class="mc-manage-subtitle"><span id="subManagePlanName"></span> · API subscription</div>
+          <h2 id="subManageApiName" class="dp-mcp__manage-plan-name"></h2>
+          <div class="dp-mcp__manage-subtitle"><span id="subManagePlanName"></span> · API subscription</div>
         </div>
       </div>
-      <button id="subManageClose" class="mc-modal-close" aria-label="Close">&times;</button>
+      <button id="subManageClose" class="dp-mcp__modal-close" aria-label="Close">&times;</button>
     </div>
-    <div class="mc-manage-body">
-      <div class="mc-manage-status-row">
-        <span class="mc-manage-status-label">Status</span>
-        <span id="subManageStatusBadge" class="mc-manage-status-badge mc-manage-status-badge--active">Active</span>
+    <div class="dp-mcp__manage-body">
+      <div class="dp-mcp__manage-status-row">
+        <span class="dp-mcp__manage-status-label">Status</span>
+        <span id="subManageStatusBadge" class="dp-mcp__manage-status-badge dp-mcp__manage-status-badge--active">Active</span>
       </div>
-      <div class="mc-token-label" style="margin-top:1.25rem;">
+      <div class="dp-mcp__token-label" style="margin-top:1.25rem;">
         <i class="bi bi-key" style="color:#637282;"></i>
         <span>Subscription token</span>
       </div>
-      <div class="mc-token-field mc-token-field--manage">
-        <div id="subManageTokenVal" class="mc-token-val mc-token-val--manage"></div>
-        <div class="mc-token-field-actions">
-          <button id="subManageRevealBtn" class="mc-token-action-btn" title="Reveal token">
+      <div class="dp-mcp__token-field dp-mcp__token-field--manage">
+        <div id="subManageTokenVal" class="dp-mcp__token-val dp-mcp__token-val--manage"></div>
+        <div class="dp-mcp__token-field-actions">
+          <button id="subManageRevealBtn" class="dp-mcp__token-action-btn" title="Reveal token">
             <i id="subManageRevealIcon" class="bi bi-eye"></i>
           </button>
-          <button id="subManageCopyBtn" class="copy-btn mc-token-copy-btn" title="Copy token">
-            <span class="copy-btn-icon"><i class="bi bi-copy"></i></span>
-            <span class="copy-btn-check"><i class="bi bi-check"></i> Copied</span>
+          <button id="subManageCopyBtn" class="dp-copy__btn dp-mcp__token-copy-btn" title="Copy token">
+            <span class="dp-copy__btn-icon"><i class="bi bi-copy"></i></span>
+            <span class="dp-copy__btn-check"><i class="bi bi-check"></i> Copied</span>
           </button>
         </div>
       </div>
-      <p class="mc-config-note" style="margin:0.625rem 0 0;">Use this token as the <code class="mc-inline-code">Subscription-Key</code> header when calling this API.</p>
-      <hr class="mc-manage-divider">
-      <div class="mc-manage-actions">
-        <button id="subManageRegenerateBtn" class="dp-btn mc-manage-action-btn mc-manage-action-btn--regenerate">
+      <p class="dp-mcp__config-note" style="margin:0.625rem 0 0;">Use this token as the <code class="dp-mcp__inline-code">Subscription-Key</code> header when calling this API.</p>
+      <hr class="dp-mcp__manage-divider">
+      <div class="dp-mcp__manage-actions">
+        <button id="subManageRegenerateBtn" class="dp-btn dp-mcp__manage-action-btn dp-mcp__manage-action-btn--regenerate">
           <i class="bi bi-arrow-clockwise"></i> Regenerate
         </button>
-        <button id="subManageSuspendBtn" class="dp-btn mc-manage-action-btn mc-manage-action-btn--suspend">
+        <button id="subManageSuspendBtn" class="dp-btn dp-mcp__manage-action-btn dp-mcp__manage-action-btn--suspend">
           <i class="bi bi-pause-circle"></i>
-          <span class="sub-suspend-label">Suspend</span>
+          <span class="dp-subscription__suspend-label">Suspend</span>
         </button>
-        <button id="subManageUnsubBtn" class="dp-btn mc-manage-action-btn mc-manage-action-btn--unsub">
+        <button id="subManageUnsubBtn" class="dp-btn dp-mcp__manage-action-btn dp-mcp__manage-action-btn--unsub">
           <i class="bi bi-trash"></i> Unsubscribe
         </button>
       </div>
@@ -118,31 +118,31 @@
 </div>
 
 <!-- Unsubscribe confirmation dialog -->
-<div id="subUnsubDialog" class="mc-overlay" style="display:none;" role="dialog" aria-modal="true">
-  <div class="mc-unsub-dialog">
-    <div class="mc-unsub-header">
-      <span class="mc-unsub-icon"><i class="bi bi-exclamation-triangle-fill"></i></span>
-      <h2 id="subUnsubTitle" class="mc-unsub-title">Unsubscribe?</h2>
+<div id="subUnsubDialog" class="dp-mcp__overlay" style="display:none;" role="dialog" aria-modal="true">
+  <div class="dp-mcp__unsub-dialog">
+    <div class="dp-mcp__unsub-header">
+      <span class="dp-mcp__unsub-icon"><i class="bi bi-exclamation-triangle-fill"></i></span>
+      <h2 id="subUnsubTitle" class="dp-mcp__unsub-title">Unsubscribe?</h2>
     </div>
-    <p id="subUnsubDesc" class="mc-unsub-desc">Your applications will lose access to this API and any tokens will stop working. You can re-subscribe at any time.</p>
-    <div class="mc-unsub-actions">
+    <p id="subUnsubDesc" class="dp-mcp__unsub-desc">Your applications will lose access to this API and any tokens will stop working. You can re-subscribe at any time.</p>
+    <div class="dp-mcp__unsub-actions">
       <button id="subUnsubCancelBtn" class="dp-btn dp-btn--outline">Cancel</button>
-      <button id="subUnsubConfirmBtn" class="dp-btn mc-unsub-confirm-btn">Unsubscribe</button>
+      <button id="subUnsubConfirmBtn" class="dp-btn dp-mcp__unsub-confirm-btn">Unsubscribe</button>
     </div>
   </div>
 </div>
 
 <!-- Regenerate token confirmation dialog -->
-<div id="subRegenerateDialog" class="mc-overlay" style="display:none;" role="dialog" aria-modal="true">
-  <div class="mc-unsub-dialog">
-    <div class="mc-unsub-header">
-      <span class="mc-unsub-icon"><i class="bi bi-exclamation-triangle-fill"></i></span>
-      <h2 class="mc-unsub-title">Regenerate token?</h2>
+<div id="subRegenerateDialog" class="dp-mcp__overlay" style="display:none;" role="dialog" aria-modal="true">
+  <div class="dp-mcp__unsub-dialog">
+    <div class="dp-mcp__unsub-header">
+      <span class="dp-mcp__unsub-icon"><i class="bi bi-exclamation-triangle-fill"></i></span>
+      <h2 class="dp-mcp__unsub-title">Regenerate token?</h2>
     </div>
-    <p class="mc-unsub-desc">Your current token will be invalidated immediately. Any applications using it will need to be updated with the new token.</p>
-    <div class="mc-unsub-actions">
+    <p class="dp-mcp__unsub-desc">Your current token will be invalidated immediately. Any applications using it will need to be updated with the new token.</p>
+    <div class="dp-mcp__unsub-actions">
       <button id="subRegenerateCancelBtn" class="dp-btn dp-btn--outline">Cancel</button>
-      <button id="subRegenerateConfirmBtn" class="dp-btn mc-unsub-confirm-btn">Regenerate</button>
+      <button id="subRegenerateConfirmBtn" class="dp-btn dp-mcp__unsub-confirm-btn">Regenerate</button>
     </div>
   </div>
 </div>

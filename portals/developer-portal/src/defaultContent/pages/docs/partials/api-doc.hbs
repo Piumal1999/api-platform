@@ -17,7 +17,7 @@
  */
  -->
 {{#if isAPIDefinition}}
-<div class="adoc-file-badge adoc-file-badge--spec">
+<div class="dp-doc__file-badge dp-doc__file-badge--spec">
   <i class="bi bi-code-slash"></i>
   {{#if (eq apiType "GRAPHQL")}}schema.graphql
   {{else if (eq apiType "SOAP")}}apiDefinition.xml
@@ -29,11 +29,11 @@
 {{> api-specification}}
 {{else}}
 {{#if currentDocName}}
-<div class="adoc-file-badge adoc-file-badge--doc">
+<div class="dp-doc__file-badge dp-doc__file-badge--doc">
   <i class="bi bi-file-text"></i> {{currentDocName}}.md
 </div>
 {{/if}}
-<div class="api-markdown-content">
+<div class="dp-api__markdown-content">
     {{{apiMD}}}
 </div>
 {{/if}}

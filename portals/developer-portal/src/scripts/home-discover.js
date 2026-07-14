@@ -38,9 +38,9 @@
     if (copyBtn) {
         copyBtn.addEventListener('click', function () {
             navigator.clipboard.writeText(prompt).then(function () {
-                copyBtn.classList.add('copy-btn--copied');
+                copyBtn.classList.add('dp-copy__btn--copied');
                 if (copyBtn._copyTimer) clearTimeout(copyBtn._copyTimer);
-                copyBtn._copyTimer = setTimeout(function () { copyBtn.classList.remove('copy-btn--copied'); }, 1600);
+                copyBtn._copyTimer = setTimeout(function () { copyBtn.classList.remove('dp-copy__btn--copied'); }, 1600);
             });
         });
     }

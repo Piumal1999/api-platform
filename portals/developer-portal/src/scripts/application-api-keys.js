@@ -18,7 +18,7 @@
 /* eslint-disable no-undef */
 
 (function () {
-    const cfg = document.getElementById('application-api-keys-config');
+    const cfg = document.getElementById('dp-applications__api-keys-config');
     if (!cfg) return;
 
     const orgId = cfg.dataset.orgId;

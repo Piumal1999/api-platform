@@ -1,5 +1,5 @@
 /* Documentation page layout */
-.adoc-wrap {
+.dp-doc__wrap{
   display: flex;
   gap: 2rem;
   align-items: flex-start;
@@ -7,16 +7,16 @@
 }
 
 /* Nav sidebar */
-.adoc-nav {
+.dp-doc__nav{
   width: 15.5rem;
   flex: none;
 }
 
-.adoc-nav-group {
+.dp-doc__nav-group{
   margin-bottom: 1.375rem;
 }
 
-.adoc-nav-group-title {
+.dp-doc__nav-group-title{
   font-size: 0.6875rem;
   font-weight: 700;
   line-height: 1;
@@ -26,13 +26,13 @@
   margin-bottom: 0.625rem;
 }
 
-.adoc-nav-items {
+.dp-doc__nav-items{
   display: flex;
   flex-direction: column;
   gap: 0.1875rem;
 }
 
-.adoc-nav-item {
+.dp-doc__nav-item{
   display: flex;
   align-items: center;
   gap: 0.6875rem;
@@ -48,21 +48,20 @@
   background: transparent;
 }
 
-.adoc-nav-item:hover {
+.dp-doc__nav-item:hover{
   background: var(--surface-sunken);
   color: var(--primary);
   text-decoration: none;
 }
 
-.adoc-nav-item--active,
-.adoc-nav-item.active {
+.dp-doc__nav-item--active, .dp-doc__nav-item.active{
   background: var(--primary-surface) !important;
   color: var(--primary) !important;
   font-weight: 600;
 }
 
 /* Content card */
-.adoc-content-card {
+.dp-doc__content-card{
   flex: 1;
   min-width: 0;
   border: 1px solid var(--border);
@@ -72,7 +71,7 @@
 }
 
 /* Filename badge */
-.adoc-file-badge {
+.dp-doc__file-badge{
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
@@ -84,22 +83,22 @@
   margin-bottom: 1.125rem;
 }
 
-.adoc-file-badge--doc {
+.dp-doc__file-badge--doc{
   background: var(--warning-surface);
   color: var(--warning);
 }
 
-.adoc-file-badge--spec {
+.dp-doc__file-badge--spec{
   background: var(--info-surface);
   color: var(--info);
 }
 
 /* Markdown content typography */
-.api-markdown-content {
+.dp-api__markdown-content{
   padding: 0;
 }
 
-.api-markdown-content h1 {
+.dp-api__markdown-content h1{
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 1.2;
@@ -108,7 +107,7 @@
   letter-spacing: -0.01em;
 }
 
-.api-markdown-content h2 {
+.dp-api__markdown-content h2{
   font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.3;
@@ -118,7 +117,7 @@
   border-bottom: 1px solid var(--border);
 }
 
-.api-markdown-content h3 {
+.dp-api__markdown-content h3{
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.3;
@@ -126,20 +125,20 @@
   margin: 1.5rem 0 0.5rem;
 }
 
-.api-markdown-content p {
+.dp-api__markdown-content p{
   font-size: 0.9375rem;
   line-height: 1.65;
   color: var(--text);
   margin: 0.875rem 0 0;
 }
 
-.api-markdown-content p:first-child { margin-top: 0; }
+.dp-api__markdown-content p:first-child{ margin-top: 0; }
 
-.api-markdown-content strong { color: var(--text-strong); font-weight: 600; }
+.dp-api__markdown-content strong{ color: var(--text-strong); font-weight: 600; }
 
-.api-markdown-content a { color: var(--primary); }
+.dp-api__markdown-content a{ color: var(--primary); }
 
-.api-markdown-content code {
+.dp-api__markdown-content code{
   font-family: var(--font-family-mono);
   font-size: 0.78125rem;
   color: #d6336c;
@@ -148,7 +147,7 @@
   border-radius: 0.25rem;
 }
 
-.api-markdown-content pre {
+.dp-api__markdown-content pre{
   background: var(--ink);
   border-radius: 0.75rem;
   padding: 1.25rem;
@@ -156,7 +155,7 @@
   margin: 1rem 0 0;
 }
 
-.api-markdown-content pre code {
+.dp-api__markdown-content pre code{
   color: var(--on-dark);
   background: none;
   padding: 0;
@@ -164,8 +163,7 @@
   line-height: 1.7;
 }
 
-.api-markdown-content ul,
-.api-markdown-content ol {
+.dp-api__markdown-content ul, .dp-api__markdown-content ol{
   font-size: 0.9375rem;
   line-height: 1.65;
   color: var(--text);
@@ -173,15 +171,15 @@
   margin: 0.75rem 0 0;
 }
 
-.api-markdown-content li { margin-top: 0.375rem; }
+.dp-api__markdown-content li{ margin-top: 0.375rem; }
 
-.api-markdown-content table {
+.dp-api__markdown-content table{
   border-collapse: collapse;
   width: 100%;
   margin: 0.875rem 0 0.25rem;
 }
 
-.api-markdown-content th {
+.dp-api__markdown-content th{
   text-align: left;
   font-size: 0.78125rem;
   font-weight: 600;
@@ -192,7 +190,7 @@
   border: 1px solid var(--border);
 }
 
-.api-markdown-content td {
+.dp-api__markdown-content td{
   font-size: 0.84375rem;
   line-height: 1.5;
   color: var(--text);
@@ -201,7 +199,7 @@
   vertical-align: top;
 }
 
-.api-markdown-content blockquote {
+.dp-api__markdown-content blockquote{
   margin: 1rem 0 0;
   padding: 0.8125rem 0.9375rem 0.8125rem 1rem;
   background: var(--info-surface);
@@ -210,39 +208,44 @@
   border-radius: 0.625rem;
 }
 
-.api-markdown-content blockquote p {
+.dp-api__markdown-content blockquote p{
   color: var(--text);
   margin: 0;
 }
 
-.api-markdown-content hr {
+.dp-api__markdown-content hr{
   border: none;
   border-top: 1px solid var(--border);
   margin: 1.75rem 0;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .adoc-wrap { flex-direction: column; }
-  .adoc-nav { width: 100%; }
-  .adoc-nav-items { flex-direction: row; flex-wrap: wrap; }
-  .adoc-content-card { padding: 1.5rem 1.25rem; }
-}
-
-@media (max-width: 768px) {
-  .adoc-content-card { padding: 1.25rem 1rem; }
-}
-
 /* ── Legacy markdown content ─────────────────────────────────── */
-.api-md-content {
+.dp-api__md-content{
   padding: 2.5rem 8.125rem;
   background-color: var(--surface);
   line-height: 1.8;
 }
 
-.api-md-content h1 { font-size: 1.875rem; color: var(--text); }
-.api-md-content h2, .api-md-content h3 { font-size: 1.5rem; color: var(--text); }
-.api-md-content h4, .api-md-content h5, .api-md-content h6 { font-size: 1.25rem; color: var(--text); }
-.api-md-content p { font-size: 0.9375rem; color: var(--text); }
-.api-md-content li { font-size: 0.9375rem; color: var(--text); }
-.api-md-content li::marker { color: var(--primary); }
+.dp-api__md-content h1{ font-size: 1.875rem; color: var(--text); }
+
+.dp-api__md-content h2, .dp-api__md-content h3{ font-size: 1.5rem; color: var(--text); }
+
+.dp-api__md-content h4, .dp-api__md-content h5, .dp-api__md-content h6{ font-size: 1.25rem; color: var(--text); }
+
+.dp-api__md-content p{ font-size: 0.9375rem; color: var(--text); }
+
+.dp-api__md-content li{ font-size: 0.9375rem; color: var(--text); }
+
+.dp-api__md-content li::marker{ color: var(--primary); }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dp-doc__wrap{ flex-direction: column; }
+  .dp-doc__nav{ width: 100%; }
+  .dp-doc__nav-items{ flex-direction: row; flex-wrap: wrap; }
+  .dp-doc__content-card{ padding: 1.5rem 1.25rem; }
+}
+
+@media (max-width: 768px) {
+  .dp-doc__content-card{ padding: 1.25rem 1rem; }
+}

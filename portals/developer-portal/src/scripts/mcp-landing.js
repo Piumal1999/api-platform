@@ -24,14 +24,14 @@
     if (!el) return;
     var text = el.textContent || el.innerText || '';
     try { navigator.clipboard.writeText(text).catch(function(){}); } catch(e) {}
-    btn.classList.add('copy-btn--copied');
+    btn.classList.add('dp-copy__btn--copied');
     if (btn._copyTimer) clearTimeout(btn._copyTimer);
-    btn._copyTimer = setTimeout(function() { btn.classList.remove('copy-btn--copied'); }, 1600);
+    btn._copyTimer = setTimeout(function() { btn.classList.remove('dp-copy__btn--copied'); }, 1600);
   }
   window.copyMcpConfig = copyMcpConfig;
 
   // Syntax-highlight MCP JSON/config code blocks (highlight.js CDN loads before this defer script).
-  document.querySelectorAll('.mc-json-block pre code, .mc-config-pre code').forEach(function(el) {
+  document.querySelectorAll('.dp-mcp__json-block pre code, .dp-mcp__config-pre code').forEach(function(el) {
     hljs.highlightElement(el);
   });
 }());

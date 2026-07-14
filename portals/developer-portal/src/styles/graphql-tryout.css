@@ -1,4 +1,4 @@
-.graphql-tryout-container {
+.dp-graphql__tryout-container{
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -6,7 +6,7 @@
   font-family: var(--font-family-sans);
 }
 
-.graphql-controls {
+.dp-graphql__controls{
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -17,20 +17,20 @@
   background: var(--surface-sunken);
 }
 
-.graphql-control {
+.dp-graphql__control{
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.graphql-control.graphql-control-row {
+.dp-graphql__control.dp-graphql__control-row{
   flex-direction: row;
   align-items: flex-start;
   gap: 12px;
   max-height: 160px;
 }
 
-.graphql-endpoint-type-wrapper {
+.dp-graphql__endpoint-type-wrapper{
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -38,7 +38,7 @@
   min-width: 140px;
 }
 
-.graphql-endpoint-input-wrapper {
+.dp-graphql__endpoint-input-wrapper{
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -46,7 +46,7 @@
   min-width: 0;
 }
 
-.graphql-control label {
+.dp-graphql__control label{
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -54,8 +54,7 @@
   color: var(--text-muted);
 }
 
-.graphql-control input,
-.graphql-control select {
+.dp-graphql__control input, .dp-graphql__control select{
   border: 1px solid var(--border-strong);
   border-radius: 8px;
   padding: 8px 12px;
@@ -67,7 +66,7 @@
   box-sizing: border-box;
 }
 
-.graphql-control select {
+.dp-graphql__control select{
   cursor: pointer;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2357606a' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E");
@@ -76,79 +75,39 @@
   padding-right: 32px;
 }
 
-.graphql-control select:hover {
+.dp-graphql__control select:hover{
   border-color: #3498DB;
 }
 
-.graphql-control select:focus {
+.dp-graphql__control select:focus{
   outline: none;
   border-color: #3498DB;
   box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
 
-.graphql-control .control-hint {
+.dp-graphql__control .dp-graphql__control-hint{
   font-size: 12px;
   color: var(--text-muted);
 }
 
-.graphql-control .control-hint strong {
+.dp-graphql__control .dp-graphql__control-hint strong{
   color: var(--text-strong);
 }
 
-.graphiql-container .graphiql-logo {
-  display: none !important;
-}
-
-.graphiql-container .graphiql-session {
-  height: 100% !important;
-}
-
-.graphiql-container .graphiql-sidebar .graphiql-sidebar-section:last-of-type button {
-  display: none !important;
-}
-
-.graphiql-container .graphiql-execute-button,
-.graphiql-container button.graphiql-execute-button,
-.graphiql-container .graphiql-execute-button-wrapper button {
-  background-color: #3498DB !important;
-  border-color: #3498DB !important;
-  color: var(--white) !important;
-}
-
-.graphiql-container .graphiql-execute-button:hover,
-.graphiql-container button.graphiql-execute-button:hover,
-.graphiql-container .graphiql-execute-button-wrapper button:hover {
-  background-color: #5DADE2 !important;
-  border-color: #5DADE2 !important;
-}
-
-.graphiql-container .graphiql-execute-button:active,
-.graphiql-container button.graphiql-execute-button:active,
-.graphiql-container .graphiql-execute-button-wrapper button:active {
-  background-color: #2980B9 !important;
-  border-color: #2980B9 !important;
-}
-
-.graphiql-container {
-  --primary-400: #3498DB !important;
-  --primary-500: #5DADE2 !important;
-  --primary-600: #2980B9 !important;
-}
-
-.graphql-auth-panel {
+.dp-graphql__auth-panel{
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.graphql-auth-tabs {
+.dp-graphql__auth-tabs{
   display: flex;
   gap: 0;
   border-bottom: 1px solid var(--border-strong);
   margin-bottom: 8px;
 }
 
-.graphql-auth-tab {
+.dp-graphql__auth-tab{
   padding: 6px 16px;
   font-family: var(--font-family-sans);
   font-size: 12px;
@@ -163,32 +122,64 @@
   margin-bottom: -1px;
 }
 
-.graphql-auth-tab:hover {
+.dp-graphql__auth-tab:hover{
   color: var(--text-strong);
 }
 
-.graphql-auth-tab.active {
+.dp-graphql__auth-tab.active{
   color: #3498DB;
   border-bottom-color: #3498DB;
 }
 
-.graphql-control select option:disabled {
+.dp-graphql__control select option:disabled{
   color: var(--text-subtle);
 }
 
+.graphiql-container .graphiql-logo{
+  display: none !important;
+}
+
+.graphiql-container .graphiql-session{
+  height: 100% !important;
+}
+
+.graphiql-container .graphiql-sidebar .graphiql-sidebar-section:last-of-type button{
+  display: none !important;
+}
+
+.graphiql-container .graphiql-execute-button, .graphiql-container button.graphiql-execute-button, .graphiql-container .graphiql-execute-button-wrapper button{
+  background-color: #3498DB !important;
+  border-color: #3498DB !important;
+  color: var(--white) !important;
+}
+
+.graphiql-container .graphiql-execute-button:hover, .graphiql-container button.graphiql-execute-button:hover, .graphiql-container .graphiql-execute-button-wrapper button:hover{
+  background-color: #5DADE2 !important;
+  border-color: #5DADE2 !important;
+}
+
+.graphiql-container .graphiql-execute-button:active, .graphiql-container button.graphiql-execute-button:active, .graphiql-container .graphiql-execute-button-wrapper button:active{
+  background-color: #2980B9 !important;
+  border-color: #2980B9 !important;
+}
+
+.graphiql-container{
+  --primary-400: #3498DB !important;
+  --primary-500: #5DADE2 !important;
+  --primary-600: #2980B9 !important;
+}
+
 @media (max-width: 640px) {
-  .graphql-control input,
-  .graphql-control select {
+  .dp-graphql__control input, .dp-graphql__control select{
     font-size: 12px;
   }
 
-  .graphql-control.graphql-control-row {
+  .dp-graphql__control.dp-graphql__control-row{
     flex-direction: column;
     max-height: none;
   }
 
-  .graphql-endpoint-type-wrapper {
+  .dp-graphql__endpoint-type-wrapper{
     min-width: 100%;
   }
 }
-

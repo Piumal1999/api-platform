@@ -2,16 +2,16 @@
   <link rel='stylesheet' href='/technical-styles/applications.css' />
 {{/pageHead}}
 
-<div class="page-container">
+<div class="dp-page__container">
 
   <!-- Page header -->
-  <div class="page-header">
+  <div class="dp-page__header">
     <div>
-      <h1 class="page-title">Applications</h1>
-      <p class="page-desc">Applications hold the API keys and subscriptions you use to call APIs.</p>
+      <h1 class="dp-page__title">Applications</h1>
+      <p class="dp-page__desc">Applications hold the API keys and subscriptions you use to call APIs.</p>
     </div>
     {{#if applicationsMetadata.length}}
-    <button class="apps-create-btn" id="apps-create-btn" type="button"
+    <button class="dp-applications__create-btn" id="dp-applications__create-btn" type="button"
       {{#if @root.isReadOnlyMode}}disabled title="Read-only mode"{{/if}}>
       <i class="bi bi-plus"></i> Create application
     </button>
@@ -24,7 +24,7 @@
     <span class="dp-empty-icon"><i class="bi bi-grid-3x3-gap-fill"></i></span>
     <h2 class="dp-empty-title">No applications yet</h2>
     <p class="dp-empty-desc">Create an application to generate API keys and subscribe to APIs. You can manage all your credentials in one place.</p>
-    <button class="dp-btn dp-btn--primary dp-btn--lg" id="apps-create-btn-empty" type="button"
+    <button class="dp-btn dp-btn--primary dp-btn--lg" id="dp-applications__create-btn-empty" type="button"
       {{#if @root.isReadOnlyMode}}disabled title="Read-only mode"{{/if}}>
       <i class="bi bi-plus"></i> Create application
     </button>
@@ -33,23 +33,23 @@
 
   <!-- Card grid -->
   {{#if applicationsMetadata.length}}
-  <div class="apps-grid" id="applicationsContainer">
+  <div class="dp-applications__grid" id="applicationsContainer">
     {{#applicationsMetadata}}
-    <div class="app-card" id="app-card-{{id}}" data-id="{{id}}" data-display-name="{{displayName}}"
+    <div class="dp-app__card" id="app-card-{{id}}" data-id="{{id}}" data-display-name="{{displayName}}"
       style="cursor:pointer;" onclick="window.location.href='{{../baseUrl}}/applications/{{id}}'">
 
-      <div class="app-card-top">
-        <span class="app-avatar" data-display-name="{{displayName}}"></span>
-        <div class="app-card-meta">
-          <h3 class="app-card-name">{{displayName}}</h3>
+      <div class="dp-app__card-top">
+        <span class="dp-app__avatar" data-display-name="{{displayName}}"></span>
+        <div class="dp-app__card-meta">
+          <h3 class="dp-app__card-name">{{displayName}}</h3>
         </div>
       </div>
 
-      <p class="app-card-desc">{{description}}</p>
+      <p class="dp-app__card-desc">{{description}}</p>
 
-      <div class="app-card-footer">
+      <div class="dp-app__card-footer">
         {{#unless @root.isReadOnlyMode}}
-        <button type="button" class="app-delete-btn" id="trash-btn-{{id}}"
+        <button type="button" class="dp-app__delete-btn" id="trash-btn-{{id}}"
           title="Delete application"
           onclick="event.stopPropagation(); appShowDeleteModal('{{id}}', '{{displayName}}')">
           <i class="bi bi-trash"></i>
@@ -65,52 +65,52 @@
 </div>
 
 <!-- ── Create application modal ── -->
-<div class="app-modal-overlay" id="app-create-modal" style="display:none;">
-  <div class="app-modal">
-    <div class="app-modal-head">
-      <div class="app-modal-head-left">
-        <span class="app-modal-icon"><i class="bi bi-grid-3x3-gap-fill"></i></span>
-        <h2 class="app-modal-title">Create application</h2>
+<div class="dp-app__modal-overlay" id="app-create-modal" style="display:none;">
+  <div class="dp-app__modal">
+    <div class="dp-app__modal-head">
+      <div class="dp-app__modal-head-left">
+        <span class="dp-app__modal-icon"><i class="bi bi-grid-3x3-gap-fill"></i></span>
+        <h2 class="dp-app__modal-title">Create application</h2>
       </div>
-      <button type="button" class="app-modal-close" id="app-create-close" aria-label="Close">
+      <button type="button" class="dp-app__modal-close" id="app-create-close" aria-label="Close">
         <i class="bi bi-x-lg"></i>
       </button>
     </div>
-    <div class="app-modal-body">
-      <div class="app-form-group">
-        <label for="app-name-input">Application name <span class="app-required">*</span></label>
-        <input type="text" id="app-name-input" class="app-form-input" placeholder="e.g. My Mobile App" maxlength="100" autocomplete="off" />
+    <div class="dp-app__modal-body">
+      <div class="dp-app__form-group">
+        <label for="app-name-input">Application name <span class="dp-app__required">*</span></label>
+        <input type="text" id="app-name-input" class="dp-app__form-input" placeholder="e.g. My Mobile App" maxlength="100" autocomplete="off" />
       </div>
-      <div class="app-form-group">
+      <div class="dp-app__form-group">
         <label for="app-desc-input">Description</label>
-        <textarea id="app-desc-input" class="app-form-input" rows="3"
+        <textarea id="app-desc-input" class="dp-app__form-input" rows="3"
           placeholder="What is this application for? (optional)"
           maxlength="256" style="resize:vertical;"></textarea>
       </div>
     </div>
-    <div class="app-modal-footer">
-      <button type="button" class="app-btn-secondary" id="app-create-cancel">Cancel</button>
-      <button type="button" class="app-btn-primary" id="app-create-confirm" disabled>Create</button>
+    <div class="dp-app__modal-footer">
+      <button type="button" class="dp-app__btn--secondary" id="app-create-cancel">Cancel</button>
+      <button type="button" class="dp-app__btn--primary" id="app-create-confirm" disabled>Create</button>
     </div>
   </div>
 </div>
 
 <!-- ── Delete confirmation modal ── -->
-<div class="app-modal-overlay" id="app-delete-modal" style="display:none;">
-  <div class="app-modal app-modal--sm">
-    <div class="app-modal-head">
-      <div class="app-modal-head-left">
-        <span class="app-modal-icon app-modal-icon--danger"><i class="bi bi-trash"></i></span>
-        <h2 class="app-modal-title">Delete application</h2>
+<div class="dp-app__modal-overlay" id="app-delete-modal" style="display:none;">
+  <div class="dp-app__modal dp-app__modal--sm">
+    <div class="dp-app__modal-head">
+      <div class="dp-app__modal-head-left">
+        <span class="dp-app__modal-icon dp-app__modal-icon--danger"><i class="bi bi-trash"></i></span>
+        <h2 class="dp-app__modal-title">Delete application</h2>
       </div>
     </div>
-    <p class="app-modal-body-text">
+    <p class="dp-app__modal-body-text">
       Are you sure you want to delete <strong id="app-delete-name"></strong>?
       Its API keys and subscriptions will be revoked. This action can't be undone.
     </p>
-    <div class="app-modal-footer">
-      <button type="button" class="app-btn-secondary" id="app-delete-cancel">Cancel</button>
-      <button type="button" class="app-btn-danger" id="app-delete-confirm">Delete</button>
+    <div class="dp-app__modal-footer">
+      <button type="button" class="dp-app__btn--secondary" id="app-delete-cancel">Cancel</button>
+      <button type="button" class="dp-app__btn--danger" id="app-delete-confirm">Delete</button>
     </div>
   </div>
 </div>
@@ -152,7 +152,7 @@
     return handle;
   }
 
-  document.querySelectorAll('.app-avatar[data-display-name]').forEach(function (el, i) {
+  document.querySelectorAll('.dp-app__avatar[data-display-name]').forEach(function (el, i) {
     var c = palette[i % palette.length];
     el.style.background = c.bg;
     el.style.color = c.fg;
@@ -172,9 +172,9 @@
     document.getElementById('app-create-modal').style.display = 'none';
   }
 
-  var createBtn = document.getElementById('apps-create-btn');
+  var createBtn = document.getElementById('dp-applications__create-btn');
   if (createBtn) createBtn.addEventListener('click', openCreateModal);
-  var createBtnEmpty = document.getElementById('apps-create-btn-empty');
+  var createBtnEmpty = document.getElementById('dp-applications__create-btn-empty');
   if (createBtnEmpty) createBtnEmpty.addEventListener('click', openCreateModal);
 
   document.getElementById('app-create-close').addEventListener('click', closeCreateModal);
@@ -249,7 +249,7 @@
         document.getElementById('app-delete-modal').style.display = 'none';
         var card = document.getElementById('app-card-' + pendingDeleteId);
         if (card) card.remove();
-        if (!document.querySelector('.app-card')) {
+        if (!document.querySelector('.dp-app__card')) {
           window.location.reload();
         }
       })

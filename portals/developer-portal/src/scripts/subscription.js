@@ -213,7 +213,7 @@ async function runPendingPlanSwitch(orgId, apiId, planName, displayName, subscri
 
 function refreshModalOrReload(orgId) {
     // If inside a visible modal, re-render its content instead of reloading the page
-    var visibleModal = document.querySelector('.modal.custom-modal[style*="flex"]');
+    var visibleModal = document.querySelector('.modal.dp-ui__modal[style*="flex"]');
     if (visibleModal && visibleModal.id && typeof prepareSubscriptionModal === 'function') {
         prepareSubscriptionModal(visibleModal.id);
         return;
@@ -255,7 +255,7 @@ async function refreshLandingPageSubscriptions() {
             if (!existingSection) {
                 existingSection = document.createElement('div');
                 existingSection.className = 'existing-subscriptions mb-4';
-                var plansHeader = document.querySelector('#subscriptionPlans .container-header');
+                var plansHeader = document.querySelector('#subscriptionPlans .dp-ui__container-header');
                 if (plansHeader) {
                     plansHeader.parentNode.insertBefore(existingSection, plansHeader);
                 } else {
@@ -265,7 +265,7 @@ async function refreshLandingPageSubscriptions() {
             var modalEl = document.getElementById('planModal-' + apiId);
             var isTokenBased = (modalEl && modalEl.dataset.hasSubscriptionToken === 'true') || existing.some(function(s) { return !!s.subscriptionToken; });
 
-            existingSection.innerHTML = '<div class="container-header mb-4">Subscriptions</div>';
+            existingSection.innerHTML = '<div class="dp-ui__container-header mb-4">Subscriptions</div>';
             var table = document.createElement('table');
             table.className = 'table';
             var headerHtml = '<thead><tr><th>Plan</th><th>Status</th>';
@@ -295,7 +295,7 @@ async function refreshLandingPageSubscriptions() {
                     var tokenDisplay = document.createElement('div');
                     tokenDisplay.className = 'token-display';
                     var code = document.createElement('code');
-                    code.className = 'masked-token';
+                    code.className = 'dp-ui__masked-token';
                     code.id = 'token-' + sub.subscriptionId;
                     code.dataset.revealed = 'false';
                     code.textContent = '****';
@@ -306,9 +306,9 @@ async function refreshLandingPageSubscriptions() {
                     revealBtn.dataset.subscriptionId = sub.subscriptionId;
                     revealBtn.addEventListener('click', function() { toggleTokenVisibility(this.dataset.subscriptionId); });
                     var copyBtn = document.createElement('button');
-                    copyBtn.className = 'copy-btn';
+                    copyBtn.className = 'dp-copy__btn';
                     copyBtn.title = 'Copy token';
-                    copyBtn.innerHTML = '<span class="copy-btn-icon"><i class="bi bi-copy"></i></span><span class="copy-btn-check"><i class="bi bi-check"></i> Copied</span>';
+                    copyBtn.innerHTML = '<span class="dp-copy__btn-icon"><i class="bi bi-copy"></i></span><span class="dp-copy__btn-check"><i class="bi bi-check"></i> Copied</span>';
                     copyBtn.dataset.subscriptionId = sub.subscriptionId;
                     copyBtn.addEventListener('click', function() { copySubscriptionToken(this, this.dataset.subscriptionId); });
                     tokenDisplay.appendChild(code);
@@ -354,9 +354,9 @@ async function refreshLandingPageSubscriptions() {
             .filter(function(s) { return s.status === 'ACTIVE'; })
             .map(function(s) { return (s.subscriptionPlanName || '').toLowerCase(); });
 
-        var planCards = document.querySelectorAll('#subscriptionPlans .subscription-card');
+        var planCards = document.querySelectorAll('#subscriptionPlans .dp-subscription__card');
         planCards.forEach(function(card) {
-            var btn = card.querySelector('.subscription-plan-subscribe-btn, .subscribe-btn, .current-plan-btn');
+            var btn = card.querySelector('.dp-subscription__plan-subscribe-btn, .dp-api__subscribe-btn, .current-plan-btn');
             if (!btn) return;
             var planName = (btn.dataset.planName || '').toLowerCase();
             if (activePlanNames.indexOf(planName) !== -1) {
@@ -383,9 +383,9 @@ function copySubscriptionToken(btn, subscriptionId) {
             if (!token) return;
             try { navigator.clipboard.writeText(token).catch(function(){}); } catch(e) {}
             if (!btn) return;
-            btn.classList.add('copy-btn--copied');
+            btn.classList.add('dp-copy__btn--copied');
             if (btn._copyTimer) clearTimeout(btn._copyTimer);
-            btn._copyTimer = setTimeout(function() { btn.classList.remove('copy-btn--copied'); }, 1600);
+            btn._copyTimer = setTimeout(function() { btn.classList.remove('dp-copy__btn--copied'); }, 1600);
         } catch (e) {}
     })();
 }
@@ -442,7 +442,7 @@ async function fetchTokenIfNeeded(subscriptionId) {
 function showSubscriptionTokenModal(token, planName) {
     return new Promise((resolve) => {
         const overlay = document.createElement('div');
-        overlay.className = 'modal custom-modal';
+        overlay.className = 'modal dp-ui__modal';
         overlay.style.display = 'flex';
 
         const safeplanName = document.createElement('span');
@@ -455,12 +455,12 @@ function showSubscriptionTokenModal(token, planName) {
 
         overlay.innerHTML = `
             <div class="modal-dialog" role="document">
-                <div class="modal-content custom-modal-content">
-                    <div class="custom-modal-header">
-                        <h2 class="custom-modal-title m-0">Subscription Created</h2>
+                <div class="modal-content dp-ui__modal-content">
+                    <div class="dp-ui__modal-header">
+                        <h2 class="dp-ui__modal-title m-0">Subscription Created</h2>
                         <button type="button" class="btn-close" id="closeTokenModal"></button>
                     </div>
-                    <div class="custom-modal-body">
+                    <div class="dp-ui__modal-body">
                         <p>Your subscription to the <strong id="planNameDisplay"></strong> plan has been created successfully.</p>
                         <p class="mb-2"><strong>Subscription Token:</strong></p>
                         <div class="d-flex align-items-center gap-2 mb-3" id="tokenContainer"></div>
@@ -481,14 +481,14 @@ function showSubscriptionTokenModal(token, planName) {
         tokenContainer.appendChild(safeToken);
 
         const copyBtn = document.createElement('button');
-        copyBtn.className = 'copy-btn';
+        copyBtn.className = 'dp-copy__btn';
         copyBtn.title = 'Copy token';
-        copyBtn.innerHTML = '<span class="copy-btn-icon"><i class="bi bi-copy"></i></span><span class="copy-btn-check"><i class="bi bi-check"></i> Copied</span>';
+        copyBtn.innerHTML = '<span class="dp-copy__btn-icon"><i class="bi bi-copy"></i></span><span class="dp-copy__btn-check"><i class="bi bi-check"></i> Copied</span>';
         copyBtn.addEventListener('click', function() {
             try { navigator.clipboard.writeText(token).catch(function(){}); } catch(e) {}
-            this.classList.add('copy-btn--copied');
+            this.classList.add('dp-copy__btn--copied');
             if (this._copyTimer) clearTimeout(this._copyTimer);
-            this._copyTimer = setTimeout(() => { this.classList.remove('copy-btn--copied'); }, 1600);
+            this._copyTimer = setTimeout(() => { this.classList.remove('dp-copy__btn--copied'); }, 1600);
         });
         tokenContainer.appendChild(copyBtn);
 
@@ -528,14 +528,14 @@ function showSubscriptionTokenInModal(apiId, token, planName) {
     code.className = 'p-2 bg-white border rounded flex-grow-1';
 
     const copyBtn = document.createElement('button');
-    copyBtn.className = 'copy-btn';
+    copyBtn.className = 'dp-copy__btn';
     copyBtn.title = 'Copy token';
-    copyBtn.innerHTML = '<span class="copy-btn-icon"><i class="bi bi-copy"></i></span><span class="copy-btn-check"><i class="bi bi-check"></i> Copied</span>';
+    copyBtn.innerHTML = '<span class="dp-copy__btn-icon"><i class="bi bi-copy"></i></span><span class="dp-copy__btn-check"><i class="bi bi-check"></i> Copied</span>';
     copyBtn.addEventListener('click', function() {
         try { navigator.clipboard.writeText(token).catch(function(){}); } catch(e) {}
-        this.classList.add('copy-btn--copied');
+        this.classList.add('dp-copy__btn--copied');
         if (this._copyTimer) clearTimeout(this._copyTimer);
-        this._copyTimer = setTimeout(() => { this.classList.remove('copy-btn--copied'); }, 1600);
+        this._copyTimer = setTimeout(() => { this.classList.remove('dp-copy__btn--copied'); }, 1600);
     });
 
     tokenBlock.appendChild(code);

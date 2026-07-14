@@ -163,7 +163,7 @@ function openWarningModal(param1, param2, param3, param4, param5, param6, param7
 async function deleteApplication() {
     const modal = document.getElementById('warningModal');
     const applicationId = modal.dataset.param2;
-    const messageOverlay = document.getElementById(`message-overlay-${applicationId}`);
+    const messageOverlay = document.getElementById(`dp-message__overlay-${applicationId}`);
     const trashButton = document.getElementById(`trash-btn-${applicationId}`);
 
     try {
@@ -216,7 +216,7 @@ window.showAppDeleteMessage = function (overlay, message, type = 'success') {
         }
 
         // Set message - keeping it simple and concise
-        const messageText = overlay.querySelector('.message-text');
+        const messageText = overlay.querySelector('.dp-message__text');
         if (messageText) messageText.textContent = message;
 
         // Set type (success/error)
@@ -224,9 +224,9 @@ window.showAppDeleteMessage = function (overlay, message, type = 'success') {
         overlay.classList.add(type);
 
         // Update icon - ensure proper class structure for alignment
-        const icon = overlay.querySelector('.message-icon');
+        const icon = overlay.querySelector('.dp-message__icon');
         if (icon) {
-            icon.className = 'bi message-icon ' + type;
+            icon.className = 'bi dp-message__icon ' + type;
             icon.classList.add(type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-circle-fill');
         }
 

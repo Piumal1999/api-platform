@@ -1,15 +1,16 @@
-/* MCP server overview page — mc-* prefix */
+/* MCP server overview page — dp-mcp__* prefix */
 
 /* ── Accordion card (Tools / Resources / Prompts) ────────────── */
-.mc-accordion {
+.dp-mcp__accordion{
   border: 1px solid var(--border);
   border-radius: 0.75rem;
   overflow: hidden;
   margin-bottom: 0.75rem;
 }
-.mc-accordion:last-child { margin-bottom: 0; }
 
-.mc-accordion-head {
+.dp-mcp__accordion:last-child{ margin-bottom: 0; }
+
+.dp-mcp__accordion-head{
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -22,10 +23,12 @@
   transition: background 0.15s;
   list-style: none;
 }
-.mc-accordion-head:hover { background: #f8e8d2; }
-.mc-accordion-head.open { border-bottom-color: #f3ddc4; }
 
-.mc-accordion-head-label {
+.dp-mcp__accordion-head:hover{ background: #f8e8d2; }
+
+.dp-mcp__accordion-head.open{ border-bottom-color: #f3ddc4; }
+
+.dp-mcp__accordion-head-label{
   display: flex;
   align-items: center;
   gap: 0.5625rem;
@@ -35,26 +38,28 @@
   color: #7a4a12;
 }
 
-.mc-accordion-chevron {
+.dp-mcp__accordion-chevron{
   color: #a87a44;
   transition: transform 0.2s;
   transform: rotate(180deg); /* closed by default — points down */
 }
-.mc-accordion-head.open .mc-accordion-chevron {
+
+.dp-mcp__accordion-head.open .dp-mcp__accordion-chevron{
   transform: rotate(0deg); /* open — points up */
 }
 
-.mc-accordion-body {
+.dp-mcp__accordion-body{
   display: none;
   flex-direction: column;
   gap: 0.75rem;
   padding: 1rem;
 }
-.mc-accordion-head.open + .mc-accordion-body {
+
+.dp-mcp__accordion-head.open + .dp-mcp__accordion-body{
   display: flex;
 }
 
-.mc-accordion-desc {
+.dp-mcp__accordion-desc{
   margin: 0;
   font-size: 0.84375rem;
   line-height: 1.5;
@@ -62,33 +67,36 @@
 }
 
 /* ── Resource meta rows (URI, MIME Type) ─────────────────────── */
-.mc-accordion-meta {
+.dp-mcp__accordion-meta{
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
   font-size: 0.8125rem;
   line-height: 1.9;
 }
-.mc-accordion-meta-key {
+
+.dp-mcp__accordion-meta-key{
   font-weight: 700;
   color: var(--text-strong);
   white-space: nowrap;
 }
-.mc-accordion-meta-val {
+
+.dp-mcp__accordion-meta-val{
   font-family: var(--font-family-mono);
   font-size: 0.78125rem;
   color: var(--text-muted);
 }
 
 /* ── JSON schema block inside accordion ─────────────────────── */
-.mc-json-block {
+.dp-mcp__json-block{
   background: var(--surface-sunken);
   border: 1px solid var(--border);
   border-radius: 0.5625rem;
   padding: 0.875rem 1rem;
   overflow-x: auto;
 }
-.mc-json-block pre {
+
+.dp-mcp__json-block pre{
   margin: 0;
   font-size: 0.75rem;
   line-height: 1.55;
@@ -96,7 +104,8 @@
   overflow-x: auto;
   max-height: 25rem;
 }
-.mc-json-block pre code.hljs {
+
+.dp-mcp__json-block pre code.hljs{
   background: transparent;
   padding: 0;
   font-family: var(--font-family-mono);
@@ -105,12 +114,12 @@
 }
 
 /* ── Config panel (right sidebar) ───────────────────────────── */
-.mc-config-panel {
+.dp-mcp__config-panel{
   position: sticky;
   top: 1.25rem;
 }
 
-.mc-config-block {
+.dp-mcp__config-block{
   position: relative;
   border: 1px solid var(--border);
   border-radius: 0.75rem;
@@ -118,20 +127,21 @@
   padding: 1rem;
 }
 
-.mc-config-copy {
+.dp-mcp__config-copy{
   position: absolute;
   top: 0.625rem;
   right: 0.625rem;
 }
 
-.mc-config-pre {
+.dp-mcp__config-pre{
   margin: 0;
   font-size: 0.75rem;
   line-height: 1.55;
   white-space: pre;
   overflow-x: auto;
 }
-.mc-config-pre code.hljs {
+
+.dp-mcp__config-pre code.hljs{
   background: transparent;
   padding: 0;
   font-family: var(--font-family-mono);
@@ -139,7 +149,7 @@
   line-height: 1.55;
 }
 
-.mc-config-note {
+.dp-mcp__config-note{
   margin: 0.75rem 0.125rem 0;
   font-size: 0.75rem;
   line-height: 1.5;
@@ -147,7 +157,7 @@
 }
 
 /* ── MCP subscription modals — shared overlay ───────────────── */
-.mc-overlay {
+.dp-mcp__overlay{
   position: fixed;
   inset: 0;
   display: flex;
@@ -160,12 +170,7 @@
   padding: 1rem;
 }
 
-@keyframes mc-pop {
-  from { opacity: 0; transform: translateY(10px) scale(.985); }
-  to   { opacity: 1; transform: none; }
-}
-
-.mc-modal-close {
+.dp-mcp__modal-close{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -179,28 +184,29 @@
   cursor: pointer;
   transition: background 0.15s;
 }
-.mc-modal-close:hover { background: rgba(0,0,0,.06); }
+
+.dp-mcp__modal-close:hover{ background: rgba(0,0,0,.06); }
 
 /* ── Token modal (shown after subscribing) ───────────────────── */
-.mc-token-modal {
+.dp-mcp__token-modal{
   position: relative;
   width: 32.5rem;
   max-width: 100%;
   background: var(--white);
   border-radius: 1.125rem;
   box-shadow: 0 28px 70px color-mix(in srgb, var(--ink) 38%, transparent);
-  animation: mc-pop .3s ease;
+  animation: dp-mcp__pop .3s ease;
   overflow: hidden;
 }
 
-.mc-token-modal-header {
+.dp-mcp__token-modal-header{
   background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 5%, var(--surface)) 0%, color-mix(in srgb, var(--primary) 9%, var(--surface)) 100%);
   border-bottom: 1px solid var(--border);
   padding: 2.125rem 2rem 1.75rem;
   text-align: center;
 }
 
-.mc-token-success-icon {
+.dp-mcp__token-success-icon{
   margin: 0 auto;
   width: 3.75rem; height: 3.75rem;
   border-radius: 50%;
@@ -213,7 +219,7 @@
   box-shadow: 0 8px 22px color-mix(in srgb, var(--success) 34%, transparent), 0 0 0 7px color-mix(in srgb, var(--success) 10%, transparent);
 }
 
-.mc-token-modal-title {
+.dp-mcp__token-modal-title{
   margin: 1.125rem 0 0;
   font-size: 1.3125rem;
   font-weight: 700;
@@ -221,32 +227,25 @@
   letter-spacing: -0.01em;
 }
 
-.mc-token-modal-sub {
+.dp-mcp__token-modal-sub{
   margin: 0.5rem 0 0;
   font-size: 0.90625rem;
   line-height: 1.55;
   color: var(--text-muted);
 }
 
-.mc-token-modal-body {
+.dp-mcp__token-modal-body{
   padding: 1.5rem 2rem 1.875rem;
 }
 
-#mcpTokenModalClose,
-#apiTokenModalClose {
-  position: absolute;
-  top: 1rem; right: 1rem;
-  z-index: 2;
-}
-
-.mc-token-modal-footer {
+.dp-mcp__token-modal-footer{
   margin-top: 1.5rem;
   display: flex;
   justify-content: flex-end;
 }
 
 /* ── Shared token field elements ─────────────────────────────── */
-.mc-token-label {
+.dp-mcp__token-label{
   display: inline-flex;
   align-items: center;
   gap: 0.4375rem;
@@ -255,40 +254,44 @@
   color: var(--text-strong);
 }
 
-.mc-token-field {
+.dp-mcp__token-field{
   position: relative;
   margin-top: 0.625rem;
   border-radius: 0.6875rem;
   padding: 0.9375rem 3.5rem 0.9375rem 1rem;
   min-height: 3.25rem;
 }
-.mc-token-field--pink {
+
+.dp-mcp__token-field--pink{
   background: #faf7fb;
   border: 1px solid #ead6e2;
 }
-.mc-token-field--manage {
+
+.dp-mcp__token-field--manage{
   background: #faf7fb;
   border: 1px solid #ead6e2;
   padding-right: 6rem;
 }
 
-.mc-token-val {
+.dp-mcp__token-val{
   font-family: var(--font-family-mono);
   font-size: 0.84375rem;
   font-weight: 600;
   line-height: 1.6;
   word-break: break-all;
 }
-.mc-token-val--pink   { color: #c2185b; }
-.mc-token-val--manage { color: #c2185b; letter-spacing: .04em; }
 
-.mc-token-copy-btn {
+.dp-mcp__token-val--pink{ color: #c2185b; }
+
+.dp-mcp__token-val--manage{ color: #c2185b; letter-spacing: .04em; }
+
+.dp-mcp__token-copy-btn{
   position: absolute;
   top: 50%; transform: translateY(-50%);
   right: 0.6875rem;
 }
 
-.mc-token-field-actions {
+.dp-mcp__token-field-actions{
   position: absolute;
   top: 50%; transform: translateY(-50%);
   right: 0.625rem;
@@ -296,12 +299,13 @@
   align-items: center;
   gap: 0.125rem;
 }
-.mc-token-field-actions .mc-token-copy-btn {
+
+.dp-mcp__token-field-actions .dp-mcp__token-copy-btn{
   position: static;
   transform: none;
 }
 
-.mc-token-action-btn {
+.dp-mcp__token-action-btn{
   display: inline-flex;
   align-items: center;
   border: none;
@@ -312,9 +316,10 @@
   cursor: pointer;
   transition: background 0.15s;
 }
-.mc-token-action-btn:hover { background: #efe1ea; }
 
-.mc-token-warning {
+.dp-mcp__token-action-btn:hover{ background: #efe1ea; }
+
+.dp-mcp__token-warning{
   margin-top: 1rem;
   display: flex;
   align-items: flex-start;
@@ -328,24 +333,24 @@
   color: color-mix(in srgb, var(--warning) 55%, var(--ink));
 }
 
-.mc-inline-code {
+.dp-mcp__inline-code{
   font-family: var(--font-family-mono);
   font-size: 0.78125rem;
   color: #c2185b;
 }
 
 /* ── Manage subscription modal ───────────────────────────────── */
-.mc-manage-modal {
+.dp-mcp__manage-modal{
   width: 31.25rem;
   max-width: 100%;
   background: var(--white);
   border-radius: 1.125rem;
   box-shadow: 0 28px 70px color-mix(in srgb, var(--ink) 38%, transparent);
-  animation: mc-pop .3s ease;
+  animation: dp-mcp__pop .3s ease;
   overflow: hidden;
 }
 
-.mc-manage-header {
+.dp-mcp__manage-header{
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -354,13 +359,13 @@
   border-bottom: 1px solid var(--border);
 }
 
-.mc-manage-header-info {
+.dp-mcp__manage-header-info{
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-.mc-manage-plan-icon {
+.dp-mcp__manage-plan-icon{
   width: 2.5rem; height: 2.5rem;
   flex: none;
   border-radius: 0.6875rem;
@@ -372,7 +377,7 @@
   font-size: 1rem;
 }
 
-.mc-manage-plan-name {
+.dp-mcp__manage-plan-name{
   margin: 0;
   font-size: 1.125rem;
   font-weight: 700;
@@ -380,30 +385,30 @@
   line-height: 1.2;
 }
 
-.mc-manage-subtitle {
+.dp-mcp__manage-subtitle{
   margin-top: 0.1875rem;
   font-size: 0.75rem;
   color: var(--text-muted);
 }
 
-.mc-manage-body {
+.dp-mcp__manage-body{
   padding: 1.375rem 1.5rem 1.5rem;
 }
 
-.mc-manage-status-row {
+.dp-mcp__manage-status-row{
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.625rem;
 }
 
-.mc-manage-status-label {
+.dp-mcp__manage-status-label{
   font-size: 0.8125rem;
   font-weight: 700;
   color: var(--text-strong);
 }
 
-.mc-manage-status-badge {
+.dp-mcp__manage-status-badge{
   display: inline-flex;
   align-items: center;
   gap: 0.4375rem;
@@ -412,28 +417,31 @@
   font-size: 0.75rem;
   font-weight: 600;
 }
-.mc-manage-status-badge::before {
+
+.dp-mcp__manage-status-badge::before{
   content: '';
   display: inline-block;
   width: 0.4375rem; height: 0.4375rem;
   border-radius: 50%;
   background: currentcolor;
 }
-.mc-manage-status-badge--active    { background: var(--success-surface); color: var(--success); }
-.mc-manage-status-badge--suspended { background: var(--warning-surface); color: var(--warning); }
 
-.mc-manage-divider {
+.dp-mcp__manage-status-badge--active{ background: var(--success-surface); color: var(--success); }
+
+.dp-mcp__manage-status-badge--suspended{ background: var(--warning-surface); color: var(--warning); }
+
+.dp-mcp__manage-divider{
   margin: 1.375rem 0 1.125rem;
   border: none;
   border-top: 1px solid var(--border);
 }
 
-.mc-manage-actions {
+.dp-mcp__manage-actions{
   display: flex;
   gap: 0.75rem;
 }
 
-.mc-manage-action-btn {
+.dp-mcp__manage-action-btn{
   flex: 1;
   min-width: 0;
   display: inline-flex;
@@ -448,33 +456,41 @@
   transition: background 0.15s, opacity 0.15s;
   background: var(--white);
 }
-.mc-manage-action-btn.mc-manage-action-btn--regenerate { border: 1px solid color-mix(in srgb, var(--primary) 34%, var(--surface)); color: var(--primary); }
-.mc-manage-action-btn.mc-manage-action-btn--regenerate:hover { background: color-mix(in srgb, var(--primary) 5%, var(--surface)); }
-.mc-manage-action-btn.mc-manage-action-btn--suspend { border: 1px solid color-mix(in srgb, var(--warning) 35%, var(--surface)); color: var(--warning); }
-.mc-manage-action-btn.mc-manage-action-btn--resume  { border: 1px solid color-mix(in srgb, var(--success) 40%, var(--surface)); color: var(--success); }
-.mc-manage-action-btn.mc-manage-action-btn--suspend:hover { background: color-mix(in srgb, var(--warning) 7%, var(--surface)); }
-.mc-manage-action-btn.mc-manage-action-btn--resume:hover  { background: color-mix(in srgb, var(--success) 8%, var(--surface)); }
-.mc-manage-action-btn.mc-manage-action-btn--unsub   { border: 1px solid color-mix(in srgb, var(--danger) 30%, var(--surface)); color: var(--danger); }
-.mc-manage-action-btn.mc-manage-action-btn--unsub:hover   { background: var(--danger-surface); }
+
+.dp-mcp__manage-action-btn.dp-mcp__manage-action-btn--regenerate{ border: 1px solid color-mix(in srgb, var(--primary) 34%, var(--surface)); color: var(--primary); }
+
+.dp-mcp__manage-action-btn.dp-mcp__manage-action-btn--regenerate:hover{ background: color-mix(in srgb, var(--primary) 5%, var(--surface)); }
+
+.dp-mcp__manage-action-btn.dp-mcp__manage-action-btn--suspend{ border: 1px solid color-mix(in srgb, var(--warning) 35%, var(--surface)); color: var(--warning); }
+
+.dp-mcp__manage-action-btn.dp-mcp__manage-action-btn--resume{ border: 1px solid color-mix(in srgb, var(--success) 40%, var(--surface)); color: var(--success); }
+
+.dp-mcp__manage-action-btn.dp-mcp__manage-action-btn--suspend:hover{ background: color-mix(in srgb, var(--warning) 7%, var(--surface)); }
+
+.dp-mcp__manage-action-btn.dp-mcp__manage-action-btn--resume:hover{ background: color-mix(in srgb, var(--success) 8%, var(--surface)); }
+
+.dp-mcp__manage-action-btn.dp-mcp__manage-action-btn--unsub{ border: 1px solid color-mix(in srgb, var(--danger) 30%, var(--surface)); color: var(--danger); }
+
+.dp-mcp__manage-action-btn.dp-mcp__manage-action-btn--unsub:hover{ background: var(--danger-surface); }
 
 /* ── Unsubscribe warning dialog ──────────────────────────────── */
-.mc-unsub-dialog {
+.dp-mcp__unsub-dialog{
   width: 27.5rem;
   max-width: 100%;
   background: var(--white);
   border-radius: 1rem;
   padding: 1.875rem 1.875rem 1.625rem;
   box-shadow: 0 24px 60px color-mix(in srgb, var(--ink) 34%, transparent);
-  animation: mc-pop .3s ease;
+  animation: dp-mcp__pop .3s ease;
 }
 
-.mc-unsub-header {
+.dp-mcp__unsub-header{
   display: flex;
   align-items: flex-start;
   gap: 0.875rem;
 }
 
-.mc-unsub-icon {
+.dp-mcp__unsub-icon{
   width: 2.875rem; height: 2.875rem;
   flex: none;
   border-radius: 0.6875rem;
@@ -486,7 +502,7 @@
   font-size: 1.25rem;
 }
 
-.mc-unsub-title {
+.dp-mcp__unsub-title{
   margin: 0;
   font-size: 1.125rem;
   font-weight: 700;
@@ -494,21 +510,21 @@
   line-height: 1.3;
 }
 
-.mc-unsub-desc {
+.dp-mcp__unsub-desc{
   margin: 1rem 0 0;
   font-size: 0.875rem;
   line-height: 1.6;
   color: var(--text-muted);
 }
 
-.mc-unsub-actions {
+.dp-mcp__unsub-actions{
   margin-top: 1.5rem;
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
 }
 
-.mc-unsub-confirm-btn {
+.dp-mcp__unsub-confirm-btn{
   background: var(--danger);
   border: none;
   color: var(--white);
@@ -519,9 +535,23 @@
   cursor: pointer;
   transition: opacity 0.15s;
 }
-.mc-unsub-confirm-btn:hover { opacity: 0.9; }
+
+.dp-mcp__unsub-confirm-btn:hover{ opacity: 0.9; }
 
 /* ── Plans wrap within MCP sidebar ──────────────────────────── */
-.mcp-plans-wrap .aov-plan-card { margin-bottom: 0.875rem; }
-.mcp-plans-wrap .aov-plan-card:last-of-type { margin-bottom: 0; }
-.mcp-view-sub-btn { display: flex !important; align-items: center; justify-content: center; gap: 0.4375rem; }
+.dp-mcp__plans-wrap .dp-api-overview__plan-card{ margin-bottom: 0.875rem; }
+
+.dp-mcp__plans-wrap .dp-api-overview__plan-card:last-of-type{ margin-bottom: 0; }
+
+.dp-mcp__view-sub-btn{ display: flex !important; align-items: center; justify-content: center; gap: 0.4375rem; }
+
+#mcpTokenModalClose, #apiTokenModalClose{
+  position: absolute;
+  top: 1rem; right: 1rem;
+  z-index: 2;
+}
+
+@keyframes dp-mcp__pop {
+  from{ opacity: 0; transform: translateY(10px) scale(.985); }
+  to{ opacity: 1; transform: none; }
+}

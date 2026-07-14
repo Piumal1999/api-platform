@@ -26,9 +26,9 @@ function copyAgentPrompt() {
     const text = document.getElementById('apiAgentPromptText').textContent;
     const btn = document.getElementById('apiBtnCopyPrompt');
     navigator.clipboard.writeText(text).then(() => {
-        btn.classList.add('copy-btn--copied');
+        btn.classList.add('dp-copy__btn--copied');
         if (btn._copyTimer) clearTimeout(btn._copyTimer);
-        btn._copyTimer = setTimeout(() => { btn.classList.remove('copy-btn--copied'); }, 1600);
+        btn._copyTimer = setTimeout(() => { btn.classList.remove('dp-copy__btn--copied'); }, 1600);
     });
 }
 
@@ -85,7 +85,7 @@ function addRipple(btn, e) {
 document.addEventListener('DOMContentLoaded', () => {
     let apiName = '';
 
-    const aiBtn = document.querySelector('.btn-icon-ai');
+    const aiBtn = document.querySelector('.dp-prompt__btn-icon-ai');
     if (aiBtn) aiBtn.addEventListener('click', (e) => addRipple(aiBtn, e));
 
     const dataEl = document.getElementById('apiAgentData');

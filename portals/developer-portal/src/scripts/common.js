@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem('sidebar-expanded') === '1') {
         sidebar.classList.add('expanded');
         sidebar.classList.remove('force-collapse');
-        collapseBtn.querySelector('.collapse-text').textContent = "Collapse";
+        collapseBtn.querySelector('.dp-sidebar__collapse-text').textContent = "Collapse";
     }
 
     // Track if the mouse has left the sidebar
@@ -58,13 +58,13 @@ document.addEventListener("DOMContentLoaded", function () {
             // If currently expanded (pinned), collapse and prevent hover expansion
             sidebar.classList.remove('expanded');
             sidebar.classList.add('force-collapse');
-            collapseBtn.querySelector('.collapse-text').textContent = "Expand";
+            collapseBtn.querySelector('.dp-sidebar__collapse-text').textContent = "Expand";
             localStorage.setItem('sidebar-expanded', '0');
         } else {
             // If currently collapsed, pin it expanded
             sidebar.classList.add('expanded');
             sidebar.classList.remove('force-collapse');
-            collapseBtn.querySelector('.collapse-text').textContent = "Collapse";
+            collapseBtn.querySelector('.dp-sidebar__collapse-text').textContent = "Collapse";
             localStorage.setItem('sidebar-expanded', '1');
         }
     });
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setActiveDocLink();
 
     // Handle API card message overlays
-    const messageOverlays = document.querySelectorAll('.message-overlay');
+    const messageOverlays = document.querySelectorAll('.dp-message__overlay');
     messageOverlays.forEach(overlay => {
         // Add hidden class initially
         overlay.classList.add('hidden');

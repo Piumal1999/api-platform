@@ -16,15 +16,15 @@
  * under the License.
  -->
 
-<section class="apis-section">
+<section class="dp-api-listing__section">
   <div class="container-fluid">
     <!-- Hero -->
-    <div class="apilist-hero-container">
-      <div class="apilist-hero-content">
-        <h1 class="apilist-hero-title">Discover, Integrate, and Innovate with Scalable APIs</h1>
-        <p class="apilist-hero-description">Explore our extensive API catalog and discover how to integrate them seamlessly into your application.</p>
+    <div class="dp-api-listing__hero-container">
+      <div class="dp-api-listing__hero-content">
+        <h1 class="dp-api-listing__hero-title">Discover, Integrate, and Innovate with Scalable APIs</h1>
+        <p class="dp-api-listing__hero-description">Explore our extensive API catalog and discover how to integrate them seamlessly into your application.</p>
       </div>
-      <div class="apilist-hero-image">
+      <div class="dp-api-listing__hero-image">
         <svg width="280" height="150" viewBox="0 0 320 190" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M82 62 H128" stroke="#a9c1e6" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round"/>
           <path d="M192 128 H238" stroke="#a9c1e6" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round"/>
@@ -44,30 +44,30 @@
     </div>
   </div>
 
-  <div class="container-fluid apilist-container">
+  <div class="container-fluid dp-api-listing__container">
     <!-- Search -->
-    <div class="search-container">
-      <div class="search-input">
-        <i class="bi bi-search search-icon"></i>
+    <div class="dp-search__container">
+      <div class="dp-search__input">
+        <i class="bi bi-search dp-search__icon"></i>
         <input type="text" id="query" placeholder="Search APIs" autocomplete="off" />
       </div>
     </div>
 
     {{#if (eq apiMetadata.length 0)}}
     <!-- Empty state -->
-    <div class="apilist-empty" id="no-subscription">
-      <div class="apilist-empty-icon">
+    <div class="dp-api-listing__empty" id="no-subscription">
+      <div class="dp-api-listing__empty-icon">
         <i class="bi bi-info-circle"></i>
       </div>
-      <div class="apilist-empty-body">
-        <div class="apilist-empty-title">No APIs available yet</div>
-        <p class="apilist-empty-desc">There are no published APIs in this developer portal right now. Once APIs are published, they'll appear here for you to explore and subscribe to.</p>
+      <div class="dp-api-listing__empty-body">
+        <div class="dp-api-listing__empty-title">No APIs available yet</div>
+        <p class="dp-api-listing__empty-desc">There are no published APIs in this developer portal right now. Once APIs are published, they'll appear here for you to explore and subscribe to.</p>
       </div>
     </div>
     {{else}}
     <!-- Results bar -->
-    <div class="apilist-results-bar">
-      <h2 class="apilist-results-heading">APIs <span class="apilist-results-count">{{apiMetadata.length}}</span></h2>
+    <div class="dp-api-listing__results-bar">
+      <h2 class="dp-api-listing__results-heading">APIs <span class="dp-api-listing__results-count">{{apiMetadata.length}}</span></h2>
     </div>
     {{/if}}
 
@@ -76,25 +76,25 @@
 
       {{#apiMetadata}}
       <div class="col-lg-4 col-md-6 col-sm-12" id="apiCard-{{id}}">
-        <div class="api-card d-flex flex-column{{#if hasSubscription}} api-card--subscribed{{/if}}">
+        <div class="dp-api__card d-flex flex-column{{#if hasSubscription}} dp-api__card--subscribed{{/if}}">
 
-          {{#if hasSubscription}}<div class="api-card-ribbon-wrap"><div class="api-card-ribbon-label">Subscribed</div></div>{{/if}}
+          {{#if hasSubscription}}<div class="dp-api__card-ribbon-wrap"><div class="dp-api__card-ribbon-label">Subscribed</div></div>{{/if}}
 
           <!-- Top: icon + name + version + type badge -->
-          <div class="api-card-top" data-href="{{../baseUrl}}/api/{{id}}" style="cursor:pointer;">
+          <div class="dp-api__card-top" data-href="{{../baseUrl}}/api/{{id}}" style="cursor:pointer;">
             {{#if apiImageMetadata.api-icon}}
-            <img src="{{apiImageMetadata.api-icon}}" class="api-card-img" alt="{{name}}" />
+            <img src="{{apiImageMetadata.api-icon}}" class="dp-api__card-img" alt="{{name}}" />
             {{else}}
-            <span class="api-icon
-              {{#if (eq type "GRAPHQL")}}api-icon--graphql
-              {{else if (eq type "WS")}}api-icon--ws
-              {{else if (eq type "SOAP")}}api-icon--soap
-              {{else}}api-icon--rest{{/if}}">{{firstTwoLetters name}}</span>
+            <span class="dp-api__icon
+              {{#if (eq type "GRAPHQL")}}dp-api__icon--graphql
+              {{else if (eq type "WS")}}dp-api__icon--ws
+              {{else if (eq type "SOAP")}}dp-api__icon--soap
+              {{else}}dp-api__icon--rest{{/if}}">{{firstTwoLetters name}}</span>
             {{/if}}
-            <div class="api-card-meta">
-              <h5 class="api-card-title">{{name}}</h5>
-              <div class="api-card-meta-row">
-                <span class="api-version">{{version}}</span>
+            <div class="dp-api__card-meta">
+              <h5 class="dp-api__card-title">{{name}}</h5>
+              <div class="dp-api__card-meta-row">
+                <span class="dp-api__version">{{version}}</span>
                 <span class="dp-badge
                   {{#if (eq type "GRAPHQL")}}dp-badge--graphql
                   {{else if (eq type "WS")}}dp-badge--ws
@@ -122,10 +122,10 @@
           </div>
 
           <!-- Description -->
-          <p class="api-card-desc clamp2" data-href="{{../baseUrl}}/api/{{id}}" style="cursor:pointer;">{{description}}</p>
+          <p class="dp-api__card-desc dp-ui__clamp2" data-href="{{../baseUrl}}/api/{{id}}" style="cursor:pointer;">{{description}}</p>
 
           <!-- Tags -->
-          <div class="api-card-tags">
+          <div class="dp-api__card-tags">
             {{#tags}}
             <span class="dp-tag">{{this}}</span>
             {{/tags}}
@@ -133,14 +133,14 @@
 
           <!-- Footer -->
           {{#if subscriptionPlans.length}}
-          <div class="api-card-footer">
-            <div class="api-card-footer-left">
-              <a href="{{../baseUrl}}/api/{{id}}#subscriptionPlans" class="api-plans-link">
+          <div class="dp-api__card-footer">
+            <div class="dp-api__card-footer-left">
+              <a href="{{../baseUrl}}/api/{{id}}#subscriptionPlans" class="dp-api__plans-link">
                 <i class="bi bi-tag"></i> {{subscriptionPlans.length}} plans
               </a>
             </div>
             {{#if hasSubscription}}
-            <a href="{{../baseUrl}}/api/{{id}}#subscriptionPlans" class="api-card-view-sub-btn">
+            <a href="{{../baseUrl}}/api/{{id}}#subscriptionPlans" class="dp-api__card-view-sub-btn">
               <i class="bi bi-check-circle"></i> View subscription
             </a>
             {{else}}
@@ -151,12 +151,12 @@
           </div>
           {{/if}}
 
-          <div class="message-overlay hidden">
-            <div class="message-content">
-              <i class="bi message-icon"></i>
-              <p class="message-text"></p>
+          <div class="dp-message__overlay hidden">
+            <div class="dp-message__content">
+              <i class="bi dp-message__icon"></i>
+              <p class="dp-message__text"></p>
             </div>
-            <button type="button" class="close-message" aria-label="Close message">&times;</button>
+            <button type="button" class="dp-message__close" aria-label="Close message">&times;</button>
           </div>
         </div>
       </div>
