@@ -12,6 +12,19 @@ enabled = false
 [logging]
 console_only = true
 
+# Database connection differs per DB variant — each compose file's environment:
+# block sets the APIP_DP_DATABASE_* vars (postgres: type/host/port/name/username/
+# password; sqlite: type/file). This file mounts over configs/config.toml, so the
+# env references that config.toml would normally provide must be repeated here.
+[database]
+type     = '{{ env "APIP_DP_DATABASE_TYPE" "sqlite" }}'
+file     = '{{ env "APIP_DP_DATABASE_FILE" "/tmp/devportal-it.db" }}'
+host     = '{{ env "APIP_DP_DATABASE_HOST" "localhost" }}'
+port     = '{{ env "APIP_DP_DATABASE_PORT" "5432" }}'
+name     = '{{ env "APIP_DP_DATABASE_NAME" "devportal" }}'
+username = '{{ env "APIP_DP_DATABASE_USERNAME" "devportal" }}'
+password = '{{ env "APIP_DP_DATABASE_PASSWORD" "devportal" }}'
+
 [security]
 # Required — devportal fails closed at startup without these.
 encryption_key = '{{ env "APIP_DP_SECURITY_ENCRYPTIONKEY" }}'
