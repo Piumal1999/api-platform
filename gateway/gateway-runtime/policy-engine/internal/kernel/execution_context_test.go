@@ -22,6 +22,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -980,6 +981,78 @@ func TestProcessHeaders_UnsupportedEncodingAllowedWithoutBodyPolicies(t *testing
 	respResp, err := execCtx.processResponseHeaders(context.Background(), okResponseHeaders("snappy"))
 	require.NoError(t, err)
 	assert.Nil(t, respResp.GetImmediateResponse())
+}
+
+// postRequestHeadersWithLength is postRequestHeaders plus a Content-Length header.
+func postRequestHeadersWithLength(contentLength string) *extprocv3.HttpHeaders {
+	headers := postRequestHeaders("")
+	headers.Headers.Headers = append(headers.Headers.Headers,
+		&corev3.HeaderValue{Key: "content-length", RawValue: []byte(contentLength)})
+	return headers
+}
+
+// A buffered body declared larger than the engine accepts is refused at the header
+// phase, before any policy runs and before Envoy buffers it. Left to the body phase,
+// Envoy could ship the whole body in one message the engine's gRPC limit refuses,
+// turning the client's 413 into an empty 500 whenever this phase answered late.
+func TestProcessRequestHeaders_DeclaredOversizeBodyRejected(t *testing.T) {
+	execCtx, policyRan := newEncodingTestContext(t, false)
+	execCtx.buildRequestContexts(
+		postRequestHeadersWithLength(strconv.FormatInt(testMaxDecompressedBytes+1, 10)), RouteMetadata{})
+
+	resp, err := execCtx.processRequestHeaders(context.Background())
+	require.NoError(t, err)
+
+	immediate := resp.GetImmediateResponse()
+	require.NotNil(t, immediate, "an oversize declared body must be rejected at the header phase")
+	assert.Equal(t, typev3.StatusCode_PayloadTooLarge, immediate.GetStatus().GetCode())
+	assert.Contains(t, string(immediate.GetBody()), "Payload Too Large")
+	assert.False(t, *policyRan)
+	// The client learns neither the configured limit nor the size that tripped it.
+	assert.NotContains(t, string(immediate.GetBody()), strconv.FormatInt(testMaxDecompressedBytes, 10))
+}
+
+// Everything the header-phase check must leave to the body phase: a body within the
+// limit, a value Envoy would already have rejected, a bodyless request, a streamed
+// body (bounded by the streaming path instead), and a chain that never reads the body.
+func TestProcessRequestHeaders_DeclaredBodyLengthNotRejected(t *testing.T) {
+	atLimit := strconv.FormatInt(testMaxDecompressedBytes, 10)
+	overLimit := strconv.FormatInt(testMaxDecompressedBytes+1, 10)
+
+	cases := []struct {
+		name    string
+		headers *extprocv3.HttpHeaders
+		setup   func(ec *PolicyExecutionContext)
+		noBody  bool
+	}{
+		{name: "at the limit", headers: postRequestHeadersWithLength(atLimit)},
+		{name: "unparsable length", headers: postRequestHeadersWithLength("not-a-number")},
+		{name: "no length declared", headers: postRequestHeaders("")},
+		{name: "bodyless request", headers: func() *extprocv3.HttpHeaders {
+			h := postRequestHeadersWithLength(overLimit)
+			h.EndOfStream = true
+			return h
+		}()},
+		{name: "streamed request body", headers: postRequestHeadersWithLength(overLimit),
+			setup: func(ec *PolicyExecutionContext) { ec.isStreamingRequest = true }},
+		{name: "chain without a body policy", headers: postRequestHeadersWithLength(overLimit), noBody: true},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			execCtx, _ := newEncodingTestContext(t, false)
+			if tc.noBody {
+				execCtx.policyChain = &registry.PolicyChain{}
+			}
+			execCtx.buildRequestContexts(tc.headers, RouteMetadata{})
+			if tc.setup != nil {
+				tc.setup(execCtx)
+			}
+
+			resp, err := execCtx.processRequestHeaders(context.Background())
+			require.NoError(t, err)
+			assert.Nil(t, resp.GetImmediateResponse())
+		})
+	}
 }
 
 // The cheapest bypass of all: declare a supported encoding, send bytes that are

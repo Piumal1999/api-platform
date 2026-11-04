@@ -24,6 +24,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"strconv"
 	"strings"
 
 	extprocconfigv3 "github.com/envoyproxy/go-control-plane/envoy/extensions/filters/http/ext_proc/v3"
@@ -1011,6 +1012,13 @@ func (ec *PolicyExecutionContext) processRequestHeaders(
 		return ec.rejectUnsupportedRequestEncoding(ctx, "request_headers"), nil
 	}
 
+	// Reject a declared-oversize body here, while Envoy has buffered none of it. Left
+	// to the body phase, the outcome depends on timing — see requestDeclaresOversizeBody.
+	if declared, oversize := ec.requestDeclaresOversizeBody(); oversize {
+		err := fmt.Errorf("declared Content-Length of %d bytes exceeds the request body limit", declared)
+		return ec.handlePayloadTooLarge(ctx, err, "request_headers"), nil
+	}
+
 	execResult, err := ec.server.executor.ExecuteRequestHeaderPolicies(
 		ctx,
 		ec.policyChain.Policies,
@@ -1084,6 +1092,42 @@ func (ec *PolicyExecutionContext) responseHasNoBody() bool {
 // body and again when the body arrives.
 func (ec *PolicyExecutionContext) requestHasNoBody() bool {
 	return ec.requestHeadersEndOfStream
+}
+
+// requestDeclaresOversizeBody reports whether a request whose body Envoy is about to
+// buffer declares, in Content-Length, more bytes than the engine accepts, and returns
+// the declared size.
+//
+// The check has to happen at the header phase. Envoy learns the request's body mode
+// only from this phase's ModeOverride, and until the reply arrives it holds incoming
+// body bytes under backpressure instead of enforcing
+// router.http_listener.per_connection_buffer_limit_bytes. If the buffer crosses that
+// limit before the reply, Envoy never issues its own 413: it buffers the whole body and
+// sends it as one ext_proc message, which the engine's gRPC receive limit (sized from
+// request_body.max_decompressed_bytes) refuses, and the client gets an empty 500. So a
+// body over the limit got a 413 or a 500 depending on how quickly this phase answered.
+//
+// Content-Length counts wire bytes, so for a compressed body it is compared against a
+// decoded-size ceiling. That is deliberate: a buffered body whose wire size alone is
+// above the ceiling cannot reliably reach the engine at all, whatever it decodes to.
+//
+// A chunked request declares no length and is not covered; streamed request bodies
+// are bounded by the streaming path's own limits instead.
+func (ec *PolicyExecutionContext) requestDeclaresOversizeBody() (int64, bool) {
+	if !ec.policyChain.RequiresRequestBody || ec.isStreamingRequest || ec.requestHasNoBody() {
+		return 0, false
+	}
+	values := ec.requestHeaderCtx.Headers.Get("content-length")
+	if len(values) == 0 {
+		return 0, false
+	}
+	// Envoy rejects a malformed or conflicting Content-Length before ext_proc runs, so
+	// an unparsable value here is left for the body phase rather than guessed at.
+	declared, err := strconv.ParseInt(strings.TrimSpace(values[0]), 10, 64)
+	if err != nil || declared < 0 {
+		return 0, false
+	}
+	return declared, declared > ec.server.maxRequestDecompressedBytes
 }
 
 // requestEncodingBlocksBodyPolicies reports whether the request carries a Content-Encoding
