@@ -346,14 +346,16 @@ func (a BuilderAccess) GoEnvValue(key string) string {
 	return ""
 }
 
-// prepare returns the extra `docker run` arguments, the environment for the docker
-// process (nil to inherit), and a cleanup func that is always safe to call.
+// prepare returns the extra builder run arguments, the environment for the
+// container engine process (nil to inherit), and a cleanup func that is always
+// safe to call. With relabel, the credentials mount gets a shared SELinux label
+// (podman and buildah on Linux), so the builder can read it on SELinux-enforcing hosts.
 //
-// Settings are passed as name-only -e flags with their values in the docker
+// Settings are passed as name-only -e flags with their values in the engine
 // process's environment, so values never appear on the command line or in the
 // build log. --git-credential tokens are written to a netrc in a new private
 // directory under scratchParent, which must not be the build workspace.
-func (a BuilderAccess) prepare(scratchParent string, baseEnv []string) (args []string, env []string, cleanup func(), err error) {
+func (a BuilderAccess) prepare(scratchParent string, baseEnv []string, relabel bool) (args []string, env []string, cleanup func(), err error) {
 	cleanup = func() {}
 
 	if len(a.GoEnv) > 0 {
@@ -381,7 +383,7 @@ func (a BuilderAccess) prepare(scratchParent string, baseEnv []string) (args []s
 		}
 	}
 	if netrc != "" {
-		mount, err := bindMountSpec(netrc, netrcMountTarget)
+		mount, err := bindMountSpec(netrc, netrcMountTarget, relabel)
 		if err != nil {
 			cleanup()
 			return nil, nil, func() {}, err
@@ -450,13 +452,21 @@ func writeNetrc(dir string, creds []GitCredential) (string, error) {
 // bindMountSpec builds a read-only --mount value. --mount (unlike -v) fails when
 // the source is missing instead of creating an empty directory there, and its
 // value is CSV, so the source path is quoted when it contains a comma or quote.
-func bindMountSpec(src, dst string) (string, error) {
+//
+// relabel adds relabel=shared, the --mount form of the :z volume option, which
+// podman and buildah accept and docker does not. shared rather than private, so
+// the label of a user's own --netrc file does not lock it to one container.
+func bindMountSpec(src, dst string, relabel bool) (string, error) {
 	if strings.ContainsAny(src, "\r\n") {
 		return "", fmt.Errorf("the credentials file path must not contain a line break")
 	}
+	fields := []string{"type=bind", "src=" + src, "dst=" + dst, "readonly"}
+	if relabel {
+		fields = append(fields, "relabel=shared")
+	}
 	var b strings.Builder
 	w := csv.NewWriter(&b)
-	if err := w.Write([]string{"type=bind", "src=" + src, "dst=" + dst, "readonly"}); err != nil {
+	if err := w.Write(fields); err != nil {
 		return "", err
 	}
 	w.Flush()

@@ -294,7 +294,7 @@ func TestValidateNetrcFile_RefusesFilesOthersCanRead(t *testing.T) {
 }
 
 func TestPrepare_NothingConfigured(t *testing.T) {
-	args, env, cleanup, err := BuilderAccess{}.prepare(t.TempDir(), []string{"PATH=/bin"})
+	args, env, cleanup, err := BuilderAccess{}.prepare(t.TempDir(), []string{"PATH=/bin"}, false)
 	defer cleanup()
 	if err != nil || len(args) != 0 || env != nil {
 		t.Fatalf("prepare() = %v, %v, %v; want no args and an inherited environment", args, env, err)
@@ -308,7 +308,7 @@ func TestPrepare_GoEnvTravelsByNameOnly(t *testing.T) {
 	}}
 	base := []string{"PATH=/bin", "GOPRIVATE=github.com/old/*"}
 
-	args, env, cleanup, err := access.prepare(t.TempDir(), base)
+	args, env, cleanup, err := access.prepare(t.TempDir(), base, false)
 	defer cleanup()
 	if err != nil {
 		t.Fatalf("prepare() error = %v", err)
@@ -328,7 +328,7 @@ func TestPrepare_NetrcFileIsMountedReadOnly(t *testing.T) {
 	dir := filepath.Join(t.TempDir(), "with,comma")
 	netrc := filepath.Join(dir, "netrc")
 
-	args, _, cleanup, err := BuilderAccess{NetrcFile: netrc}.prepare(t.TempDir(), nil)
+	args, _, cleanup, err := BuilderAccess{NetrcFile: netrc}.prepare(t.TempDir(), nil, false)
 	defer cleanup()
 	if err != nil {
 		t.Fatalf("prepare() error = %v", err)
@@ -348,6 +348,20 @@ func TestPrepare_NetrcFileIsMountedReadOnly(t *testing.T) {
 	}
 }
 
+func TestPrepare_NetrcMountRelabel(t *testing.T) {
+	netrc := filepath.Join(t.TempDir(), "netrc")
+
+	args, _, cleanup, err := BuilderAccess{NetrcFile: netrc}.prepare(t.TempDir(), nil, true)
+	defer cleanup()
+	if err != nil {
+		t.Fatalf("prepare() error = %v", err)
+	}
+	want := []string{"--mount", "type=bind,src=" + netrc + ",dst=/root/.netrc,readonly,relabel=shared"}
+	if !slices.Equal(args, want) {
+		t.Fatalf("args = %v, want %v", args, want)
+	}
+}
+
 func TestPrepare_GitCredentialsBecomeAPrivateNetrc(t *testing.T) {
 	scratch := t.TempDir()
 	access := BuilderAccess{GitCredentials: []GitCredential{
@@ -355,7 +369,7 @@ func TestPrepare_GitCredentialsBecomeAPrivateNetrc(t *testing.T) {
 		{Host: "gitlab.acme.com", Username: "ci-bot", token: "glpat-xyz"},
 	}}
 
-	args, _, cleanup, err := access.prepare(scratch, nil)
+	args, _, cleanup, err := access.prepare(scratch, nil, false)
 	if err != nil {
 		t.Fatalf("prepare() error = %v", err)
 	}
@@ -520,14 +534,14 @@ func TestBuilderRunArgs(t *testing.T) {
 	}
 
 	// Not set: no -fetch-timeout, so builder images that predate the flag keep working.
-	if got := builderRunArgs(config, []string{"-e", "GOPRIVATE"}); !slices.Equal(got, base) {
+	if got := builderRunArgs(config, false, []string{"-e", "GOPRIVATE"}); !slices.Equal(got, base) {
 		t.Fatalf("args = %v, want %v", got, base)
 	}
 
 	// Set: passed after the image, where the builder reads its own flags.
 	config.FetchTimeout = 10 * time.Minute
 	want := append(slices.Clone(base), "-fetch-timeout", "10m0s")
-	if got := builderRunArgs(config, []string{"-e", "GOPRIVATE"}); !slices.Equal(got, want) {
+	if got := builderRunArgs(config, false, []string{"-e", "GOPRIVATE"}); !slices.Equal(got, want) {
 		t.Fatalf("args = %v, want %v", got, want)
 	}
 }
